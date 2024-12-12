@@ -28,6 +28,14 @@
   flex-wrap: wrap;
 }
 
+.filter_trip .time_filter .active-filterTime {
+  border-color: #40a9ff !important;
+}
+
+.filter_trip .time_filter .active-filterTime p {
+  color: #40a9ff !important;
+}
+
 .filter_trip .time_filter button {
   width: calc(50% - 4.5px);
   margin-bottom: 9px;

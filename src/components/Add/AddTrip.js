@@ -270,7 +270,11 @@ function AddPoint(props) {
 	};
 	const onFinish = (values) => {
 		let arrListPoint = values.listTimePoint.map((item, index) => {
-			return {...item, timeDropOff: moment(item.timeDropOff).format("HH:mm:SS"), timePickUp: moment(item.timePickUp).format("HH:mm:SS")};
+			return {
+				...item, 
+				timeDropOff: moment(item.timeDropOff).format("HH:mm:ss"),
+				timePickUp: moment(item.timePickUp).format("HH:mm:ss")
+			};
 		});
 		let createdPoint = {
 			arrListPoint,

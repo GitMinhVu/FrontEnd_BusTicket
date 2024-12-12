@@ -1,5 +1,5 @@
-import React, {Fragment, useEffect} from "react";
-import {Layout, Menu, Breadcrumb, Image, Table, Statistic, Button, Rate, Popconfirm} from "antd";
+import React, {Fragment, useEffect, useState} from "react";
+import {Layout, Menu, Breadcrumb, Image, Table, Statistic, Button, Rate, Popconfirm, Input, Space} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {AudioOutlined, EditOutlined, SearchOutlined, DeleteOutlined, CalendarOutlined, FolderViewOutlined, CarOutlined} from "@ant-design/icons";
 import {OPEN_DRAWER} from "../../redux/types/DrawerTypes";
@@ -17,6 +17,23 @@ export default function AdminStation() {
 	const dispatch = useDispatch();
 	const {listStation} = useSelector((state) => state.StationReducer);
 	console.log("file: AdminStation.js ~ line 10 ~ AdminStation ~ listStation", listStation);
+
+	const [searchName, setSearchName] = useState("");
+	const [searchProvince, setSearchProvince] = useState("");
+
+	const handleSearchName = (e) => {
+		setSearchName(e.target.value);
+	};
+
+	const handleSearchProvince = (e) => {
+		setSearchProvince(e.target.value);
+	};
+
+	const filteredStations = listStation.filter(station => {
+		const nameMatch = station.name.toLowerCase().includes(searchName.toLowerCase());
+		const provinceMatch = station.province.toLowerCase().includes(searchProvince.toLowerCase());
+		return nameMatch && provinceMatch;
+	});
 
 	useEffect(() => {
 		dispatch(getListStationAction());
@@ -111,21 +128,43 @@ export default function AdminStation() {
 			</Breadcrumb>
 			<div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
 				<h1>Danh sách bến xe</h1>
-				<Button
-					type="primary"
-					className="mb-3"
-					onClick={() => {
-						dispatch({
-							type: OPEN_DRAWER,
-							title: "Thêm Bến Xe",
-							content: <AddStation />,
-						});
-					}}
-				>
-					<AddBusinessIcon className="mr-2" />
-					Thêm Bến Xe
-				</Button>
-				<Table columns={columns} dataSource={listStation} />
+				<div style={{ 
+					display: 'flex', 
+					justifyContent: 'space-between',
+					alignItems: 'center',
+					marginBottom: 16 
+				}}>
+					<Space size="middle">
+						<Input
+							placeholder="Tìm kiếm theo tên bến xe"
+							prefix={<SearchOutlined />}
+							value={searchName}
+							onChange={handleSearchName}
+							style={{ width: 250 }}
+						/>
+						<Input
+							placeholder="Tìm kiếm theo tỉnh/thành phố"
+							prefix={<SearchOutlined />}
+							value={searchProvince}
+							onChange={handleSearchProvince}
+							style={{ width: 250 }}
+						/>
+					</Space>
+					<Button
+						type="primary"
+						onClick={() => {
+							dispatch({
+								type: OPEN_DRAWER,
+								title: "Thêm Bến Xe",
+								content: <AddStation />,
+							});
+						}}
+					>
+						<AddBusinessIcon className="mr-2" />
+						Thêm Bến Xe
+					</Button>
+				</div>
+				<Table columns={columns} dataSource={filteredStations} />
 			</div>
 		</Content>
 	);

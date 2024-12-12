@@ -35,5 +35,16 @@ export class TripService extends baseService {
 	confirmTripPassenger = (id, status) => {
 		return this.put(`/tripPassenger/confirm/${id}`, status);
 	};
+	//SORT PRICE
+	sortPriceTripPassenger = (tripSort) => {
+		return this.post(`/tripPassenger/sortprice`, tripSort);
+	};
+	//SORT time
+	sortTimeTripPassenger = (tripSort) => {
+		return this.post(`/tripPassenger/sorttime`, tripSort);
+	};
+	FilterTimeTripPassenger = (tripSort) => {
+		return this.post(`/tripPassenger/filtertime`, tripSort);
+	};
 }
 export const tripService = new TripService();

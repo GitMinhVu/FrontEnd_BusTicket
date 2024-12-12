@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import {Layout, Menu, Breadcrumb, Table, Input, Space, Popconfirm, Button} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {AudioOutlined, EditOutlined, SearchOutlined, DeleteOutlined, HistoryOutlined, FolderViewOutlined} from "@ant-design/icons";
@@ -94,6 +94,21 @@ export default function AdminTrip() {
 			},
 		},
 	];
+	const [searchFrom, setSearchFrom] = useState("");
+	const [searchTo, setSearchTo] = useState("");
+	const handleSearchFrom = (e) => {
+		setSearchFrom(e.target.value);
+	};
+	const handleSearchTo = (e) => {
+		setSearchTo(e.target.value);
+	};
+	const filteredTrips = listTrip.filter(trip => {
+		const fromMatch = trip.from.province.toLowerCase().includes(searchFrom.toLowerCase()) ||
+						 trip.from.address.toLowerCase().includes(searchFrom.toLowerCase());
+		const toMatch = trip.to.province.toLowerCase().includes(searchTo.toLowerCase()) ||
+					   trip.to.address.toLowerCase().includes(searchTo.toLowerCase());
+		return fromMatch && toMatch;
+	});
 	return (
 		<Content style={{margin: "0 16px"}}>
 			<Breadcrumb style={{margin: "16px 0"}}>
@@ -102,17 +117,40 @@ export default function AdminTrip() {
 			</Breadcrumb>
 			<div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
 				<h1>Danh sách các chuyến đi</h1>
-				<Button
-					type="primary"
-					className="mb-3"
-					onClick={() => {
-						history.push("/admin/addtrip");
-					}}
-				>
-					<HistoryOutlined />
-					Thêm Chuyến Đi
-				</Button>
-				<Table columns={columns} dataSource={listTrip} />
+				<div style={{ 
+					display: 'flex', 
+					justifyContent: 'space-between',
+					alignItems: 'center',
+					marginBottom: 16 
+				}}>
+					<Space size="middle">
+						<Input
+							placeholder="Tìm kiếm điểm đi"
+							prefix={<SearchOutlined />}
+							value={searchFrom}
+							onChange={handleSearchFrom}
+							style={{ width: 200 }}
+						/>
+						<Input
+							placeholder="Tìm kiếm điểm đến"
+							prefix={<SearchOutlined />}
+							value={searchTo}
+							onChange={handleSearchTo}
+							style={{ width: 200 }}
+						/>
+					</Space>
+					<Button
+						type="primary"
+						className="mb-3"
+						onClick={() => {
+							history.push("/admin/addtrip");
+						}}
+					>
+						<HistoryOutlined />
+						Thêm Chuyến Đi
+					</Button>
+				</div>
+				<Table columns={columns} dataSource={filteredTrips} />
 			</div>
 		</Content>
 	);

@@ -24,6 +24,12 @@
 	.time_filter {
 		display: flex;
 		flex-wrap: wrap;
+		.active-filterTime {
+			p {
+				color: #40a9ff !important;
+			}
+			border-color: #40a9ff !important;
+		}
 		button {
 			width: calc(50% - 4.5px);
 			margin-bottom: 9px;

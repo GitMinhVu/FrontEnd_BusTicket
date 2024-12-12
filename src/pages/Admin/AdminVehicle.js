@@ -1,5 +1,5 @@
-import React, {Fragment, useEffect} from "react";
-import {Layout, Menu, Breadcrumb, Image, Table, Statistic, Button, Rate, Popconfirm} from "antd";
+import React, {Fragment, useEffect, useState} from "react";
+import {Layout, Menu, Breadcrumb, Image, Table, Statistic, Button, Rate, Popconfirm, Input} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import _, {templateSettings} from "lodash";
 import {AudioOutlined, EditOutlined, SearchOutlined, DeleteOutlined, CalendarOutlined, FolderViewOutlined, CarOutlined} from "@ant-design/icons";
@@ -164,6 +164,13 @@ export default function AdminVehicle() {
 			},
 		},
 	];
+	const [searchText, setSearchText] = useState("");
+	const handleSearch = (e) => {
+		setSearchText(e.target.value);
+	};
+	const filteredVehicles = listVehicle.filter(vehicle =>
+		vehicle.name.toLowerCase().includes(searchText.toLowerCase())
+	);
 	return (
 		<Content style={{margin: "0 16px"}}>
 			<Breadcrumb style={{margin: "16px 0"}}>
@@ -172,6 +179,14 @@ export default function AdminVehicle() {
 			</Breadcrumb>
 			<div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
 				<h1>Danh sách xe</h1>
+				
+				<Input
+					placeholder="Tìm kiếm theo tên xe"
+					prefix={<SearchOutlined />}
+					value={searchText}
+					onChange={handleSearch}
+					style={{marginBottom: 16, width: 300}}
+				/>
 				<Button
 					type="primary"
 					className="mb-3"
@@ -186,7 +201,7 @@ export default function AdminVehicle() {
 					<LocalCarWashIcon className="mr-2" />
 					Thêm Xe
 				</Button>
-				<Table columns={columns} dataSource={listVehicle} />
+				<Table columns={columns} dataSource={filteredVehicles} />
 			</div>
 		</Content>
 	);

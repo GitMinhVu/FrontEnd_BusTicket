@@ -1,5 +1,6 @@
-import {GET_IMG_VEHICLES, GET_PROVINCE, GET_TRIP_BY_USER, GET_TRIP_PASSENGER, OPEN_CLOSE_BOOKING, OPEN_CLOSE_DETAILS, SELECT_BOOKING_SEAT, SELECT_TRIP, SET_DROPOFF_PICKUP, TRIP_RENDER} from "../types/BookingTypes";
+import {CANCEL_SORT_TIME, GET_IMG_VEHICLES, GET_PROVINCE, GET_TRIP_BY_USER, GET_TRIP_PASSENGER, GET_TRIP_PASSENGER2, OPEN_CLOSE_BOOKING, OPEN_CLOSE_DETAILS, SELECT_BOOKING_SEAT, SELECT_TRIP, SET_DROPOFF_PICKUP, SET_SORT_TIME, TRIP_RENDER} from "../types/BookingTypes";
 import {message} from "antd";
+import {FILTER_TRIPPASSENGER_TIME} from "../types/TripTypes";
 
 const initialState = {
 	listProvince: [],
@@ -11,9 +12,11 @@ const initialState = {
 	},
 	tripRender: {},
 	listTripPassenger: [],
+	listTripPassenger2: [],
 	listSeatSelected: [],
 	dropoff: "",
 	pickup: "",
+	isSort: false,
 };
 
 export default (state = initialState, action) => {
@@ -37,6 +40,9 @@ export default (state = initialState, action) => {
 		}
 		case GET_TRIP_PASSENGER: {
 			return {...state, listTripPassenger: action.listTripPassenger};
+		}
+		case GET_TRIP_PASSENGER2: {
+			return {...state, listTripPassenger2: action.listTripPassenger};
 		}
 		case OPEN_CLOSE_BOOKING: {
 			let arrListTrip = [...state.listTripPassenger];
@@ -108,6 +114,22 @@ export default (state = initialState, action) => {
 			state.dropoff = "";
 			state.pickup = "";
 			return {...state};
+		}
+		case FILTER_TRIPPASSENGER_TIME: {
+			let listTripPassengerFilter = [...state.listTripPassenger];
+			listTripPassengerFilter = listTripPassengerFilter.filter((item) => item.startTime >= action.timeStart && item.startTime <= action.timeEnd);
+			if (listTripPassengerFilter.length > 0) {
+				return {...state, listTripPassenger: listTripPassengerFilter};
+			} else {
+				message.error("Không có chuyến nào");
+			}
+			return {...state};
+		}
+		case SET_SORT_TIME: {
+			return {...state, isSort: true};
+		}
+		case CANCEL_SORT_TIME: {
+			return {...state, isSort: false};
 		}
 		default:
 			return state;

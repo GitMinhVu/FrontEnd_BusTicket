@@ -16,6 +16,7 @@ import {getImageVehicleAction, getSeatVehicleAction} from "../../redux/actions/v
 import {getTimePointTripAction} from "../../redux/actions/timePointAction";
 
 import LoadingSpin from "../Loading/LoadingSpin";
+import {SortPriceTripPassengerAction, SortTimeTripPassengerAction} from "../../redux/actions/tripAction";
 export default function ListTrips(props) {
 	let {tripSearch, listTripPassenger, listImgVehicle, tripRender} = useSelector((state) => state.BookingReducer);
 	const {isLoadingSpin} = useSelector((state) => state.LoadingReducer);
@@ -170,16 +171,60 @@ export default function ListTrips(props) {
 				</h1>
 				<div className="sort">
 					<span className="sort-label mr-5">Sắp xếp theo:</span>
-					<button type="button" className="ant-btn">
+					<button
+						type="button"
+						className="ant-btn"
+						onClick={() => {
+							let tripSort = {
+								tripId: param.id,
+								attribute: "startTime",
+								type: "ASC",
+							};
+							dispatch(SortTimeTripPassengerAction(tripSort));
+						}}
+					>
 						<span>Giờ sớm nhất</span>
 					</button>
-					<button type="button" className="ant-btn">
+					<button
+						type="button"
+						className="ant-btn"
+						onClick={() => {
+							let tripSort = {
+								tripId: param.id,
+								attribute: "startTime",
+								type: "DESC",
+							};
+							dispatch(SortTimeTripPassengerAction(tripSort));
+						}}
+					>
 						<span>Giờ muộn nhất</span>
 					</button>
-					<button type="button" className="ant-btn">
+					<button
+						type="button"
+						className="ant-btn"
+						onClick={() => {
+							let tripSort = {
+								tripId: param.id,
+								attribute: "price",
+								type: "ASC",
+							};
+							dispatch(SortPriceTripPassengerAction(tripSort));
+						}}
+					>
 						<span>Giá thấp nhất</span>
 					</button>
-					<button type="button" className="ant-btn">
+					<button
+						type="button"
+						className="ant-btn"
+						onClick={() => {
+							let tripSort = {
+								tripId: param.id,
+								attribute: "price",
+								type: "DESC",
+							};
+							dispatch(SortPriceTripPassengerAction(tripSort));
+						}}
+					>
 						<span>Giá cao nhất</span>
 					</button>
 				</div>

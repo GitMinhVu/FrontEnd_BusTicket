@@ -20,6 +20,7 @@ import {TICKET_BOOKING} from "../../redux/types/TicketTypes";
 import {USER_LOGIN} from "../../util/settings/config";
 import {OPEN_DRAWER} from "../../redux/types/DrawerTypes";
 import MapPoint from "../Map/MapPoint";
+import moment from "moment";
 
 const {SubMenu} = Menu;
 const menu = (
@@ -44,10 +45,17 @@ function StepBookingSeat(props) {
 	const {listSeatSelected} = useSelector((state) => state.BookingReducer);
 	const {listSeatVehicle} = useSelector((state) => state.vehicleReducer);
 	const {isLoadingSpin} = useSelector((state) => state.LoadingReducer);
-	console.log("listSeatVehicle", listSeatVehicle);
+	let {tripDetail} = useSelector((state) => state.TripReducer);
+	const {tripPassenger} = props;
+	console.log(tripPassenger);
+	var today = new Date();
+	var date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+	console.log(date);
+	var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	var dateTime = date + " " + time;
+
 	const {prev, next, current, setCurrent} = props;
 	const dispatch = useDispatch();
-
 	const renderSeat = (floors) => {
 		return listSeatVehicle.map((item, index) => {
 			let classDaDat = item.status === "đã đặt" ? "gheDaChon" : "";
@@ -58,9 +66,11 @@ function StepBookingSeat(props) {
 			}
 			let disabled = item.status === "đã đặt" ? true : false;
 			let arrClass = [classDaDat, classDangDat];
+			let typeGhe = item.type == "seat" ? "Ghế thường" : "Giường nằm";
+
 			if (item.floor === floors) {
 				return (
-					<Tooltip title={`Ghế: ${item.name}, Giá: ${item.price.toLocaleString()} VNĐ`} placement="top">
+					<Tooltip title={`Ghế: ${item.name}, Giá: ${item.price.toLocaleString()} VNĐ, Loại: ${typeGhe}`} placement="top">
 						<button
 							className="seat"
 							style={{border: "none"}}
@@ -155,14 +165,24 @@ function StepBookingSeat(props) {
 								<Button
 									type="primary"
 									onClick={() => {
-										if (listSeatSelected.length > 0) {
-											next();
+										var date1 = new Date(`${moment(tripPassenger.trip.startTime).format("YYYY-MM-DD")} ${tripPassenger.startTime}`);
+										var date2 = new Date(dateTime);
+										if (localStorage.getItem(USER_LOGIN)) {
+											if (listSeatSelected.length > 0) {
+												if (date2.getTime() <= date1.getTime()) {
+													next();
+												} else {
+													message.error("Chuyến đã qua ngày không thể đặt vé");
+												}
+											} else {
+												dispatch({
+													type: SET_MODAL,
+													title: "Lỗi chọn ghế",
+													content: "Vui lòng chọn ít nhất 1 chỗ ngồi",
+												});
+											}
 										} else {
-											dispatch({
-												type: SET_MODAL,
-												title: "Lỗi chọn ghế",
-												content: "Vui lòng chọn ít nhất 1 chỗ ngồi",
-											});
+											message.error("Bạn chưa đăng nhập");
 										}
 									}}
 								>
@@ -446,7 +466,7 @@ export default function StepBooking(props) {
 	const steps = [
 		{
 			title: "Chọn ghế ngồi",
-			content: <StepBookingSeat vehicle={props.vehicle} prev={prev} next={next} current={current} setCurrent={setCurrent} />,
+			content: <StepBookingSeat tripPassenger={props.tripPassenger} vehicle={props.vehicle} prev={prev} next={next} current={current} setCurrent={setCurrent} />,
 		},
 		{
 			title: "Điểm đón trả",

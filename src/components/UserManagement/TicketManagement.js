@@ -15,6 +15,7 @@ const {TabPane} = Tabs;
 const {Meta} = Card;
 export default function TicketManagement() {
 	const {ticketUser} = useSelector((state) => state.TicketReducer);
+	console.log("file: TicketManagement.js ~ line 18 ~ TicketManagement ~ ticketUser", ticketUser);
 
 	const {userLogin} = useSelector((state) => state.userReducer);
 
@@ -51,7 +52,11 @@ export default function TicketManagement() {
 									placement="topRight"
 									title={"Bạn có muốn hủy vé xe này không?"}
 									onConfirm={() => {
-										confirm(item.id);
+										if (item.tripPassengerTicket.status == "depart") {
+											confirm(item.id);
+										} else {
+											message.error("Không thể hủy vé");
+										}
 									}}
 									okText="Yes"
 									cancelText="No"
