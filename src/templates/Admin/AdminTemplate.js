@@ -156,7 +156,7 @@ export default function AdminTemplate(props) {
 								</Header>
 								<Component {...propsRoute} />
 
-								<Footer style={{textAlign: "center"}}>Created 2022 Huỳnh Văn Phú</Footer>
+								<Footer style={{textAlign: "center"}}>Created 2024 To Minh Vu</Footer>
 							</Layout>
 						</Layout>
 					</Fragment>
