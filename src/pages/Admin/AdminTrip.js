@@ -126,12 +126,14 @@ export default function AdminTrip() {
 					<Space size="middle">
 						<Input
 							placeholder="Tìm kiếm điểm đi"
+							allowClear
 							prefix={<SearchOutlined />}
 							value={searchFrom}
 							onChange={handleSearchFrom}
 							style={{ width: 200 }}
 						/>
 						<Input
+							allowClear
 							placeholder="Tìm kiếm điểm đến"
 							prefix={<SearchOutlined />}
 							value={searchTo}

@@ -137,6 +137,7 @@ export default function AdminStation() {
 					<Space size="middle">
 						<Input
 							placeholder="Tìm kiếm theo tên bến xe"
+							allowClear
 							prefix={<SearchOutlined />}
 							value={searchName}
 							onChange={handleSearchName}
@@ -144,6 +145,7 @@ export default function AdminStation() {
 						/>
 						<Input
 							placeholder="Tìm kiếm theo tỉnh/thành phố"
+							allowClear
 							prefix={<SearchOutlined />}
 							value={searchProvince}
 							onChange={handleSearchProvince}
@@ -159,8 +161,9 @@ export default function AdminStation() {
 								content: <AddStation />,
 							});
 						}}
+						style={{display:'flex', alignItems:'center'}}
 					>
-						<AddBusinessIcon className="mr-2" />
+						<AddBusinessIcon className="mr-2" style={{marginRight: 8}} />
 						Thêm Bến Xe
 					</Button>
 				</div>

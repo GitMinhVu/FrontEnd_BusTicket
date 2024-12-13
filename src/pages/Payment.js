@@ -45,7 +45,10 @@ export default function Payment(props) {
 				<div className="header-body">
 					<div className="grid grid-cols-1">
 						<div className="logo">
-							<img src="https://storage.googleapis.com/fe-production/icon_vxr_full.svg" alt="logo" />
+							<img src='./images/original.png' alt="logo" />
+							
+							<span>VietBus Travel🚍</span>
+
 						</div>
 					</div>
 				</div>

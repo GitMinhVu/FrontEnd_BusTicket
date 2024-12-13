@@ -60,52 +60,18 @@ export default function AdminVehicle() {
 		{
 			title: "Hình Ảnh",
 			render: (text, vehicle) => {
-				const totalImages = vehicle.vehicleOfImage.length;
-				const displayImages = vehicle.vehicleOfImage.slice(0, 3);
-				
 				return (
-					<div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-						{displayImages.map((item, index) => (
-							<Image 
-								preview={{
-									visible: false,
-									onVisibleChange: (visible) => {
-										if (visible) {
-											const allImages = vehicle.vehicleOfImage.map(img => img.link);
-											window.previewImages = allImages;
-										}
-									}
-								}}
+					<div style={{ display: 'flex', alignItems: 'center' }}> {/* Thêm style này */}
+						{vehicle.vehicleOfImage.map((item, index) => {
+							return <Image 
+								preview={{visible: vehicle.visible}} 
 								width={75} 
 								height={60} 
 								style={{borderRadius: "50%"}} 
 								src={item.link} 
 								key={index} 
-							/>
-						))}
-						
-						{totalImages > 3 && (
-							<div 
-								style={{ 
-									width: 75,
-									height: 60,
-									borderRadius: "50%",
-									background: 'rgba(0,0,0,0.45)',
-									display: 'flex',
-									alignItems: 'center',
-									justifyContent: 'center',
-									color: 'white',
-									cursor: 'pointer'
-								}}
-								onClick={() => {
-									const allImages = vehicle.vehicleOfImage.map(img => img.link);
-									window.previewImages = allImages;
-								}}
-							>
-								+{totalImages - 3}
-							</div>
-						)}
-
+							/>;
+						})}
 						<Button
 							type="link"
 							icon={<EyeOutlined />}
@@ -220,27 +186,30 @@ export default function AdminVehicle() {
 			<div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
 				<h1>Danh sách xe</h1>
 				
-				<Input
-					placeholder="Tìm kiếm theo tên xe"
-					prefix={<SearchOutlined />}
-					value={searchText}
-					onChange={handleSearch}
-					style={{marginBottom: 16, width: 300}}
-				/>
-				<Button
-					type="primary"
-					className="mb-3"
-					onClick={() => {
-						dispatch({
-							type: OPEN_DRAWER,
-							title: "Thêm nhà xe",
-							content: <AddVehicle />,
-						});
-					}}
-				>
-					<LocalCarWashIcon className="mr-2" />
-					Thêm Xe
-				</Button>
+				<div style={{ display: 'flex', gap: '16px', marginBottom: 16, justifyContent:'space-between' }}>
+					<Input
+						placeholder="Tìm kiếm theo tên xe"
+						allowClear	
+						prefix={<SearchOutlined />}
+						value={searchText}
+						onChange={handleSearch}
+						style={{ width: 300 }}
+					/>
+					<Button
+						type="primary"
+						onClick={() => {
+							dispatch({
+								type: OPEN_DRAWER,
+								title: "Thêm nhà xe",
+								content: <AddVehicle />,
+							});
+						}}
+						style={{ display: 'flex', alignItems: 'center' }}
+					>
+						<LocalCarWashIcon style={{ marginRight: 8 }}/>
+						Thêm Xe
+					</Button>
+				</div>
 				<Table columns={columns} dataSource={filteredVehicles} />
 			</div>
 		</Content>

@@ -53,7 +53,19 @@ export default function AdminTemplate(props) {
 						<Layout style={{minHeight: "100vh"}}>
 							<Sider collapsible collapsed={collapsed} onCollapse={changeCollapsed}>
 								<div className="logo flex justify-center items-center mt-5">
-									<img src="https://storage.googleapis.com/fe-production/icon_vxr_full.svg" alt={123} className="mb-5" />
+									{/* <span style={{color:"white"}}>VietBusTravel- Admin</span> */}
+									{/* <img src="https://www.shutterstock.com/image-vector/big-black-bus-vector-image-600nw-2473900693.jpg" alt={123} className="mb-5" /> */}
+									<img 
+										src="/images/original.png" 
+										alt="VietBus Logo" 
+										style={{
+											width: '70%',
+											marginBottom: '20px',
+											borderRadius: '50%', 
+											aspectRatio:'1/1',
+											objectFit:'cover'
+										}}
+									/>
 								</div>
 								<Menu theme="dark" defaultSelectedKeys={[{key}]} mode="inline">
 									<Menu.Item
@@ -145,14 +157,17 @@ export default function AdminTemplate(props) {
 							</Sider>
 							<Layout className="site-layout">
 								<Header className="site-layout-background flex justify-end" style={{padding: 0, background: "#fff"}}>
-									<Dropdown overlay={menu} trigger={["click"]} className="mr-5 cursor-pointer">
-										<div className="flex items-center">
-											<Avatar style={{verticalAlign: "middle", background: "#7265e6", marginRight: 10}} size="large">
-												{userLogin?.name}
-											</Avatar>
-											<span className="text-xl">Xin chào , {userLogin?.name}</span>
-										</div>
-									</Dropdown>
+									<div className="flex items-center justify-between w-full px-5">
+										<span className="font-bold text-xl">VietBus Travel🚍- Hệ Thống Quản Lý</span>
+										<Dropdown overlay={menu} trigger={["click"]} className="cursor-pointer">
+											<div className="flex items-center">
+												<Avatar style={{verticalAlign: "middle", background: "#7265e6", marginRight: 10}} size="large">
+													{userLogin?.name}
+												</Avatar>
+												<span className="text-xl">Xin chào , {userLogin?.name}</span>
+											</div>
+										</Dropdown>
+									</div>
 								</Header>
 								<Component {...propsRoute} />
 

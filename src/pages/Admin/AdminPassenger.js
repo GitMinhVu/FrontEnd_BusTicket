@@ -29,7 +29,6 @@ export default function AdminPassenger() {
 		{
 			title: "Tên Nhà Xe",
 			dataIndex: "name",
-
 			sorter: (a, b) => a.name.length - b.name.length,
 			sortDirections: ["descend"],
 			filters: arrFilterName,
@@ -167,6 +166,7 @@ export default function AdminPassenger() {
 						value={searchText}
 						onChange={handleSearch}
 						style={{ width: 300 }}
+						allowClear
 					/>
 					<Button
 						type="primary"
@@ -177,8 +177,9 @@ export default function AdminPassenger() {
 								content: <AddPassenger />,
 							});
 						}}
+						style={{display:'flex', alignItems:'center'}}
 					>
-						<AddBusinessIcon className="mr-2" />
+						<AddBusinessIcon className="mr-2"style={{marginRight:8}} />
 						Thêm Nhà Xe
 					</Button>
 				</div>

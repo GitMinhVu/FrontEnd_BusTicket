@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import {Layout, Menu, Breadcrumb, Table, Input, Space, Popconfirm, Button} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteUserAction, getUserAction} from "../../redux/actions/UserAction";
@@ -105,9 +105,15 @@ export default function AdminUser() {
 		console.log("params", pagination, filters, sorter, extra);
 	}
 
+	const [searchText, setSearchText] = useState("");
+
 	const onSearch = (value) => {
-		dispatch(getUserAction(value));
+		setSearchText(value);
 	};
+
+	const filteredUsers = listUser.filter(user =>
+		user.name.toLowerCase().includes(searchText.toLowerCase())
+	);
 
 	return (
 		<Content style={{margin: "0 16px"}}>
@@ -116,22 +122,42 @@ export default function AdminUser() {
 				<Breadcrumb.Item>User</Breadcrumb.Item>
 			</Breadcrumb>
 			<div className="site-layout-background" style={{padding: 12, minHeight: 360}}>
-				<Search placeholder="Search User" allowClear enterButton="Search" size="large" onSearch={onSearch} className="mb-3" />
-				<Button
-					type="primary"
-					className="mb-3"
-					onClick={() => {
-						dispatch({
-							type: OPEN_DRAWER,
-							title: "Thêm Người Dùng",
-							content: <AddUser />,
-						});
-					}}
-				>
-					<UserAddOutlined />
-					Thêm Người Dùng
-				</Button>
-				<Table columns={columns} dataSource={listUser} onChange={onChange} />
+				<div style={{ display: 'flex', gap: '16px', marginBottom: 16, justifyContent: 'space-between' }}>
+					<Space size="middle">
+					<Input
+						placeholder="Tìm kiếm theo tên người dùng"
+						prefix={<SearchOutlined />}
+						allowClear
+						onSearch={onSearch}
+						onChange={(e) => setSearchText(e.target.value)}
+						style={{ width: 400 }}/>
+					</Space>
+					{/* <Search
+						placeholder="Tìm kiếm theo tên người dùng"
+						allowClear
+						prefix={<SearchOutlined />}
+						size="large"
+						enterButton={false}
+						onSearch={onSearch}
+						onChange={(e) => setSearchText(e.target.value)}
+						style={{ width: 400 }}
+					/> */}
+					<Button
+						type="primary"
+						onClick={() => {
+							dispatch({
+								type: OPEN_DRAWER,
+								title: "Thêm Người Dùng",
+								content: <AddUser />,
+							});
+						}}
+						style={{ display: 'flex', alignItems: 'center' }}
+					>
+						<UserAddOutlined />
+						Thêm Người Dùng
+					</Button>
+				</div>
+				<Table columns={columns} dataSource={filteredUsers} onChange={onChange} />
 			</div>
 		</Content>
 	);

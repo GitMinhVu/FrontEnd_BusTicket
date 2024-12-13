@@ -318,6 +318,7 @@ export default function AdminTicket(props) {
 						value={searchName}
 						onChange={handleSearchName}
 						style={{ width: 250 }}
+						allowClear
 					/>
 					<Input
 						placeholder="Tìm kiếm theo số điện thoại"
@@ -325,6 +326,7 @@ export default function AdminTicket(props) {
 						value={searchPhone}
 						onChange={handleSearchPhone}
 						style={{ width: 250 }}
+						allowClear
 					/>
 				</div>
 				<Table columns={columns} dataSource={filteredTickets} />
