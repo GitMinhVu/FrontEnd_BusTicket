@@ -150,10 +150,8 @@ export default function AdminTripPassenger(props) {
 			render: (text, trip) => {
 				return (
 					<div>
-						{" "}
-						{trip.vehicle.name}{" "}
-						<Button
-							type="primary"
+						<a
+							// type="primary"
 							onClick={() => {
 								dispatch({
 									type: SET_MODAL,
@@ -161,9 +159,11 @@ export default function AdminTripPassenger(props) {
 									content: <Vehicle vehicle={trip.vehicle} />,
 								});
 							}}
+							style={{ cursor: 'pointer' }}
+
 						>
-							Chi Tiết
-						</Button>
+							{trip.vehicle.name}{" "}	
+						</a>
 					</div>
 				);
 			},

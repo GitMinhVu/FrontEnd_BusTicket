@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from "react";
 import {Layout, Menu, Breadcrumb, Image, Table, Statistic, Button, Rate, Popconfirm, Input} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import _, {templateSettings} from "lodash";
-import {AudioOutlined, EditOutlined, SearchOutlined, DeleteOutlined, CalendarOutlined, FolderViewOutlined, CarOutlined} from "@ant-design/icons";
+import {AudioOutlined, EditOutlined, SearchOutlined, DeleteOutlined, CalendarOutlined, FolderViewOutlined, CarOutlined, EyeOutlined} from "@ant-design/icons";
 import LocalCarWashIcon from "@mui/icons-material/LocalCarWash";
 import {SET_MODAL} from "../../redux/types/ModalTypes";
 import DetailsVehicleOfPassengerCar from "../../components/Vehicle/DetailsVehicleOfPassengerCar";
@@ -60,13 +60,55 @@ export default function AdminVehicle() {
 		{
 			title: "Hình Ảnh",
 			render: (text, vehicle) => {
+				const totalImages = vehicle.vehicleOfImage.length;
+				const displayImages = vehicle.vehicleOfImage.slice(0, 3);
+				
 				return (
-					<div>
-						{vehicle.vehicleOfImage.map((item, index) => {
-							return <Image preview={{visible: vehicle.visible}} width={75} height={60} style={{borderRadius: "50%"}} src={item.link} key={index} />;
-						})}
+					<div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+						{displayImages.map((item, index) => (
+							<Image 
+								preview={{
+									visible: false,
+									onVisibleChange: (visible) => {
+										if (visible) {
+											const allImages = vehicle.vehicleOfImage.map(img => img.link);
+											window.previewImages = allImages;
+										}
+									}
+								}}
+								width={75} 
+								height={60} 
+								style={{borderRadius: "50%"}} 
+								src={item.link} 
+								key={index} 
+							/>
+						))}
+						
+						{totalImages > 3 && (
+							<div 
+								style={{ 
+									width: 75,
+									height: 60,
+									borderRadius: "50%",
+									background: 'rgba(0,0,0,0.45)',
+									display: 'flex',
+									alignItems: 'center',
+									justifyContent: 'center',
+									color: 'white',
+									cursor: 'pointer'
+								}}
+								onClick={() => {
+									const allImages = vehicle.vehicleOfImage.map(img => img.link);
+									window.previewImages = allImages;
+								}}
+							>
+								+{totalImages - 3}
+							</div>
+						)}
+
 						<Button
-							type="primary"
+							type="link"
+							icon={<EyeOutlined />}
 							onClick={() => {
 								dispatch({
 									type: SET_MODAL,
@@ -75,9 +117,7 @@ export default function AdminVehicle() {
 									width: 1000,
 								});
 							}}
-						>
-							Xem Chi Tiết
-						</Button>
+						/>
 					</div>
 				);
 			},
