@@ -6,15 +6,15 @@ import "../Sass/css/Home.css";
 export default function Home() {
 	const data = [
 		{
-			title: "VeXeRe và nhà xe tài trợ 4000 vé xe Tết 2022 cho sinh viên",
+			title: "VeXeRe và nhà xe tài trợ 4000 vé xe Tết 2024 cho sinh viên",
 			img: "./images/slide1.png",
 		},
 		{
-			title: "Thanh toán tại ShopeePay - Giảm ngay 10% khi đặt VeXeRe",
+			title: "Thanh toán tại ShopeePay - Giảm ngay 10% khi đặt VietBus",
 			img: "./images/slide2.png",
 		},
 		{
-			title: "Thuê xe mùa dịch tại VeXeRe",
+			title: "Thuê xe mùa dịch tại VietBus",
 			img: "./images/slide4.png",
 		},
 	];
@@ -28,12 +28,12 @@ export default function Home() {
 	return (
 		<>
 			<div className="home_banner">
-				<img src="./images/banner1.png" alt="123" className="img_banner" />
+				<img src="https://onetour.vn/Media/Images/OneTour/tin-tuc/2019/thang%209/ruong-bac-thang-tren-vung-cao-viet-nam-1.jpg" alt="123" className="img_banner" />
 				<div className="home_content">
 					<div className="home_around w-full">
 						<div className="title_banner">
 							<a href="https://vexere.com/vi-VN/nhung-cau-hoi-thuong-gap.html" target="_blank" rel="noreferrer">
-								<h2 className="homepage__Title-bs2n93-3 LVkvx">VeXeRe - Cam kết hoàn 150% nếu nhà xe không giữ vé</h2>
+								<h2 className="homepage__Title-bs2n93-3 LVkvx">VietBus - Mua vé xe online trực tuyến</h2>
 							</a>
 						</div>
 					</div>
@@ -49,22 +49,22 @@ export default function Home() {
 						<Slider {...settings} className="slide_main">
 							<div>
 								<a href="#">
-									<img src="./images/slide1.png" alt="123" />
+									<img src="https://homepage.momocdn.net/blogscontents/momo-amazone-s3-api-241121163807-638678038876804007.jpg" alt="123" />
 								</a>
 							</div>
 							<div>
 								<a href="#">
-									<img src="./images/slide2.png" alt="123" />
+									<img src="https://homepage.momocdn.net/blogscontents/momo-upload-api-220512154539-637879671390050067.jpg" alt="123" />
 								</a>
 							</div>
 							<div>
 								<a href="#">
-									<img src="./images/slide4.png" alt="123" />
+									<img src="https://homepage.momocdn.net/blogscontents/momo-upload-api-220624110152-637916653124381989.jpg" alt="123" />
 								</a>
 							</div>
 							<div>
 								<a href="#">
-									<img src="./images/slide3.png" alt="123" />
+									<img src="https://cdn-www.vinid.net/15012021-EDM-VeXeRe_02.gif" alt="123" />
 								</a>
 							</div>
 						</Slider>
@@ -155,42 +155,42 @@ export default function Home() {
 					<h2 className="home_slide_title mt-5">Bến xe nổi bật</h2>
 					<div className="grid grid-cols-4 gap-20">
 						<a
-							href="https://vexere.com/vi-VN/ben-xe-mien-dong"
+							// href="https://vexere.com/vi-VN/ben-xe-mien-dong"
 							data-bg="https://storage.googleapis.com/fe-production/images/bx-mien-dong.jpg"
 							className="BusStationCard__Wrapper-sc-759o96-0 kKZSxH lazyloaded"
 							style={{
-								backgroundImage: 'url("https://storage.googleapis.com/fe-production/images/bx-mien-dong.jpg")',
+								backgroundImage: 'url("https://benxemiendongmoi.com.vn/_content/BXMD.LandingPage/images/cover.jpg")',
 							}}
 						>
 							<header className="BusStationCard__Header-sc-759o96-1 iSiVXT">Bến xe Miền Đông</header>
 						</a>
 
 						<a
-							href="https://vexere.com/vi-VN/ben-xe-nuoc-ngam"
+							// href="https://vexere.com/vi-VN/ben-xe-nuoc-ngam"
 							data-bg="https://storage.googleapis.com/fe-production/images/bx-nuoc-ngam.jpg"
 							className="BusStationCard__Wrapper-sc-759o96-0 kKZSxH lazyloaded"
 							style={{
-								backgroundImage: 'url("https://storage.googleapis.com/fe-production/images/bx-nuoc-ngam.jpg")',
+								backgroundImage: 'url("https://photo.znews.vn/w660/Uploaded/spluwao/2024_04_20/photo1634363077947_16343630780822104981950.jpg")',
 							}}
 						>
-							<header className="BusStationCard__Header-sc-759o96-1 iSiVXT">Bến xe Nước Ngầm</header>
+							<header className="BusStationCard__Header-sc-759o96-1 iSiVXT">Bến xe Miền Tây</header>
 						</a>
 						<a
-							href="https://vexere.com/vi-VN/ben-xe-gia-lam"
+							// href="https://vexere.com/vi-VN/ben-xe-gia-lam"
 							data-bg="https://storage.googleapis.com/fe-production/images/bx-gia-lam.jpg"
 							className="BusStationCard__Wrapper-sc-759o96-0 kKZSxH lazyloaded"
 							style={{
-								backgroundImage: 'url("https://storage.googleapis.com/fe-production/images/bx-gia-lam.jpg")',
+								backgroundImage: 'url("https://ik.imagekit.io/tvlk/blog/2024/06/ben-xe-5.png?tr=q-70,w-625,dpr-2")',
 							}}
 						>
-							<header className="BusStationCard__Header-sc-759o96-1 iSiVXT">Bến xe Gia Lâm</header>
+							<header className="BusStationCard__Header-sc-759o96-1 iSiVXT">Bến xe Châu Đốc</header>
 						</a>
 						<a
-							href="https://vexere.com/vi-VN/ben-xe-my-dinh"
+							// href="https://vexere.com/vi-VN/ben-xe-my-dinh"
 							data-bg="https://storage.googleapis.com/fe-production/images/bx-my-dinh.jpg"
 							className="BusStationCard__Wrapper-sc-759o96-0 kKZSxH lazyloaded"
 							style={{
-								backgroundImage: 'url("https://storage.googleapis.com/fe-production/images/bx-my-dinh.jpg")',
+								backgroundImage: 'url("https://ik.imagekit.io/tvlk/blog/2024/06/ben-xe-my-dinh-1.png?tr=q-70,w-625,dpr-2")',
 							}}
 						>
 							<header className="BusStationCard__Header-sc-759o96-1 iSiVXT">Bến xe Mỹ Đình</header>

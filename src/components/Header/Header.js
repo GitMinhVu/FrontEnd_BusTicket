@@ -101,7 +101,13 @@ export default function Header() {
 									history.push("/");
 								}}
 							>
-								<img src="https://storage.googleapis.com/fe-production/icon_vxr_full.svg" alt={123} className="mb-5" />
+								{/* <img src="https://storage.googleapis.com/fe-production/icon_vxr_full.svg" alt={123} className="mb-5" /> */}
+								{/* <img src="./images/original.png" alt={123} className="mb-5" style={{width: 100}}/> */}
+								<h1 className="text-2xl flex items-center" style={{width: 200}}>
+									<span>VietBus Travel🚍</span>
+									{/* <img src="./images/original.png" style={{width:100}} alt="logo" /> */}
+								</h1>
+
 							</a>
 						</div>
 					</div>
@@ -123,7 +129,7 @@ export default function Header() {
 								<a href="#news">Ưu đãi</a>
 							</li>
 							<li className="hotline">
-								<Popover placement="bottom" title="Số Điện Thoại Tổng Đài" content={"09323232222"} trigger="click">
+								<Popover placement="bottom" title="Số Điện Thoại Tổng Đài" content={"0937750843"} trigger="click">
 									<a href="#">
 										<img src="https://storage.googleapis.com/fe-production/svgIcon/hotline-icon.svg" alt className="object-cover" />
 										Hotline

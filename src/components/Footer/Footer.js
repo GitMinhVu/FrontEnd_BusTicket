@@ -99,19 +99,19 @@ export default function Footer() {
 							color: "rgb(77, 77, 77)",
 						}}
 					>
-						Công ty TNHH Thương Mại Dịch Vụ VeXeRe
+						Công ty TNHH Thương Mại Dịch Vụ VietBus-Travel
 					</div>
-					<div>Địa chỉ đăng ký kinh doanh: 8C Chữ Đồng Tử, Phường 7, Quận Tân Bình, Thành Phố Hồ Chí Minh, Việt Nam</div>
+					<div>Địa chỉ đăng ký kinh doanh: Lê Văn Việt, Phường Long Thạnh Mỹ, Quận 9, Thành Phố Hồ Chí Minh, Việt Nam</div>
 					<div>
 						Địa chỉ:&nbsp;
 						<a href="https://www.google.com/maps/place/CirCO+Dien+Bien+Phu/@10.7822282,106.6880465,18z/data=!3m1!4b1!4m13!1m7!3m6!1s0x31752f31c5edc5a3:0xe8f6cfd8e118c28c!2zMjIyIMSQaeG7h24gQmnDqm4gUGjhu6csIFBoxrDhu51uZyA3LCBRdeG6rW4gMywgSOG7kyBDaMOtIE1pbmgsIFZpZXRuYW0!3b1!8m2!3d10.7822256!4d106.6891435!3m4!1s0x31752f9514a4a77f:0xb0d51eeba4261070!8m2!3d10.7822256!4d106.6891435?hl=en-US" rel="nofollow noopener noreferrer" title="Xem bản đồ" target="_blank" className="License__LinkStyled-fwwcnv-2 NrTuu">
 							<span itemProp="address" itemType="http://schema.org/PostalAddress">
-								<span itemProp="streetAddress">Lầu 8,9, Tòa nhà CirCO, 222 Điện Biên Phủ, Quận 3, TP. Hồ Chí Minh, Việt Nam </span>
+								<span itemProp="streetAddress">Lầu 8,9, Tòa nhà VietBus, Phường Long Thạnh Mỹ, Quận 9, TP. Hồ Chí Minh, Việt Nam </span>
 							</span>
 						</a>
 						<br />
-						Giấy chứng nhận ĐKKD số 0315133726 do Sở KH và ĐT TP. Hồ Chí Minh cấp lần đầu ngày 27/6/2018
-						<div>Bản quyền © 2020 thuộc về VeXeRe.Com</div>
+						Giấy chứng nhận ĐKKD số 0937750843 do Sở KH và ĐT TP. Hồ Chí Minh cấp lần đầu ngày 11/1/2025
+						<div>Bản quyền © 2025 thuộc về VietBusTravel.Com</div>
 					</div>
 				</div>
 			</div>
