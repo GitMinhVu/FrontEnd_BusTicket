@@ -123,7 +123,7 @@ export default function Home() {
 							</div>
 							<div className="card-content">
 								<p className="base__Headline-sc-1tvbuqk-7 OkeDq color--light-dark">Nhiều ưu đãi</p>
-								<p className="base__Body02-sc-1tvbuqk-14 VqdXU color--medium-sub">Hàng ngàn ưu đãi cực chất độc quyền tại VeXeRe.</p>
+								<p className="base__Body02-sc-1tvbuqk-14 VqdXU color--medium-sub">Hàng ngàn ưu đãi cực chất độc quyền tại VietBus.</p>
 							</div>
 						</div>
 					</div>

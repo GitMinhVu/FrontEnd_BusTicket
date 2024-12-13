@@ -380,7 +380,7 @@ function InfomationPerson(props) {
 	return (
 		<div className="info-trip">
 			<div className="TrustMessage__Container-sc-8xur6b-0 deVKGv trust-message-container undefined">
-				<p className="base__Body02-sc-1tvbuqk-14 VqdXU trust-message-content">Chỉ còn 1 bước nữa! VeXeRe cam kết chỉ sử dụng thông tin trong việc ghi nhận vé.</p>
+				<p className="base__Body02-sc-1tvbuqk-14 VqdXU trust-message-content">Chỉ còn 1 bước nữa! VietBusTravel cam kết chỉ sử dụng thông tin trong việc ghi nhận vé.</p>
 			</div>
 			<div className="w-full">
 				<div style={{margin: "auto", width: 400}}>
@@ -400,13 +400,13 @@ function InfomationPerson(props) {
 					</Form>
 				</div>
 			</div>
-			<div className="noteInfo">
+			{/* <div className="noteInfo">
 				<DoDisturbOnRoundedIcon className="mr-5" style={{color: "rgb(47, 128, 237) !important"}} />
 				<div className="info-note-content">
 					<p className="base__Body02Highlight-sc-1tvbuqk-15 cACxVN color--dark">Lưu ý: </p>
 					<p className="base__Body02-sc-1tvbuqk-14 VqdXU color--dark">Bạn cần điền số CMND/CCCD theo quy định mới của cơ quan thẩm quyền về di chuyển trong mùa dịch Covid-19</p>
 				</div>
-			</div>
+			</div> */}
 			<div class="footer">
 				<div class="footer-left"></div>
 				<div class="footer-right">
