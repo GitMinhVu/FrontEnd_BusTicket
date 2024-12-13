@@ -53,7 +53,7 @@ export default function Footer() {
 							<div className="footer_title">Hỗ trợ</div>
 							<div className="footer_list">
 								<a href="#">Hướng dẫn thanh toán</a>
-								<a href="#">Quy chế VeXeRe.com</a>
+								<a href="#">Quy chế VietBusTravel.com</a>
 								<a href="#">Bảo mật thông tin</a>
 								<a href="#">Bảo mật thanh toán</a>
 								<a href="#">Câu hỏi?</a>

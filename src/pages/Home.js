@@ -6,7 +6,7 @@ import "../Sass/css/Home.css";
 export default function Home() {
 	const data = [
 		{
-			title: "VeXeRe và nhà xe tài trợ 4000 vé xe Tết 2024 cho sinh viên",
+			title: "VietBusTravel và nhà xe tài trợ 4000 vé xe Tết 2024 cho sinh viên",
 			img: "./images/slide1.png",
 		},
 		{

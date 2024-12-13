@@ -85,48 +85,75 @@ export default function Details(props) {
 		{
 			title: (
 				<div className="img-name flex items-center">
-					<img src="https://static.vexere.com/production/utilities/1610093076560.png" alt="Khử trùng xe" width={32} height={32} className="mr-2" />
-					<div className="name">An toàn mùa covid</div>
+					<img src="https://static.vexere.com/production/utilities/1610093076560.png" alt="picture" width={32} height={32} className="mr-2" />
+					<div className="name">Để mang đến sự thoải mái và trải nghiệm tốt nhất cho hành khách, tất cả các xe của VietBusTravel đều được trang bị các tiện ích hiện đại như sau:</div>
 				</div>
 			),
-			description: (
-				<div className="description">
-					Là chương trình bảo vệ an toàn cho hành khách sử dụng dịch vụ của VeXeRe trong mùa dịch Covid. VeXeRe đồng hành các nhà xe đối tác triển khai biện pháp bảo vệ an toàn cho hành khách, như sau: (1) Kiểm tra thân nhiệt hành khách trước khi lên xe
-					<br />
-					(2) Trang bị nước rửa tay;
-					<br />
-					(3) Có đảm bảo khuyến cáo tất cả hành khách đeo khẩu trang khi lên xe; (4) Có thực hiện khử trùng xe
-					<br />
-					(5) Tài xế và nhân viên đã được tiêm vắc xin
-				</div>
-			),
+			// description: (
+			// 	<div className="description">
+			// 		Là chương trình bảo vệ an toàn cho hành khách sử dụng dịch vụ của VietBusTravel trong mùa dịch Covid. VietBusTravel đồng hành các nhà xe đối tác triển khai biện pháp bảo vệ an toàn cho hành khách, như sau: (1) Kiểm tra thân nhiệt hành khách trước khi lên xe
+			// 		<br />
+			// 		(2) Trang bị nước rửa tay;
+			// 		<br />
+			// 		(3) Có đảm bảo khuyến cáo tất cả hành khách đeo khẩu trang khi lên xe; (4) Có thực hiện picture
+			// 		<br />
+			// 		(5) Tài xế và nhân viên đã được tiêm vắc xin
+			// 	</div>
+			// ),
 		},
 		{
 			title: (
 				<div className="img-name flex items-center">
-					<img src="https://static.vexere.com/production/utilities/1609837962216.png" alt="Khử trùng xe" width={32} height={32} className="mr-2" />
-					<div className="name">Khử trùng xe</div>
+					<img src="https://png.pngtree.com/png-clipart/20230823/original/pngtree-car-seat-icon-slat-armrest-picture-image_8194781.png" alt="picture" width={32} height={32} className="mr-2" />
+					<div className="name">Ghế ngồi êm ái</div>
 				</div>
 			),
-			description: <div className="description">Nhà xe có thực hiện phun khử trùng Nano Bạc lên xe nhằm bảo vệ an toàn cho hành khách mùa Covid</div>,
+			description: <div className="description">Ghế được thiết kế rộng rãi, bọc da cao cấp, có thể ngả linh hoạt, mang lại sự thoải mái tối đa trong suốt hành trình.</div>,
 		},
 		{
 			title: (
 				<div className="img-name flex items-center">
-					<img src="https://static.vexere.com/production/utilities/1609837921462.png" alt="Khử trùng xe" width={32} height={32} className="mr-2" />
-					<div className="name">Nước rửa tay</div>
+					<img src="https://png.pngtree.com/png-clipart/20190614/original/pngtree-screen-glyph-black-icon-png-image_3754735.jpg" alt="picture" width={32} height={32} className="mr-2" />
+					<div className="name">Hệ thống giải trí</div>
 				</div>
 			),
-			description: <div className="description">Nhà xe có trang bị nước rửa tay diệt khuẩn trước khi lên xe và trong xe</div>,
+			description: <div className="description">Mỗi xe được trang bị màn hình giải trí cá nhân hoặc màn hình lớn, hỗ trợ các nội dung phim, âm nhạc và trò chơi.</div>,
 		},
 		{
 			title: (
 				<div className="img-name flex items-center">
-					<img src="https://static.vexere.com/production/utilities/1609837906714.png" alt="Khử trùng xe" width={32} height={32} className="mr-2" />
-					<div className="name">Đo thân nhiệt</div>
+					<img src="https://th.bing.com/th/id/R.435a11b18c592b1c043289f0d4a3cc4c?rik=5Z3GEvukM6ingw&pid=ImgRaw&r=0" alt="picture" width={32} height={32} className="mr-2" />
+					<div className="name">Wi-Fi miễn phí</div>
 				</div>
 			),
-			description: <div className="description">Hành khách sẽ được đo thân nhiệt trước khi lên xe để xác định không nghi nhiễm/ lan truyền vi rút Covid cho hành khách khác.</div>,
+			description: <div className="description"> Cung cấp kết nối Internet tốc độ cao để hành khách có thể làm việc hoặc giải trí trực tuyến.</div>,
+		},
+		{
+			title: (
+				<div className="img-name flex items-center">
+					<img src="https://th.bing.com/th/id/OIP.VALMXvjhFhyknpmNZitXPgHaHa?rs=1&pid=ImgDetMain" alt="picture" width={32} height={32} className="mr-2" />
+					<div className="name">Ổ cắm sạc USB</div>
+				</div>
+			),
+			description: <div className="description"> Các xe đều được trang bị ổ cắm sạc ở mỗi ghế, giúp hành khách dễ dàng sạc các thiết bị di động trong suốt chuyến đi.</div>,
+		},
+		{
+			title: (
+				<div className="img-name flex items-center">
+					<img src="https://thumbs.dreamstime.com/b/water-bottle-vector-thin-line-icon-211036424.jpg" alt="picture" width={32} height={32} className="mr-2" />
+					<div className="name">Nước uống miễn phí</div>
+				</div>
+			),
+			description: <div className="description"> Mỗi hành khách đều được phục vụ nước uống đóng chai miễn phí.</div>,
+		},
+		{
+			title: (
+				<div className="img-name flex items-center">
+					<img src="https://png.pngtree.com/element_our/20200702/ourlarge/pngtree-air-conditioner-icon-download-image_2291268.jpg" alt="picture" width={32} height={32} className="mr-2" />
+					<div className="name">Hệ thống điều hòa hiện đại</div>
+				</div>
+			),
+			description: <div className="description"> Đảm bảo không gian luôn thoáng mát và dễ chịu dù trong điều kiện thời tiết nào.</div>,
 		},
 	];
 	const settings = {
@@ -159,7 +186,7 @@ export default function Details(props) {
 						dataSource={data}
 						renderItem={(item) => (
 							<List.Item>
-								<List.Item.Meta title={<a href="https://ant.design">{item.title}</a>} description={item.description} />
+								<List.Item.Meta title={<a>{item.title}</a>} description={item.description} />
 							</List.Item>
 						)}
 					/>

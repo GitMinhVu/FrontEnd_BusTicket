@@ -38,7 +38,7 @@ export default function Booking(props) {
 				) : (
 					<Fragment>
 						<a target="_blank" href="#" className="hoanve mb-10">
-							VeXeRe - Cam kết hoàn 150% nếu nhà xe không giữ vé
+							VietBusTravel - Cam kết hoàn 150% nếu nhà xe không giữ vé
 							<img src="https://storage.googleapis.com/fe-production/svgIcon/error_outline.svg" alt="150%" />
 						</a>
 						<div className="grid grid-cols-12">

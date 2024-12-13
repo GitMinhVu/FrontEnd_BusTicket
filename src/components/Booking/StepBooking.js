@@ -126,7 +126,7 @@ function StepBookingSeat(props) {
 			) : (
 				<>
 					<div class="TrustMessage__Container-sc-8xur6b-0 deVKGv trust-message-container undefined" style={{color: "rgb(14, 99, 193)"}}>
-						<p class="base__Body02-sc-1tvbuqk-14 VqdXU trust-message-content">VeXeRe cam kết giữ đúng vị trí bạn đã chọn.</p>
+						<p class="base__Body02-sc-1tvbuqk-14 VqdXU trust-message-content">VietBusTravel cam kết giữ đúng vị trí bạn đã chọn.</p>
 					</div>
 					<div className="flex justify-center items-center">
 						<div className="list-seat flex" style={{width: "80%"}}>
