@@ -33,18 +33,25 @@ export default function AddVehicle(props) {
 			numberFloors: "",
 			type: "",
 			description: "",
-			passengerId: "",
+			passengerCarId: "",
 		},
 
 		onSubmit: (values) => {
-			console.log(values);
+			console.log('Form values before submission:',values);
+			if (!values.passengerCarId) {
+				alert("Vui lòng chọn nhà xe!");
+				return;
+			}
 			let vehicle = {
 				name: values.name,
 				type: values.type,
 				numberFloors: values.numberFloors,
 				description: values.description,
-				passengerId: values.passengerId,
+				passengerCarId: values.passengerCarId,
+				
 			};
+			console.log('Action payload:', vehicle);
+
 			dispatch(createVehicleAction(vehicle));
 			dispatch({type: CLOSE_DRAWER});
 		},
@@ -116,7 +123,7 @@ export default function AddVehicle(props) {
 							},
 						]}
 					>
-						<Select placeholder="Please select passenger" name="passengerId" onChange={handleChangeSelect("passengerId")} options={renderPassenger()} />
+						<Select placeholder="Please select passenger" name="passengerCarId" onChange={handleChangeSelect("passengerCarId")} options={renderPassenger()} />
 					</Form.Item>
 				</Col>
 			</Row>
@@ -140,9 +147,9 @@ export default function AddVehicle(props) {
 				<Button
 					type="primary"
 					htmlType="submit"
-					onClick={() => {
-						formik.handleSubmit();
-					}}
+					// onClick={() => {
+					// 	formik.handleSubmit();
+					// }}
 				>
 					Thêm Xe
 				</Button>
