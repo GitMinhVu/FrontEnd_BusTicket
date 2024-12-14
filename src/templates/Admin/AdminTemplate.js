@@ -9,18 +9,23 @@ import {useDispatch, useSelector} from "react-redux";
 import {history} from "../../App";
 import {CHANGE_KEY} from "../../redux/types/AdminTypes";
 import {TOKEN, USER_LOGIN} from "../../util/settings/config";
-
+import { useTranslation } from 'react-i18next'; 
+import LanguageSwitcher from "../../components/LanguageSwitch/LanguageSwitch";
 const {Header, Content, Footer, Sider} = Layout;
 const {SubMenu} = Menu;
+
 export default function AdminTemplate(props) {
 	const {key} = useSelector((state) => state.AdminReducer);
 	const {userLogin} = useSelector((state) => state.userReducer);
 	const dispatch = useDispatch();
 	const {Component, ...restProps} = props;
 	const [collapsed, setCollapsed] = useState(false);
+	const{t, i18n} = useTranslation();
+	
 	const changeCollapsed = () => {
 		setCollapsed(!collapsed);
 	};
+	
 	const menu = (
 		<Menu>
 			<Menu.Item
@@ -31,7 +36,7 @@ export default function AdminTemplate(props) {
 					window.location.reload();
 				}}
 			>
-				<a>Đăng Xuất</a>
+				<a>{t('auth.logout')}</a>
 			</Menu.Item>
 		</Menu>
 	);
@@ -79,7 +84,7 @@ export default function AdminTemplate(props) {
 											});
 										}}
 									>
-										Quản Lý Người Dùng
+										{t('Sidebar.userManagement')}
 									</Menu.Item>
 									<Menu.Item
 										key="2"
@@ -92,7 +97,7 @@ export default function AdminTemplate(props) {
 											});
 										}}
 									>
-										Quản Lý Chuyến Xe
+										{t('Sidebar.tripManagement')}
 									</Menu.Item>
 									<Menu.Item
 										key="3"
@@ -105,7 +110,7 @@ export default function AdminTemplate(props) {
 											});
 										}}
 									>
-										Quản Lý Nhà Xe
+										{t('Sidebar.passengerManagement')}
 									</Menu.Item>
 									<Menu.Item
 										key="4"
@@ -118,17 +123,18 @@ export default function AdminTemplate(props) {
 											});
 										}}
 									>
-										Quản Lý Xe
+										{t('Sidebar.vehicleManagement')}
+
 									</Menu.Item>
 
-									<SubMenu key="sub2" icon={<MoneyCollectOutlined />} title="Thống Kê">
+									<SubMenu key="sub2" icon={<MoneyCollectOutlined />} title={t('Sidebar.statistics')}>
 										<Menu.Item
 											key="5"
 											onClick={() => {
 												history.push("/admin/turnover");
 											}}
 										>
-											Thống Kê Tổng Hợp
+											{t('Sidebar.generalStatistics')}
 										</Menu.Item>
 									</SubMenu>
 									<Menu.Item
@@ -142,7 +148,7 @@ export default function AdminTemplate(props) {
 											});
 										}}
 									>
-										Quản Lý Vé
+										{t('Sidebar.ticketManagement')}
 									</Menu.Item>
 									<Menu.Item
 										key="8"
@@ -151,22 +157,25 @@ export default function AdminTemplate(props) {
 											history.push("/admin/station");
 										}}
 									>
-										Quản Lý Bến Xe
+										{t('Sidebar.stationManagement')}
 									</Menu.Item>
 								</Menu>
 							</Sider>
 							<Layout className="site-layout">
 								<Header className="site-layout-background flex justify-end" style={{padding: 0, background: "#fff"}}>
 									<div className="flex items-center justify-between w-full px-5">
-										<span className="font-bold text-xl">VietBus Travel🚍- Hệ Thống Quản Lý</span>
-										<Dropdown overlay={menu} trigger={["click"]} className="cursor-pointer">
-											<div className="flex items-center">
-												<Avatar style={{verticalAlign: "middle", background: "#7265e6", marginRight: 10}} size="large">
-													{userLogin?.name}
-												</Avatar>
-												<span className="text-xl">Xin chào , {userLogin?.name}</span>
-											</div>
-										</Dropdown>
+										<span className="font-bold text-xl">{t('admin.systemTitle')}</span>
+										<div className="flex items-center gap-4">
+											<LanguageSwitcher />
+											<Dropdown overlay={menu} trigger={["click"]} className="cursor-pointer">
+												<div className="flex items-center">
+													<Avatar style={{verticalAlign: "middle", background: "#7265e6", marginRight: 10}} size="large">
+														{userLogin?.name}
+													</Avatar>
+													<span className="text-xl">{t('admin.greeting')} , {userLogin?.name}</span>
+												</div>
+											</Dropdown>
+										</div>
 									</div>
 								</Header>
 								<Component {...propsRoute} />

@@ -7,11 +7,13 @@ import {SET_MODAL} from "../../redux/types/ModalTypes";
 import EditUser from "../../components/Edit/EditUser";
 import {OPEN_DRAWER} from "../../redux/types/DrawerTypes";
 import AddUser from "../../components/Add/AddUser";
+import { useTranslation } from 'react-i18next';
 
 const {Header, Content, Footer, Sider} = Layout;
 const {Search} = Input;
 
 export default function AdminUser() {
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const {listUser} = useSelector((state) => state.userReducer);
 	console.log("file: AdminUser.js ~ line 17 ~ AdminUser ~ listUser", listUser);
@@ -23,9 +25,8 @@ export default function AdminUser() {
 	}, []);
 	const columns = [
 		{
-			title: "Name",
+			title: t("lable.name"),
 			dataIndex: "name",
-
 			// specify the condition of filtering result
 			// here is that finding the name started with `value`
 			onFilter: (value, record) => record.name.indexOf(value) === 0,
@@ -33,20 +34,20 @@ export default function AdminUser() {
 			sortDirections: ["descend"],
 		},
 		{
-			title: "Email",
+			title: t("lable.email"),
 			dataIndex: "email",
 			defaultSortOrder: "descend",
 			sorter: (a, b) => a.age - b.age,
 		},
 		{
-			title: "Phone",
+			title:  t("lable.phone"),
 			dataIndex: "numberPhone",
 			filters: arrFilterPhone,
 			onFilter: (value, record) => record.numberPhone.startsWith(value),
 			filterSearch: true,
 		},
 		{
-			title: "Type",
+			title:  t("lable.authorities"),
 			dataIndex: "type",
 			filters: [
 				{
@@ -62,7 +63,7 @@ export default function AdminUser() {
 			filterSearch: true,
 		},
 		{
-			title: "Action",
+			title: t("lable.action"),
 
 			render: (text, item) => {
 				return (
@@ -73,7 +74,7 @@ export default function AdminUser() {
 								onClick={() => {
 									dispatch({
 										type: SET_MODAL,
-										title: "EDIT USER",
+										title: t("button.editUser"),
 										content: <EditUser id={item.id} />,
 										width: 600,
 									});
@@ -83,7 +84,7 @@ export default function AdminUser() {
 							</button>
 							<Popconfirm
 								placement="topLeft"
-								title={"Bạn có muốn xóa tài khoản này"}
+								title={t("messages.deleteAccount")}
 								onConfirm={() => {
 									dispatch(deleteUserAction(item.id));
 								}}
@@ -118,14 +119,14 @@ export default function AdminUser() {
 	return (
 		<Content style={{margin: "0 16px"}}>
 			<Breadcrumb style={{margin: "16px 0"}}>
-				<Breadcrumb.Item>Admin</Breadcrumb.Item>
-				<Breadcrumb.Item>User</Breadcrumb.Item>
+				<Breadcrumb.Item>{t("navigation.admin")}</Breadcrumb.Item>
+				<Breadcrumb.Item>{t("navigation.user")}</Breadcrumb.Item>
 			</Breadcrumb>
 			<div className="site-layout-background" style={{padding: 12, minHeight: 360}}>
 				<div style={{ display: 'flex', gap: '16px', marginBottom: 16, justifyContent: 'space-between' }}>
 					<Space size="middle">
 					<Input
-						placeholder="Tìm kiếm theo tên người dùng"
+						placeholder={t("Search.searchByUsername")}
 						prefix={<SearchOutlined />}
 						allowClear
 						onSearch={onSearch}
@@ -147,14 +148,14 @@ export default function AdminUser() {
 						onClick={() => {
 							dispatch({
 								type: OPEN_DRAWER,
-								title: "Thêm Người Dùng",
+								title: t("button.AddUser"),
 								content: <AddUser />,
 							});
 						}}
 						style={{ display: 'flex', alignItems: 'center' }}
 					>
 						<UserAddOutlined />
-						Thêm Người Dùng
+						{t("button.AddUser")}
 					</Button>
 				</div>
 				<Table columns={columns} dataSource={filteredUsers} onChange={onChange} />

@@ -2,15 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import './locales/i18n'; // Đường dẫn đã được điều chỉnh
 import reportWebVitals from "./reportWebVitals";
 import {Provider} from "react-redux";
 import {store} from "./redux/configStore";
 import AlertAll from "./components/Alert/AlertAll";
+
 ReactDOM.render(
 	<Provider store={store}>
 		<App />
 	</Provider>,
-
 	document.getElementById("root")
 );
 

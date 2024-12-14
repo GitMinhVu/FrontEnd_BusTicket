@@ -1,0 +1,106 @@
+{
+    "common": {
+      "add": "Thêm",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "save": "Lưu",
+      "cancel": "Hủy",
+      "confirm": "Xác nhận",
+      "search": "Tìm kiếm",
+      "loading": "Đang tải..."
+    },
+    "auth": {
+      "login": "Đăng nhập",
+      "logout": "Đăng xuất",
+      "register": "Đăng ký",
+      "username": "Tên đăng nhập",
+      "password": "Mật khẩu"
+    },
+    "navigation": {
+      "home": "Trang chủ",
+      "about": "Giới thiệu",
+      "contact": "Liên hệ",
+      "admin": "Quản trị viên",
+      "user": "Người dùng"
+    },
+    "station": {
+      "title": "Danh sách bến xe",
+      "name": "Tên bến xe",
+      "address": "Địa chỉ",
+      "province": "Tỉnh/Thành phố",
+      "pickupPoints": "Điểm đón/trả",
+      "addStation": "Thêm bến xe",
+      "editStation": "Cập nhật bến xe",
+      "deleteConfirm": "Bạn có muốn xóa bến xe này?",
+      "searchByName": "Tìm kiếm theo tên bến xe",
+      "searchByProvince": "Tìm kiếm theo tỉnh/thành phố"
+    },
+    "messages": {
+      "deleteSuccess": "Xóa thành công",
+      "deleteError": "Xóa thất bại",
+      "updateSuccess": "Cập nhật thành công",
+      "updateError": "Cập nhật thất bại",
+      "addSuccess": "Thêm mới thành công",
+      "addError": "Thêm mới thất bại",
+      "deleteAccount": "Bạn có muốn xóa tài khoản này",
+      "updateUser" : "Bạn có muốn cập nhật tài khoản này?"
+    },
+    "admin": {
+        "systemTitle": "VietBus Travel🚍- Hệ Thống Quản Lý",
+        "greeting": "Xin chào",
+        "footer": "Created 2024 To Minh Vu"
+       
+      },
+      "button":{
+        "AddUser": "Thêm người dùng",
+        "update": "Cập nhật",
+        "editUser": "Chỉnh sửa thông tin người dùng"
+      },
+      "Sidebar":{
+        "userManagement": "Quản Lý Người Dùng",
+        "tripManagement": "Quản Lý Chuyến Xe",
+        "passengerManagement": "Quản Lý Nhà Xe",
+        "vehicleManagement": "Quản Lý Xe",
+        "statistics": "Thống Kê",
+        "generalStatistics": "Thống kê tổng hợp",
+        "ticketManagement": "Quản Lý Vé",
+        "stationManagement": "Quản Lý Bến Xe"
+      },
+      "Search":{
+        "searchByUsername" : "Tìm kiếm theo tên người dùng"
+      },
+      "lable":{
+        "name": "Tên",
+        "email": "Email",
+        "authorities": "Quyền",
+        "phone":"Số điện thoại",
+        "password": "Mật khẩu",
+        "confirmPass": "Xác nhận mật khẩu",
+        "action": "Tùy chọn"
+      },
+      "placeholder":{
+        "pleaseSelectType": "Chọn quyền",
+        "pleaseEnterName": "Đặt tên người dùng",
+        "userType": "Loại người dùng"
+      },
+      "validationRules":{
+        "email_min": "Email quá ngắn!",
+        "email_max": "Email quá dài!",
+        "email_invalid": "Email không hợp lệ",
+        "email_required": "Vui lòng nhập email",
+        "name_min": "Tên quá ngắn!",
+        "name_max": "Tên quá dài!",
+        "name_required": "Vui lòng nhập tên",
+        "password_min": "Password quá ngắn!",
+        "password_max": "Password quá dài!",
+        "password_required": "Vui lòng nhập password",
+        "phone_required": "Không được bỏ trống số điện thoại",
+        "phone_invalid": "Số điện thoại không hợp lệ",
+        "confirm_password": "Mật khẩu không trùng"
+      },
+      "messageConfirm": {
+        "update" :"Cập nhật",
+        "cancel":"Hủy",
+        "confirm": "Xác nhận"
+      }
+  }
