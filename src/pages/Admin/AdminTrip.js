@@ -4,11 +4,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {AudioOutlined, EditOutlined, SearchOutlined, DeleteOutlined, HistoryOutlined, FolderViewOutlined} from "@ant-design/icons";
 import {getDetailTripAction, getTripAction} from "../../redux/actions/tripAction";
 import DirectionsRailwayFilledIcon from "@mui/icons-material/DirectionsRailwayFilled";
+import { useTranslation } from 'react-i18next'; 
 import moment from "moment";
 import _ from "lodash";
 import {history} from "../../App";
 const {Header, Content, Footer, Sider} = Layout;
 export default function AdminTrip() {
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const {listTrip} = useSelector((state) => state.TripReducer);
 	console.log(listTrip);
@@ -28,8 +30,7 @@ export default function AdminTrip() {
 	console.log("file: AdminTrip.js ~ line 22 ~ AdminTrip ~ arrFilterFrom", arrFilterFrom);
 	const columns = [
 		{
-			title: "Nơi Bắt Đầu",
-
+			title: t("tripManagement.start"),
 			// specify the condition of filtering result
 			// here is that finding the name started with `value`
 			render: (text, trip) => {
@@ -44,7 +45,7 @@ export default function AdminTrip() {
 			filterSearch: true,
 		},
 		{
-			title: "Nơi Đến",
+			title: t("tripManagement.end"),
 
 			// specify the condition of filtering result
 			// here is that finding the name started with `value`
@@ -61,7 +62,7 @@ export default function AdminTrip() {
 		},
 
 		{
-			title: "Ngày bắt đầu",
+			title: t("tripManagement.startDate"),
 			dataIndex: "startTime",
 			render: (text, trip) => {
 				return <div>{moment(trip.startTime).format("DD-MM-YYYY")}</div>;
@@ -73,7 +74,7 @@ export default function AdminTrip() {
 			filterSearch: true,
 		},
 		{
-			title: "Danh Sách Chuyến Đi Chi Tiết",
+			title: t("tripManagement.detailedTripList"),
 
 			render: (text, item) => {
 				return (
@@ -112,11 +113,11 @@ export default function AdminTrip() {
 	return (
 		<Content style={{margin: "0 16px"}}>
 			<Breadcrumb style={{margin: "16px 0"}}>
-				<Breadcrumb.Item>Admin</Breadcrumb.Item>
-				<Breadcrumb.Item>Trip</Breadcrumb.Item>
+				<Breadcrumb.Item>{t("navigation.admin")}</Breadcrumb.Item>
+				<Breadcrumb.Item>{t("tripManagement.trip")}</Breadcrumb.Item>
 			</Breadcrumb>
 			<div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
-				<h1>Danh sách các chuyến đi</h1>
+				<h1>{t("tripManagement.listOfTrips")}</h1>
 				<div style={{ 
 					display: 'flex', 
 					justifyContent: 'space-between',
@@ -125,7 +126,7 @@ export default function AdminTrip() {
 				}}>
 					<Space size="middle">
 						<Input
-							placeholder="Tìm kiếm điểm đi"
+							placeholder={t("tripManagement.searchTrip")}
 							allowClear
 							prefix={<SearchOutlined />}
 							value={searchFrom}
@@ -134,7 +135,7 @@ export default function AdminTrip() {
 						/>
 						<Input
 							allowClear
-							placeholder="Tìm kiếm điểm đến"
+							placeholder={t("tripManagement.searchForDestination")}
 							prefix={<SearchOutlined />}
 							value={searchTo}
 							onChange={handleSearchTo}
@@ -149,7 +150,7 @@ export default function AdminTrip() {
 						}}
 					>
 						<HistoryOutlined />
-						Thêm Chuyến Đi
+						{t("tripManagement.addTrip")}
 					</Button>
 				</div>
 				<Table columns={columns} dataSource={filteredTrips} />

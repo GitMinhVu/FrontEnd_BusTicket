@@ -8,10 +8,12 @@ import {getDetailTripPassengerAction, updateTripPassengerAction} from "../../red
 import moment from "moment";
 import {updatePassengerAction} from "../../redux/actions/passengerAction";
 import {CLOSE_DRAWER} from "../../redux/types/DrawerTypes";
+import { useTranslation } from 'react-i18next'; 
 const {Option} = Select;
 
 export default function EditTrip(props) {
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 	const {tripPassengerDetail} = useSelector((state) => state.TripReducer);
 	console.log(tripPassengerDetail);
 	useEffect(() => {
@@ -60,57 +62,57 @@ export default function EditTrip(props) {
 		<Form layout="vertical" name="basic" autoComplete="off">
 			<Row gutter={16}>
 				<Col span={12}>
-					<Form.Item label="Nhà Xe">
+					<Form.Item label={t("tripManagement.trippassenger.passenger")}>
 						<Input placeholder="Please enter passenger name" value={formik.values.passengerName} name="passengerName" onChange={(e) => formik.setFieldValue("passengerName", e.target.value)} disabled />
 					</Form.Item>
 				</Col>
 				<Col span={12}>
-					<Form.Item label="Xe">
+					<Form.Item label={t("tripManagement.trippassenger.vehicle")}>
 						<Input style={{width: "100%"}} name="vehicleName" placeholder="Please enter vehicle" disabled value={formik.values.vehicleName} onChange={(e) => formik.setFieldValue("vehicleName", e.target.value)} />
 					</Form.Item>
 				</Col>
 			</Row>
 			<Row gutter={16}>
 				<Col span={12}>
-					<Form.Item label="Trạng Thái">
+					<Form.Item label={t("tripManagement.trippassenger.status")}>
 						<Select placeholder="Please select status" value={formik.values.status} onChange={changeOption}>
 							<Option value="depart">
 								<Tag icon={<ClockCircleOutlined spin />} color="default">
-									Sắp xuất phát
+								{t("tripManagement.trippassenger.aboutToDepart")}
 								</Tag>
 							</Option>
 							<Option value="progress">
 								<Tag icon={<SyncOutlined spin />} color="processing">
-									Đang Chạy
+								{t("tripManagement.trippassenger.run")}
 								</Tag>
 							</Option>
 							<Option value="cancel">
 								<Tag icon={<CloseCircleOutlined />} color="error">
-									Đã Hủy
+								{t("tripManagement.trippassenger.canceled")}
 								</Tag>
 							</Option>
 							<Option value="success">
 								<Tag icon={<CheckCircleOutlined />} color="success">
-									Hoàn Thành
+								{t("tripManagement.trippassenger.complete")}
 								</Tag>
 							</Option>
 						</Select>
 					</Form.Item>
 				</Col>
 				<Col span={12}>
-					<Form.Item label="Giá Tiền">
+					<Form.Item label={t("tripManagement.trippassenger.price")}>
 						<Input style={{width: "100%"}} type="number" name="price" placeholder="Giá tiền" value={formik.values.price} onChange={(e) => formik.setFieldValue("price", e.target.value)} />
 					</Form.Item>
 				</Col>
 			</Row>
 			<Row gutter={16}>
 				<Col span={12}>
-					<Form.Item label="Số Vé" rules={[{required: true, message: "Please choose the approver"}]}>
+					<Form.Item label={t("tripManagement.trippassenger.ticketNumber")} rules={[{required: true, message: "Please choose the approver"}]}>
 						<Input style={{width: "100%"}} type="number" placeholder="Số Vé" disabled value={formik.values.soVe} />
 					</Form.Item>
 				</Col>
 				<Col span={12}>
-					<Form.Item label="Thời Gian">
+					<Form.Item label={t("tripManagement.trippassenger.time")}>
 						<TimePicker style={{width: "50%"}} name="startTime" value={moment(formik.values.startTime, "HH:mm:ss")} onChange={changeTime("startTime")} />
 						<TimePicker style={{width: "50%"}} name="endTime" value={moment(formik.values.endTime, "HH:mm:ss")} onChange={changeTime("endTime")} />
 						{/* <DatePicker.RangePicker style={{width: "100%"}} getPopupContainer={(trigger) => trigger.parentElement} /> */}
@@ -140,7 +142,7 @@ export default function EditTrip(props) {
 						formik.handleSubmit();
 					}}
 				>
-					Cập Nhật
+					{t("tripManagement.trippassenger.update")}
 				</Button>
 			</Form.Item>
 		</Form>

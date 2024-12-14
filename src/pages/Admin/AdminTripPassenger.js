@@ -12,9 +12,11 @@ import {OPEN_DRAWER} from "../../redux/types/DrawerTypes";
 import EditTrip from "../../components/Edit/EditTrip";
 import _ from "lodash";
 import AdminDetailTicket from "../../components/AdminDetailTicKet/AdminDetailTicket";
+import { useTranslation } from 'react-i18next'; 
 
 export default function AdminTripPassenger(props) {
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 	const {id} = props.match.params;
 	const {listTripPassenger, tripDetail} = useSelector((state) => state.TripReducer);
 	console.log("file: AdminTripPassenger.js ~ line 19 ~ AdminTripPassenger ~ listTripPassenger", listTripPassenger);
@@ -33,25 +35,25 @@ export default function AdminTripPassenger(props) {
 		if (trip.status == "depart") {
 			return (
 				<Tag icon={<ClockCircleOutlined spin />} color="default">
-					Sắp xuất phát
+					{t("tripManagement.trippassenger.aboutToDepart")}
 				</Tag>
 			);
 		} else if (trip.status == "progress") {
 			return (
 				<Tag icon={<SyncOutlined spin />} color="processing">
-					Đang Chạy
+					{t("tripManagement.trippassenger.run")}
 				</Tag>
 			);
 		} else if (trip.status == "cancel") {
 			return (
 				<Tag icon={<CloseCircleOutlined />} color="error">
-					Đã Hủy
+					{t("tripManagement.trippassenger.canceled")}
 				</Tag>
 			);
 		} else {
 			return (
 				<Tag icon={<CheckCircleOutlined />} color="success">
-					Hoàn Thành
+					{t("tripManagement.trippassenger.complete")}
 				</Tag>
 			);
 		}
@@ -67,7 +69,7 @@ export default function AdminTripPassenger(props) {
 						}}
 					>
 						<Tag icon={<SyncOutlined spin />} color="default">
-							Đang Chạy
+						{t("tripManagement.trippassenger.run")}
 						</Tag>
 					</Button>
 					<Button
@@ -77,7 +79,7 @@ export default function AdminTripPassenger(props) {
 						}}
 					>
 						<Tag icon={<CloseCircleOutlined spin />} color="error">
-							Hủy
+						{t("tripManagement.trippassenger.cancel")}
 						</Tag>
 					</Button>
 					<Button
@@ -87,7 +89,7 @@ export default function AdminTripPassenger(props) {
 						}}
 					>
 						<Tag icon={<CheckCircleOutlined spin />} color="success">
-							Hoàn Thành
+						{t("tripManagement.trippassenger.complete")}
 						</Tag>
 					</Button>
 				</>
@@ -102,7 +104,7 @@ export default function AdminTripPassenger(props) {
 						}}
 					>
 						<Tag icon={<CheckCircleOutlined spin />} color="success">
-							Hoàn Thành
+						{t("tripManagement.trippassenger.complete")}
 						</Tag>
 					</Button>
 					<Button
@@ -112,7 +114,7 @@ export default function AdminTripPassenger(props) {
 						}}
 					>
 						<Tag icon={<CloseCircleOutlined spin />} color="error">
-							Hủy
+						{t("tripManagement.trippassenger.cancel")}
 						</Tag>
 					</Button>
 				</>
@@ -120,20 +122,20 @@ export default function AdminTripPassenger(props) {
 		} else if (trip.status == "cancel") {
 			return (
 				<Tag icon={<CloseCircleOutlined />} color="error">
-					Đã Hủy
+					{t("tripManagement.trippassenger.canceled")}
 				</Tag>
 			);
 		} else {
 			return (
 				<Tag icon={<CheckCircleOutlined />} color="success">
-					Hoàn Thành
+					{t("tripManagement.trippassenger.complete")}
 				</Tag>
 			);
 		}
 	};
 	const columns = [
 		{
-			title: "Nhà Xe",
+			title: t("tripManagement.trippassenger.passenger"),
 			render: (text, tripPassenger) => {
 				return (
 					<div>
@@ -143,8 +145,7 @@ export default function AdminTripPassenger(props) {
 			},
 		},
 		{
-			title: "Xe",
-
+			title: t("tripManagement.trippassenger.vehicle"),
 			// specify the condition of filtering result
 			// here is that finding the name started with `value`
 			render: (text, trip) => {
@@ -155,12 +156,11 @@ export default function AdminTripPassenger(props) {
 							onClick={() => {
 								dispatch({
 									type: SET_MODAL,
-									title: `Sơ Đồ Xe ${trip.vehicle.name}`,
+									title: `${t("tripManagement.trippassenger.diagram")} ${trip.vehicle.name}`,
 									content: <Vehicle vehicle={trip.vehicle} />,
 								});
 							}}
 							style={{ cursor: 'pointer' }}
-
 						>
 							{trip.vehicle.name}{" "}	
 						</a>
@@ -169,8 +169,7 @@ export default function AdminTripPassenger(props) {
 			},
 		},
 		{
-			title: "Giá",
-
+			title: t("tripManagement.trippassenger.price"),
 			// specify the condition of filtering result
 			// here is that finding the name started with `value`
 			render: (text, trip) => {
@@ -181,8 +180,7 @@ export default function AdminTripPassenger(props) {
 		},
 
 		{
-			title: "Trạng Thái",
-
+			title: t("tripManagement.trippassenger.status"),
 			render: (text, trip) => {
 				return (
 					<Popover content={renderButtonStatus(trip)} title="Xác nhận trạng thái">
@@ -192,7 +190,7 @@ export default function AdminTripPassenger(props) {
 			},
 		},
 		{
-			title: "Giờ Bắt Đầu",
+			title: t("tripManagement.trippassenger.startTime"),
 			dataIndex: "startTime",
 
 			defaultSortOrder: "descend",
@@ -204,7 +202,7 @@ export default function AdminTripPassenger(props) {
 			filterSearch: true,
 		},
 		{
-			title: "Giờ Kết Thúc",
+			title: t("tripManagement.trippassenger.endTime"),
 			dataIndex: "endTime",
 
 			defaultSortOrder: "descend",
@@ -216,7 +214,7 @@ export default function AdminTripPassenger(props) {
 			filterSearch: true,
 		},
 		{
-			title: "Chi Tiết Về Vé",
+			title: t("tripManagement.trippassenger.startTime"),
 
 			render: (text, item) => {
 				return (
@@ -227,20 +225,20 @@ export default function AdminTripPassenger(props) {
 							onClick={() => {
 								dispatch({
 									type: SET_MODAL,
-									title: `Danh Sách Vé của nhà xe ${item.passenger.name} lúc ${item.startTime} đến ${tripDetail.from?.address}`,
+									title: `${t("tripManagement.trippassenger.busTicketList")} ${item.passenger.name} ${t(t("tripManagement.trippassenger.atTheTime"))} ${item.startTime} ${t(t("tripManagement.trippassenger.to"))} ${tripDetail.from?.address}`,
 									content: <AdminDetailTicket id={item.id} />,
 									width: 1000,
 								});
 							}}
 						>
-							Chi Tiết Vé
+							{t(t("tripManagement.trippassenger.ticketDetails"))}
 						</Button>
 					</Fragment>
 				);
 			},
 		},
 		{
-			title: "Hành Động",
+			title: (t("tripManagement.trippassenger.action")),
 
 			render: (text, item) => {
 				return (
@@ -251,7 +249,7 @@ export default function AdminTripPassenger(props) {
 								onClick={() => {
 									dispatch({
 										type: OPEN_DRAWER,
-										title: "Cập Nhật Chuyến Xe",
+										title: t("tripManagement.mess.updateTrip"),
 										content: <EditTrip idTripPassenger={item.id} soVe={item} />,
 									});
 								}}
@@ -260,10 +258,10 @@ export default function AdminTripPassenger(props) {
 							</button>
 							<Popconfirm
 								placement="topLeft"
-								title={"Bạn có muốn xóa tài khoản này"}
+								title = {t("tripManagement.mess.deleteAccount")} 
 								onConfirm={() => {
 									if (item.status != "cancel") {
-										message.error("Bạn không được phép xóa chuyến đi này vì đang ở không ở trạng thái hủy");
+										message.error(t("tripManagement.mess.noDelete"));
 									} else {
 										dispatch(deleteTripPassengerAction(item));
 									}
@@ -284,16 +282,14 @@ export default function AdminTripPassenger(props) {
 	return (
 		<Content style={{margin: "0 16px"}}>
 			<Breadcrumb style={{margin: "16px 0"}}>
-				<Breadcrumb.Item>Admin</Breadcrumb.Item>
-				<Breadcrumb.Item>Trip</Breadcrumb.Item>
-				<Breadcrumb.Item>TripPassenger</Breadcrumb.Item>
+				<Breadcrumb.Item>{t("navigation.admin")}</Breadcrumb.Item>
+				<Breadcrumb.Item>{t("tripManagement.trip")}</Breadcrumb.Item>
+				<Breadcrumb.Item>{t("tripManagement.trippassenger.trippassengers")}</Breadcrumb.Item>
 			</Breadcrumb>
-
 			<div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
 				<h1>
-					Danh sách các chuyến đi từ {tripDetail.from?.province} - {tripDetail.from?.address} đến {tripDetail.to?.province} - {tripDetail.to?.address} từ ngày {moment(tripDetail?.startTime).format("DD-MM-YYYY")}
+					{t("tripManagement.trippassenger.listOfTripsFrom")}{""} {tripDetail.from?.province} - {tripDetail.from?.address} {t("tripManagement.trippassenger.to")} {tripDetail.to?.province} - {tripDetail.to?.address} {t("tripManagement.trippassenger.fromDate")} {moment(tripDetail?.startTime).format("DD-MM-YYYY")}
 				</h1>
-
 				<Table columns={columns} dataSource={listTripPassenger} />
 			</div>
 		</Content>

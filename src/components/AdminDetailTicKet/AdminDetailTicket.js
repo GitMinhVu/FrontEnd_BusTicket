@@ -2,10 +2,12 @@ import React, {useEffect, useState} from "react";
 import {List, Avatar, Pagination} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllTicketByTrip} from "../../redux/actions/ticketAction";
+import { useTranslation } from 'react-i18next'; 
 import moment from "moment";
 
 export default function AdminDetailTicket(props) {
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 	const {listTicketTrip} = useSelector((state) => state.TicketReducer);
 	console.log("listTicketTrip", listTicketTrip);
 	useEffect(() => {
@@ -35,7 +37,7 @@ export default function AdminDetailTicket(props) {
 		return ticket.ticketSeatId.map((item, index) => {
 			return (
 				<div>
-					{item?.seatofticket?.name}, tầng {item?.seatofticket?.floor}
+					{item?.seatofticket?.name}, {t("tripManagement.trippassenger.floor")} {item?.seatofticket?.floor}
 				</div>
 			);
 		});
@@ -43,7 +45,7 @@ export default function AdminDetailTicket(props) {
 	return (
 		<div>
 			<div className="text-xl">
-				Tổng số vé : <span className="font-bold">{listTicketTrip.length}</span>
+			{t("tripManagement.trippassenger.totalNumberOfTickets")} : <span className="font-bold">{listTicketTrip.length}</span>
 			</div>
 			<List
 				itemLayout="horizontal"
@@ -54,15 +56,15 @@ export default function AdminDetailTicket(props) {
 							avatar={<Avatar src={item.user.avatar} />}
 							title={
 								<a>
-									{item.user.name} - Số Điện Thoại {item.user.numberPhone} - Vé số {item.id}
+									{item.user.name} - {t("tripManagement.trippassenger.phone")}: {item.user.numberPhone} - {t("tripManagement.trippassenger.ticketNumber")}: {item.id}
 								</a>
 							}
 							description={
 								<div className="flex justify-around">
-									<p className="font-semibold">Đặt Lúc : {moment(item.createdAt).format("DD-MM-YYYY HH:mm:ss")}</p>
-									<p className="font-bold">Số ghế: {renderSeat(item)} </p>
-									<p className="font-bold">Đón : ({renderPoint(item, "pickup")})</p>
-									<p className="font-bold">Trả : ({renderPoint(item, "dropoff")})</p>
+									<p className="font-semibold">{t("tripManagement.trippassenger.booked")}: {moment(item.createdAt).format("DD-MM-YYYY HH:mm:ss")}</p>
+									<p className="font-bold">{t("tripManagement.trippassenger.numberOfSeats")}: {renderSeat(item)} </p>
+									<p className="font-bold">{t("tripManagement.trippassenger.pickUpPoint")}: ({renderPoint(item, "pickup")})</p>
+									<p className="font-bold">{t("tripManagement.trippassenger.dropoff")}: ({renderPoint(item, "dropoff")})</p>
 								</div>
 							}
 						/>
