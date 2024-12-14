@@ -75,6 +75,7 @@ export default function AdminStation() {
 									width: 900,
 								});
 							}}
+							style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
 						>
 							<DirectionsRailwayFilledIcon />
 							<span>Điểm Đón / Dừng</span>
