@@ -47,6 +47,61 @@
             "noDelete":"Bạn không được phép xóa chuyến đi này vì đang ở không ở trạng thái hủy"
         }
     },
+    "addTrip":{
+        "fromStation": "Điểm đi",
+        "toStation": "Điểm đến",
+        "startDate": "Ngày bắt đầu",
+        "endDate": "Ngày kết thúc",
+        "startTime": "Giờ bắt đầu",
+        "endTime": "Giờ kết thúc",
+        "price": "Giá",
+        "vehicle": "Xe",
+        "passenger": "Nhà xe",
+        "selectPassenger": "Chọn nhà xe",
+        "selectVehicle": "Chọn xe",
+        "seat": "Ghế",
+        "floor": "Tầng",
+        "addTrip": "Thêm chuyến đi",
+        "departureTime": "Thời gian khởi hành",
+        "back": "Quay lại",
+        "create": "Tạo",
+        "pickUpPoint": "Điểm đón",
+        "dropOff": "Điểm trả",
+        "timePickUp": "Thời gian đón",  
+        "timeDropOff": "Thời gian trả",
+        "timeEnd": "Thời gian kết thúc",
+        "timeStart": "Thời gian khởi hành",
+        "createTrip": "Tạo chuyến đi",
+        "createPassengerCar": "Tạo Nhà Xe - Xe Phụ Trách Chuyến Đi",
+        "addPickupAndDropOffPoints": "Thêm Điểm Đón - Trả",
+        "messageError": {
+          "fromStation": "Điểm đi không được trùng với điểm đến",
+          "missingPoints": "Thiếu điểm đi",
+          "missingToStation": "Thiếu điểm đến",
+          "missingStartDate": "Thiếu ngày xuất phát",
+          "missingPassenger": "Thiếu nhà xe",
+          "missingVehicle": "Thiếu xe",
+          "missingEndTime": "Thiếu thời gian kết thúc",
+          "missingStartTime": "Thiếu thời gian khởi hành",
+          "missingPrice": "Thiếu giá",
+          "missingSeat": "Thiếu số ghế",
+          "missingFloor": "Thiếu tầng",
+          "missingTimeDropOff": "Thiếu thời gian trả",
+          "missingTimePickUp": "Thiếu thời gian đón",
+          "completeTripCreation": "Hoàn thành tạo chuyến đi",
+          "pleaseCheckAgain": "Vui lòng kiểm tra lại"
+
+
+
+
+
+
+
+
+
+
+        }
+    },
     "common": {
       "add": "Thêm",
       "edit": "Sửa",

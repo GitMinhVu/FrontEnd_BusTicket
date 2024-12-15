@@ -3,7 +3,7 @@ import {Steps, Button, message, Breadcrumb, Form, Row, Col, Input, Select, DateP
 import {Content} from "antd/lib/layout/layout";
 import {DownOutlined, UpOutlined, MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import {getListStationAction} from "../../redux/actions/stationAction";
-
+import { useTranslation } from 'react-i18next'; 
 import {useDispatch, useSelector} from "react-redux";
 import moment from "moment";
 import {getAllPassenger} from "../../redux/actions/passengerAction";
@@ -16,6 +16,8 @@ const {Option} = Select;
 
 function AddTripProvince(props) {
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
+
 	const {listStation} = useSelector((state) => state.StationReducer);
 	console.log("listStation", listStation);
 	const {prev, next, current, setCurrent} = props;
@@ -26,7 +28,7 @@ function AddTripProvince(props) {
 	const onFinish = (values) => {
 		const {fromStation, toStation, startTime} = values;
 		if (fromStation == toStation) {
-			message.error("Điểm đến và đi không được giống nhau");
+			message.error(t("addTrip.messageError.fromStation"));
 		} else {
 			const trip = {
 				fromStation,
@@ -52,12 +54,12 @@ function AddTripProvince(props) {
 			<Row gutter={16}>
 				<Col span={12}>
 					<Form.Item
-						label="Đi Từ"
+						label={t("addTrip.fromStation")}
 						name="fromStation"
 						rules={[
 							{
 								required: true,
-								message: "Thiếu Điểm Đi!",
+								message: t("addTrip.messageError.missingPoints"),
 							},
 						]}
 					>
@@ -66,12 +68,12 @@ function AddTripProvince(props) {
 				</Col>
 				<Col span={12}>
 					<Form.Item
-						label="Đến"
+						label={t("addTrip.toStation")}
 						name="toStation"
 						rules={[
 							{
 								required: true,
-								message: "Thiếu Điểm Đến!",
+								message: t("addTrip.messageError.missingToStation"),
 							},
 						]}
 					>
@@ -82,12 +84,12 @@ function AddTripProvince(props) {
 			<Row gutter={16}>
 				<Col span={16}>
 					<Form.Item
-						label="Ngày Xuất Phát"
+						label={t("addTrip.startDate")}
 						name="startTime"
 						rules={[
 							{
 								required: true,
-								message: "Thiếu Ngày Ngày Xuất!",
+								message: t("addTrip.messageError.missingStartDate"),
 							},
 						]}
 					>
@@ -104,7 +106,7 @@ function AddTripProvince(props) {
 					}}
 				>
 					<Button type="primary" htmlType="submit">
-						Tạo
+						{t("common.add")}
 					</Button>
 				</Col>
 			</Row>
@@ -114,18 +116,19 @@ function AddTripProvince(props) {
 function AddTripPassenger(props) {
 	const {prev, next, current, setCurrent} = props;
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 	const {listPassenger} = useSelector((state) => state.PassengerReducer);
 	const {listSelectVehicle} = useSelector((state) => state.vehicleReducer);
 	const {tripCreated} = useSelector((state) => state.TripReducer);
 	console.log(" tripCreated", tripCreated);
 	const renderPassenger = () => {
 		return listPassenger.map((item, index) => {
-			return {label: `Nhà xe ${item.name}`, value: item.id};
+			return {label: `${t("addTrip.passenger")} ${item.name}`, value: item.id};
 		});
 	};
 	const renderVehicle = () => {
 		return listSelectVehicle.map((item, index) => {
-			return {label: `Xe ${item.name}`, value: item.id};
+			return {label: `${t("addTrip.vehicle")} ${item.name}`, value: item.id};
 		});
 	};
 	useEffect(() => {
@@ -151,12 +154,12 @@ function AddTripPassenger(props) {
 			<Row gutter={16}>
 				<Col span={12}>
 					<Form.Item
-						label="Chọn Nhà Xe"
+						label={t("addTrip.selectPassenger")}
 						name="passengerId"
 						rules={[
 							{
 								required: true,
-								message: "Thiếu Nhà Xe!",
+								message: t("addTrip.messageError.missingPassenger"),
 							},
 						]}
 					>
@@ -165,12 +168,12 @@ function AddTripPassenger(props) {
 				</Col>
 				<Col span={12}>
 					<Form.Item
-						label="Chọn Xe"
+						label={t("addTrip.selectVehicle")}
 						name="vehicleId"
 						rules={[
 							{
 								required: true,
-								message: "Thiếu Xe!",
+								message: t("addTrip.messageError.missingVehicle"),
 							},
 						]}
 					>
@@ -181,12 +184,12 @@ function AddTripPassenger(props) {
 			<Row gutter={16}>
 				<Col span={12}>
 					<Form.Item
-						label="Thời Gian Khởi Hành"
+						label={t("addTrip.departureTime")}
 						name="startTime"
 						rules={[
 							{
 								required: true,
-								message: "Thiếu Ngày Ngày Xuất!",
+								message: t("addTrip.messageError.missingStartDate"),
 							},
 						]}
 					>
@@ -195,12 +198,12 @@ function AddTripPassenger(props) {
 				</Col>
 				<Col span={12}>
 					<Form.Item
-						label="Thời Gian kết thúc (Dự Kiến)"
+						label={t("addTrip.endTime")}
 						name="endTime"
 						rules={[
 							{
 								required: true,
-								message: "Thiếu Thời Gian Kết Thúc!",
+								message: t("addTrip.messageError.missingEndTime"),
 							},
 						]}
 					>
@@ -217,10 +220,10 @@ function AddTripPassenger(props) {
 					}}
 				>
 					<Button style={{margin: "0 8px"}} onClick={() => prev()}>
-						Quay Lại
+						{t("common.back")}
 					</Button>
 					<Button type="primary" htmlType="submit">
-						Tạo
+						{t("common.add")}
 					</Button>
 				</Col>
 			</Row>
@@ -231,6 +234,7 @@ function AddTripPassenger(props) {
 function AddPoint(props) {
 	const {prev, next, current, setCurrent} = props;
 	const dispatch = useDispatch();
+	const { t } = useTranslation();
 	const {listPointPickup, listPointDropoff} = useSelector((state) => state.PointReducer);
 	const {tripCreated, tripPassengerCreated} = useSelector((state) => state.TripReducer);
 	const {isSuccess} = useSelector((state) => state.LoadingReducer);
@@ -288,8 +292,8 @@ function AddPoint(props) {
 			{isSuccess ? (
 				<Result
 					status="success"
-					title="Hoàn thành tạo chuyến đi"
-					subTitle="Vui lòng kiểm tra lại"
+					title={t("addTrip.completeTripCreation")}
+					subTitle={t("addTrip.pleaseCheckAgain")}
 					extra={[
 						<Button
 							type="primary"
@@ -301,7 +305,7 @@ function AddPoint(props) {
 								});
 							}}
 						>
-							Quay Lại
+							{t("common.back")}
 						</Button>,
 					]}
 				/>
@@ -315,13 +319,13 @@ function AddPoint(props) {
 										<Row gutter={16}>
 											<Col span={12}>
 												<Form.Item
-													label="Điểm Đón"
+													label={t("addTrip.pickUpPoint")}
 													name={[name, "PickupPointId"]}
 													{...restField}
 													rules={[
 														{
 															required: true,
-															message: "Thiếu Điểm Đến!",
+															message: t("addTrip.messageError.missingPickUpPoint"),
 														},
 													]}
 												>
@@ -330,13 +334,13 @@ function AddPoint(props) {
 											</Col>
 											<Col span={12}>
 												<Form.Item
-													label="Thời gian đón"
+													label={t("addTrip.timePickUp")}
 													name={[name, "timePickUp"]}
 													{...restField}
 													rules={[
 														{
 															required: true,
-															message: "Thiếu Ngày Ngày Xuất!",
+															message: t("addTrip.messageError.missingTimePickUp"),
 														},
 													]}
 												>
@@ -347,13 +351,13 @@ function AddPoint(props) {
 										<Row gutter={16}>
 											<Col span={12}>
 												<Form.Item
-													label="Điểm Trả"
+													label={t("addTrip.dropOff")}
 													name={[name, "DropoffPointId"]}
 													{...restField}
 													rules={[
 														{
 															required: true,
-															message: "Thiếu Điểm Đến!",
+															message: t("addTrip.messageError.missingDropOff"),
 														},
 													]}
 												>
@@ -362,13 +366,13 @@ function AddPoint(props) {
 											</Col>
 											<Col span={12}>
 												<Form.Item
-													label="Thời gian trả"
+													label={t("addTrip.timeDropOff")}
 													name={[name, "timeDropOff"]}
 													{...restField}
 													rules={[
 														{
 															required: true,
-															message: "Thiếu Ngày Ngày Xuất!",
+															message: t("addTrip.messageError.missingTimeDropOff"),
 														},
 													]}
 												>
@@ -381,7 +385,7 @@ function AddPoint(props) {
 								))}
 								<Form.Item>
 									<Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-										Add field
+										{t("common.add")}
 									</Button>
 								</Form.Item>
 							</>
@@ -394,7 +398,7 @@ function AddPoint(props) {
 								prev();
 							}}
 						>
-							Quay Lại
+							{t("common.back")}
 						</Button>
 						<Button
 							type="primary"
@@ -403,7 +407,7 @@ function AddPoint(props) {
 								next();
 							}}
 						>
-							Thêm
+							{t("common.add")}
 						</Button>
 					</Form.Item>
 				</Form>
@@ -414,6 +418,8 @@ function AddPoint(props) {
 
 export default function AddTrip() {
 	const {Step} = Steps;
+	const { t } = useTranslation();
+
 	const [current, setCurrent] = React.useState(0);
 
 	const next = () => {
@@ -428,15 +434,15 @@ export default function AddTrip() {
 
 	const steps = [
 		{
-			title: "Tạo Chuyến Đi",
+			title: t("addTrip.createTrip"),
 			content: <AddTripProvince prev={prev} next={next} current={current} setCurrent={setCurrent} />,
 		},
 		{
-			title: "Tạo Nhà Xe - Xe Phụ Trách Chuyến Đi",
+			title: t("addTrip.createPassengerCar"),
 			content: <AddTripPassenger prev={prev} next={next} current={current} setCurrent={setCurrent} />,
 		},
 		{
-			title: "Thêm Điểm Đón - Trả",
+			title: t("addTrip.addPickupAndDropOffPoints"),
 			content: <AddPoint prev={prev} next={next} current={current} setCurrent={setCurrent} />,
 			// 	(
 
@@ -463,11 +469,11 @@ export default function AddTrip() {
 		<>
 			<Content style={{margin: "0 16px"}}>
 				<Breadcrumb style={{margin: "16px 0"}}>
-					<Breadcrumb.Item>Admin</Breadcrumb.Item>
-					<Breadcrumb.Item>Add Trip</Breadcrumb.Item>
+					<Breadcrumb.Item>{t("navigation.admin")}</Breadcrumb.Item>
+					<Breadcrumb.Item>{t("addTrip.addTrip")}</Breadcrumb.Item>
 				</Breadcrumb>
 				<div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
-					<h1>Tạo Chuyến Đi</h1>
+					<h1>{t("addTrip.createTrip")}</h1>
 					<Steps current={current}>
 						{steps.map((item) => (
 							<Step key={item.title} title={item.title} />
