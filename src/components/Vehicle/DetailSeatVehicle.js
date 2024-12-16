@@ -27,65 +27,162 @@ export default function DetailSeatVehicle(props) {
 	useEffect(() => {
 		dispatch(getDetailVehicleAction(props.id));
 	}, [props.id]);
-	const renderSeat = (floors) => {
-		return vehicleDetail.seatVehicle.map((item, index) => {
-			let classDaDat = item.status === "đã đặt" ? "gheDaChon" : "";
-			let classDangDat = "";
-			let indexSeatSelect = listSeatSelected.findIndex((seatSelect) => seatSelect.id == item.id);
-			if (indexSeatSelect != -1) {
-				classDangDat = "GheDangChon";
-			}
-			let disabled = item.status === "đã đặt" ? true : false;
-			let arrClass = [classDaDat, classDangDat];
-			const text = <span>Title</span>;
-			const content = (
-				<div className="flex justify-center">
-					<Button
-						type="primary"
-						onClick={() => {
-							dispatch({
-								type: OPEN_DRAWER,
-								title: `Cập Nhật Cho Ghế ${item.name} , Giá ${item.price}`,
-								content: <EditSeat id={item.id} />,
-								width: 300,
-							});
-						}}
-					>
-						<FormOutlined />
-					</Button>
-					<Popconfirm
-						placement="topRight"
-						title={"Bạn có muốn xóa ghế này"}
-						onConfirm={() => {
-							dispatch(DeleteSeatAction(item.id, vehicleDetail.id));
-						}}
-						okText="Yes"
-						cancelText="No"
-					>
-						<Button className="bg-red-600 ml-5" style={{backgroundColor: "red"}}>
-							<DeleteOutlined className="text-red-600" />
-						</Button>
-					</Popconfirm>
-				</div>
-			);
-			if (item.floor === floors) {
-				return (
-					<Popover title={`Ghế: ${item.name}, Giá: ${item.price.toLocaleString()} VNĐ`} content={content} placement="top">
-						<button className="seat" style={{border: "none"}} key={index} disabled={disabled}>
-							<div className="seat-container">
-								<Seat arrClass={arrClass} />
-							</div>
-						</button>
-					</Popover>
-				);
-			}
-		});
+
+	// const renderSeat = (floors) => {
+	// 	return vehicleDetail.seatVehicle.map((item, index) => {
+	// 		let classDaDat = item.status === "đã đặt" ? "gheDaChon" : "";
+	// 		let classDangDat = "";
+	// 		let indexSeatSelect = listSeatSelected.findIndex((seatSelect) => seatSelect.id == item.id);
+	// 		if (indexSeatSelect != -1) {
+	// 			classDangDat = "GheDangChon";
+	// 		}
+	// 		let disabled = item.status === "đã đặt" ? true : false;
+	// 		let arrClass = [classDaDat, classDangDat];
+	// 		const text = <span>Title</span>;
+	// 		const content = (
+	// 			<div className="flex justify-center">
+	// 				<Button
+	// 					type="primary"
+	// 					onClick={() => {
+	// 						dispatch({
+	// 							type: OPEN_DRAWER,
+	// 							title: `Cập Nhật Cho Ghế ${item.name} , Giá ${item.price}`,
+	// 							content: <EditSeat id={item.id} />,
+	// 							width: 300,
+	// 						});
+	// 					}}
+	// 				>
+	// 					<FormOutlined />
+	// 				</Button>
+	// 				<Popconfirm
+	// 					placement="topRight"
+	// 					title={"Bạn có muốn xóa ghế này"}
+	// 					onConfirm={() => {
+	// 						dispatch(DeleteSeatAction(item.id, vehicleDetail.id));
+	// 					}}
+	// 					okText="Yes"
+	// 					cancelText="No"
+	// 				>
+	// 					<Button className="bg-red-600 ml-5" style={{backgroundColor: "red"}}>
+	// 						<DeleteOutlined className="text-red-600" />
+	// 					</Button>
+	// 				</Popconfirm>
+	// 			</div>
+	// 		);
+	// 		if (item.floor === floors) {
+	// 			return (
+	// 				<Popover title={`Ghế: ${item.name}, Giá: ${item.price.toLocaleString()} VNĐ`} content={content} placement="top">
+	// 					<button className="seat" style={{border: "none"}} key={index} disabled={disabled}>
+	// 						<div className="seat-container">
+	// 							<Seat arrClass={arrClass} />
+	// 						</div>
+	// 					</button>
+	// 				</Popover>
+	// 			);
+	// 		}
+	// 	});
+	// };
+	// const renderFloor = () => {
+	// 	let arr = [];
+	// 	for (let index = 1; index <= vehicleDetail.numberFloors; index++) {
+	// 		arr.push(
+	// 			<div class="coach-container">
+	// 				<span>Tầng {index}</span>
+	// 				<div className="coach">
+	// 					<table>
+	// 						<tbody>
+	// 							<tr className="coach-row">
+	// 								<td className="seat">
+	// 									<div className="seat-container" data-disabled="true" disabled>
+	// 										<Wheel />
+	// 									</div>
+	// 								</td>
+	// 							</tr>
+	// 							<div className="coach-row">{renderSeat(index)}</div>
+	// 						</tbody>
+	// 					</table>
+	// 				</div>
+	// 			</div>
+	// 		);
+	// 	}
+	// 	return arr;
+	// };
+
+	//ex2
+
+	const renderSeatRows = (seats) => {
+		//renderSeat and renderFloor
+		// Chia ghế thành các nhóm 3 ghế
+		const rows = [];
+		for (let i = 0; i < seats.length; i += 3) {
+			rows.push(seats.slice(i, i + 3));
+		}
+		return rows.map((row, rowIndex) => (
+			<tr key={rowIndex} className="coach-row">
+				{row.map((seat, index) => {
+					let classDaDat = seat.status === "đã đặt" ? "gheDaChon" : "";
+					let classDangDat = "";
+					let indexSeatSelect = listSeatSelected.findIndex((seatSelect) => seatSelect.id == seat.id);
+					if (indexSeatSelect !== -1) {
+						classDangDat = "GheDangChon";
+					}
+					let disabled = seat.status === "đã đặt";
+					let arrClass = [classDaDat, classDangDat];
+					const content = (
+						<div className="flex justify-center">
+							<Button
+								type="primary"
+								onClick={() => {
+									dispatch({
+										type: OPEN_DRAWER,
+										title: `Cập Nhật Cho Ghế ${seat.name} , Giá ${seat.price}`,
+										content: <EditSeat id={seat.id} />,
+										width: 300,
+									});
+								}}
+							>
+								<FormOutlined />
+							</Button>
+							<Popconfirm
+								placement="topRight"
+								title={"Bạn có muốn xóa ghế này"}
+								onConfirm={() => {
+									dispatch(DeleteSeatAction(seat.id, vehicleDetail.id));
+								}}
+								okText="Yes"
+								cancelText="No"
+							>
+								<Button className="bg-red-600 ml-5" style={{backgroundColor: "red"}}>
+									<DeleteOutlined className="text-red-600" />
+								</Button>
+							</Popconfirm>
+						</div>
+					);
+
+					return (
+						<td key={index} className="seat">
+							<Popover title={`Ghế: ${seat.name}, Giá: ${seat.price.toLocaleString()} VNĐ`} content={content} placement="top">
+								<button className="seat" style={{border: "none"}} disabled={disabled}>
+									<div className="seat-container">
+										<Seat arrClass={arrClass} />
+									</div>
+								</button>
+							</Popover>
+						</td>
+					);
+				})}
+			</tr>
+		));
 	};
+
 	const renderFloor = () => {
-		let arr = [];
+		let floors = [];
 		for (let index = 1; index <= vehicleDetail.numberFloors; index++) {
-			arr.push(
-				<div class="coach-container">
+			// Lọc ghế theo tầng
+			let seatsInFloor = vehicleDetail.seatVehicle.filter((seat) => seat.floor === index);
+
+			floors.push(
+				<div key={index} className="coach-container">
 					<span>Tầng {index}</span>
 					<div className="coach">
 						<table>
@@ -97,14 +194,15 @@ export default function DetailSeatVehicle(props) {
 										</div>
 									</td>
 								</tr>
-								<div className="coach-row">{renderSeat(index)}</div>
+								{/* Hiển thị ghế theo hàng */}
+								{renderSeatRows(seatsInFloor)}
 							</tbody>
 						</table>
 					</div>
 				</div>
 			);
 		}
-		return arr;
+		return floors;
 	};
 	const [form] = Form.useForm();
 
@@ -112,7 +210,7 @@ export default function DetailSeatVehicle(props) {
 		console.log("Received values of form:", values);
 		let listSeat = values.ListSeatAdd;
 		if (vehicleDetail.seatVehicle.length <= 40) {
-			let filterFloor1 = vehicleDetail.seatVehicle.filter((item) => item.floor == 1).length;
+			let filterFloor1 = vehicleDetail.seatVehicle.filter((item) => item.floor === 1).length;
 			let seatFloor2 = vehicleDetail.seatVehicle.length - filterFloor1;
 			try {
 				if (filterFloor1 >= 20) {
