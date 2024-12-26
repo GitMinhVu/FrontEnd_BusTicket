@@ -1,5 +1,5 @@
 import React, {createElement, useEffect, useState} from "react";
-import {Tabs, List, Rate, Comment, Tooltip, Avatar} from "antd";
+import {Tabs, List, Rate, Comment, Tooltip, Avatar, Table} from "antd";
 import moment from "moment";
 import {DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled} from "@ant-design/icons";
 import _ from "lodash";
@@ -33,7 +33,7 @@ export default function Details(props) {
 		return listImageVehicle?.map((item, index) => {
 			return (
 				<div key={index}>
-					<img src={item.link} alt />
+					<img src={item.link} alt="" />
 				</div>
 			);
 		});
@@ -51,7 +51,7 @@ export default function Details(props) {
 					author={
 						<a>
 							{item.userComment.name}
-							<div>{rate == 0 ? <p>Không có đánh giá</p> : <Rate disabled defaultValue={rate} style={{fontSize: 10}} />}</div>
+							<div>{rate === 0 ? <p>Không có đánh giá</p> : <Rate disabled defaultValue={rate} style={{fontSize: 10}} />}</div>
 						</a>
 					}
 					avatar={<Avatar src={item.userComment.avatar} alt={item.userComment.name} />}
@@ -68,7 +68,7 @@ export default function Details(props) {
 
 	const renderPoint = (type) => {
 		return timePointTrip
-			.filter((timepoint) => timepoint.type == type)
+			.filter((timepoint) => timepoint.type === type)
 			.map((item, index) => {
 				return (
 					<div className="group-item">
@@ -172,7 +172,7 @@ export default function Details(props) {
 				onChange={(e) => {
 					if (e == 5) {
 						dispatch(getCommentPassengerAction(props.tripPassenger.passengerId));
-					} else if (e == 3) {
+					} else if (e === 3) {
 						dispatch(getTimePointTripAction(props.tripPassenger.id));
 					}
 				}}
@@ -197,18 +197,56 @@ export default function Details(props) {
 					) : (
 						<>
 							<div className="ant-row header">
-								<div className="note">Lưu ý</div>
-								<div className="header-content">Các mốc thời gian đón, trả bên dưới là thời gian dự kiến. Lịch này có thể thay đổi tùy tình hình thưc tế.</div>
+								<div className="note">Lưu ý: </div>
+								<div className="header-content" style={{backgroundColor: "rgba(0,0,0,0.05)"}}>
+									Các mốc thời gian đón, trả bên dưới là thời gian dự kiến. Lịch này có thể thay đổi tùy tình hình thưc tế.
+								</div>
 							</div>
-							<div className="grid grid-cols-2 text-center">
-								<div>
-									<div className="content-title font-bold text-sm">Điểm đón</div>
-									<div className="group">{renderPoint("pickup")}</div>
-								</div>
-								<div>
-									<div className="content-title font-bold text-sm">Điểm trả</div>
-									<div className="group">{renderPoint("dropoff")}</div>
-								</div>
+							<div className="grid grid-cols-2">
+								<Table
+									dataSource={timePointTrip.filter((point) => point.type === "pickup")}
+									columns={[
+										{
+											title: "Điểm đón",
+											children: [
+												{
+													title: "Thời gian",
+													dataIndex: "time",
+													key: "time",
+													className: "font-bold",
+												},
+												{
+													title: "Địa điểm",
+													dataIndex: ["point", "name"],
+													key: "name",
+												},
+											],
+										},
+									]}
+									pagination={false}
+								/>
+								<Table
+									dataSource={timePointTrip.filter((point) => point.type === "dropoff")}
+									columns={[
+										{
+											title: "Điểm trả",
+											children: [
+												{
+													title: "Thời gian",
+													dataIndex: "time",
+													key: "time",
+													className: "font-bold",
+												},
+												{
+													title: "Địa điểm",
+													dataIndex: ["point", "name"],
+													key: "name",
+												},
+											],
+										},
+									]}
+									pagination={false}
+								/>
 							</div>
 						</>
 					)}
@@ -260,17 +298,17 @@ export default function Details(props) {
 											<path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z" />
 										</svg>
 									</i>
-									<span>{props.avgRate}</span>
+									{/* <span>{props.avgRate}</span> */}
 								</div>
 								<Rate allowClear={false} defaultValue={props.avgRate} disabled />
 								<span className="ant-rate-text">{props.passenger?.passengerRate.length} đánh giá</span>
 							</div>
 							<div className="ant-row filter-rate">
 								<button type="button" className="ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter active" ant-click-animating-without-extra-node="false">
-									<span>Tất cả ({listCommentPassenger?.length == 0 ? 0 : listCommentPassenger?.length})</span>
+									<span>Tất cả ({listCommentPassenger?.length === 0 ? 0 : listCommentPassenger?.length})</span>
 								</button>
 								<button type="button" className="ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter " ant-click-animating-without-extra-node="false">
-									<span>Có nhận xét ({listCommentPassenger?.length == 0 ? 0 : listCommentPassenger?.length})</span>
+									<span>Có nhận xét ({listCommentPassenger?.length === 0 ? 0 : listCommentPassenger?.length})</span>
 								</button>
 								<button type="button" className="ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter " ant-click-animating-without-extra-node="false">
 									<span>5</span>
@@ -279,7 +317,7 @@ export default function Details(props) {
 											<path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z" />
 										</svg>
 									</i>
-									<span className="review-count">(91)</span>
+									<span className="review-count"></span>
 								</button>
 								<button type="button" className="ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter ">
 									<span>4</span>
@@ -288,7 +326,7 @@ export default function Details(props) {
 											<path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z" />
 										</svg>
 									</i>
-									<span className="review-count">(13)</span>
+									<span className="review-count"></span>
 								</button>
 								<button type="button" className="ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter ">
 									<span>3</span>
@@ -297,7 +335,7 @@ export default function Details(props) {
 											<path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z" />
 										</svg>
 									</i>
-									<span className="review-count">(5)</span>
+									<span className="review-count"></span>
 								</button>
 								<button type="button" className="ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter ">
 									<span>2</span>
@@ -306,7 +344,7 @@ export default function Details(props) {
 											<path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z" />
 										</svg>
 									</i>
-									<span className="review-count">(0)</span>
+									<span className="review-count"></span>
 								</button>
 								<button type="button" className="ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter ">
 									<span>1</span>
@@ -315,7 +353,7 @@ export default function Details(props) {
 											<path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z" />
 										</svg>
 									</i>
-									<span className="review-count">(1)</span>
+									<span className="review-count"></span>
 								</button>
 							</div>
 							<div>{renderComment()}</div>

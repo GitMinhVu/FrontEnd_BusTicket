@@ -17,7 +17,7 @@ const initialState = {
 	detailUser: {},
 };
 
-export default (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case NOFICATION: {
 			let nofi = {...state.nofication};
@@ -50,3 +50,5 @@ export default (state = initialState, action) => {
 		}
 	}
 };
+
+export default userReducer;

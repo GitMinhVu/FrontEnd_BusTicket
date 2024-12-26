@@ -162,10 +162,16 @@ export default function TicketManagement() {
 						</div>
 						<div className="col-span-8">
 							<Tabs type="card">
-								<TabPane tab="Vé đã đặt" key="1">
-									<div className="grid grid-cols-3 gap-4">{renderTicketDepart("pending")}</div>
-								</TabPane>
+								{/* <TabPane tab="Vé đã đặt" key="1">
+									<div className="grid grid-cols-3 gap-4">{renderTicketDepart("confirm")}</div>
+								</TabPane> */}
 
+								<TabPane tab="Vé đã đặt" key="1">
+									<div className="grid grid-cols-3 gap-4">
+										{renderTicketDepart("confirm")}
+										{renderTicketDepart("pending")}
+									</div>
+								</TabPane>
 								<TabPane tab="Vé đã hủy" key="3">
 									<div className="grid grid-cols-3 gap-4">{renderTicketDepart("cancel")}</div>
 								</TabPane>

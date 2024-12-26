@@ -3,7 +3,7 @@ import {Steps, Button, message, Breadcrumb, Form, Row, Col, Input, Select, DateP
 import {Content} from "antd/lib/layout/layout";
 import {DownOutlined, UpOutlined, MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import {getListStationAction} from "../../redux/actions/stationAction";
-import { useTranslation } from 'react-i18next'; 
+import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import moment from "moment";
 import {getAllPassenger} from "../../redux/actions/passengerAction";
@@ -16,7 +16,7 @@ const {Option} = Select;
 
 function AddTripProvince(props) {
 	const dispatch = useDispatch();
-	const { t } = useTranslation();
+	const {t} = useTranslation();
 
 	const {listStation} = useSelector((state) => state.StationReducer);
 	console.log("listStation", listStation);
@@ -116,7 +116,7 @@ function AddTripProvince(props) {
 function AddTripPassenger(props) {
 	const {prev, next, current, setCurrent} = props;
 	const dispatch = useDispatch();
-	const { t } = useTranslation();
+	const {t} = useTranslation();
 	const {listPassenger} = useSelector((state) => state.PassengerReducer);
 	const {listSelectVehicle} = useSelector((state) => state.vehicleReducer);
 	const {tripCreated} = useSelector((state) => state.TripReducer);
@@ -234,7 +234,7 @@ function AddTripPassenger(props) {
 function AddPoint(props) {
 	const {prev, next, current, setCurrent} = props;
 	const dispatch = useDispatch();
-	const { t } = useTranslation();
+	const {t} = useTranslation();
 	const {listPointPickup, listPointDropoff} = useSelector((state) => state.PointReducer);
 	const {tripCreated, tripPassengerCreated} = useSelector((state) => state.TripReducer);
 	const {isSuccess} = useSelector((state) => state.LoadingReducer);
@@ -275,9 +275,9 @@ function AddPoint(props) {
 	const onFinish = (values) => {
 		let arrListPoint = values.listTimePoint.map((item, index) => {
 			return {
-				...item, 
+				...item,
 				timeDropOff: moment(item.timeDropOff).format("HH:mm:ss"),
-				timePickUp: moment(item.timePickUp).format("HH:mm:ss")
+				timePickUp: moment(item.timePickUp).format("HH:mm:ss"),
 			};
 		});
 		let createdPoint = {
@@ -418,7 +418,7 @@ function AddPoint(props) {
 
 export default function AddTrip() {
 	const {Step} = Steps;
-	const { t } = useTranslation();
+	const {t} = useTranslation();
 
 	const [current, setCurrent] = React.useState(0);
 

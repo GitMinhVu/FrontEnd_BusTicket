@@ -5,6 +5,8 @@ import "./App.css";
 import {createBrowserHistory} from "history";
 import {Router, Switch} from "react-router-dom";
 import {HomeTemplate} from "./templates/HomeTemplate";
+import LoginAdmin from "./pages/Admin/LoginAdmin/LoginAdmin";
+
 import "antd/dist/antd.css";
 
 import Home from "./pages/Home";
@@ -29,6 +31,7 @@ import DrawerForm from "./components/Drawer/DrawerForm";
 import AdminTurnOver from "./pages/Admin/AdminTurnOver/AdminTurnOver";
 import AddTrip from "./components/Add/AddTrip";
 import MapPoint from "./components/Map/MapPoint";
+import TicketLookup from "./components/TicketLookup/TicketLookup";
 
 export const history = createBrowserHistory();
 
@@ -57,8 +60,10 @@ function App() {
 				<HomeTemplate path="/usermgt" exact Component={InfoManagement} />
 				<HomeTemplate path="/commentmgt" exact Component={CommentManagement} />
 				<HomeTemplate path="/booking" exact Component={Booking} />
+				<HomeTemplate path="/ticketLookup" exact Component={TicketLookup} />
 				<HomeTemplate path="/booking/:id/:from/:to/:start" exact Component={Booking} />
 				<HomeTemplate path="/" exact Component={Home} />
+				<AdminTemplate exact path="/admin/login" component={LoginAdmin} />
 			</Switch>
 		</Router>
 	);

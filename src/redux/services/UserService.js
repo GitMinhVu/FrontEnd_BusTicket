@@ -4,6 +4,9 @@ export class UserService extends baseService {
 	constructor() {
 		super();
 	}
+	login = (userInfo) => {
+		return this.post("/users/login", userInfo);
+	};
 	registerService = (user) => {
 		return this.post(`users/register`, user);
 	};
@@ -27,6 +30,9 @@ export class UserService extends baseService {
 	};
 	deleteUser = (id) => {
 		return this.delete(`/users/delete/${id}`);
+	};
+	updateImageUser = (id, file) => {
+		return this.putUpdateImage(`/users/upload/${id}`, file);
 	};
 }
 export const userService = new UserService();

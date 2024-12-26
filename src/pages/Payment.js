@@ -45,10 +45,8 @@ export default function Payment(props) {
 				<div className="header-body">
 					<div className="grid grid-cols-1">
 						<div className="logo">
-							<img src='./images/original.png' alt="logo" />
-							
+							{/* <img src='./images/original.png' alt="logo" /> */}
 							<span>VietBus Travel🚍</span>
-
 						</div>
 					</div>
 				</div>
@@ -62,6 +60,29 @@ export default function Payment(props) {
 								<Radio.Group style={{width: "100%"}} onChange={handleChangeSelect}>
 									<Space direction="vertical" style={{width: "100%"}}>
 										<div style={{borderBottom: "1px solid rgb(227, 227, 227)", padding: "20px 0", width: "100%"}}>
+											<Radio value={1} style={{width: "100%"}}>
+												<span className="flex items-center" style={{paddingRight: 8}}>
+													<img src="https://www.mungbaobao.com/upload/news/2019/05/19/12/08/14/icon-thanh-toan-1.png?v=1" alt="CASH_PAY" className="ofcui" style={{width: "24px", height: "24px"}} />
+													<p className="title mb-0 ml-2">Thanh toán khi lên xe</p>
+												</span>
+											</Radio>
+											<div className="detail-content-container">
+												<p className="mb-0">Quý khách vui lòng thanh toán trực tiếp cho tài xế khi lên xe</p>
+											</div>
+											<Collapse defaultActiveKey={["1"]}>
+												<div className="ant-collapse-content-box">
+													<span className="payment-method">Lưu ý thanh toán</span>
+													<div className="payment-hd">
+														<p>
+															1. Vui lòng có mặt tại điểm đón trước 15 phút
+															<br />
+															2. Chuẩn bị đủ số tiền để thanh toán cho tài xế
+															<br />
+															3. Giữ vé điện tử để đối chiếu khi lên xe
+														</p>
+													</div>
+												</div>
+											</Collapse>
 											<Radio value={2} style={{width: "100%"}}>
 												<span className="flex items-center" style={{paddingRight: 8}}>
 													<img src="https://storage.googleapis.com/fe-production/httpImage/momo.svg" alt="MOMO_PAY_APP" className="ofcui" />
@@ -186,7 +207,7 @@ export default function Payment(props) {
 									</div>
 								</div>
 							</Card>
-							<Button
+							{/* <Button
 								type="primary"
 								style={{width: "100%", marginTop: "20px"}}
 								className="btn-payment"
@@ -199,6 +220,25 @@ export default function Payment(props) {
 								}}
 							>
 								Thanh toán
+							</Button> */}
+							<Button
+								type="primary"
+								style={{width: "100%", marginTop: "20px"}}
+								className="btn-payment"
+								onClick={() => {
+									if (typePay === "") {
+										message.error("Vui lòng chọn phương thức thanh toán");
+									} else if (typePay === 1) {
+										// For cash payment option
+										dispatch(bookingTicketAction({...ticketBooking, paymentMethod: "cash"}, tripPassengerDetail?.passenger));
+										// message.success("Đặt vé thành công! Vui lòng kiểm tra email của bạn.");
+									} else if (typePay === 2) {
+										// For MoMo payment
+										dispatch(bookingTicketAction({...ticketBooking, paymentMethod: "momo"}, tripPassengerDetail?.passenger));
+									}
+								}}
+							>
+								{typePay === 1 ? "Đặt vé" : "Thanh toán"}
 							</Button>
 						</div>
 					</div>

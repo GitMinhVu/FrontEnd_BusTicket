@@ -7,7 +7,13 @@ export class TicketService extends baseService {
 	getTicketUser = (userId) => {
 		return this.get(`/ticket?userId=${userId}`);
 	};
-	getDetailTicket = (id) => {
+	// getDetailTicket = (id) => {
+	// 	return this.get(`/ticket/${id}`);
+	// };
+	getDetailTicket = (id, numberPhone) => {
+		if (numberPhone) {
+			return this.get(`/ticket/${id}?numberPhone=${numberPhone}`);
+		}
 		return this.get(`/ticket/${id}`);
 	};
 	cancelTicket = (id) => {
@@ -28,5 +34,11 @@ export class TicketService extends baseService {
 	getAllTicketByTrip = (id) => {
 		return this.get(`/ticket/trip?tripPassengerId=${id}`);
 	};
+	// getTicketByPhoneAndId = (ticketId, numberPhone) => {
+	// 	return this.get(`/ticket/${ticketId}?numberPhone=${numberPhone}`);
+	// };
+	// searchTicketByPhone = (numberPhone) => {
+	// 	return this.get(`/ticket/search?numberPhone=${numberPhone.toString()}`);
+	// };
 }
 export const ticketService = new TicketService();

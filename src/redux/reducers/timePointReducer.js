@@ -6,7 +6,7 @@ const initialState = {
 	timepointDetail: {},
 };
 
-export default (state = initialState, action) => {
+const timePointReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_TIMEPOINT_TRIP: {
 			return {...state, timePointTrip: action.timePointTrip};
@@ -21,3 +21,5 @@ export default (state = initialState, action) => {
 			return state;
 	}
 };
+
+export default timePointReducer;

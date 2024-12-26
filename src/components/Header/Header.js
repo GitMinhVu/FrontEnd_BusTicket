@@ -107,14 +107,13 @@ export default function Header() {
 									<span>VietBus Travel🚍</span>
 									{/* <img src="./images/original.png" style={{width:100}} alt="logo" /> */}
 								</h1>
-
 							</a>
 						</div>
 					</div>
 					<div className="header_left col-span-6">
 						<ul>
 							<li>
-								<a href="https://vexere.com/vi-VN/xe-limousine" target="_blank">
+								<a href="https://vexere.com/vi-VN/xe-limousine" target="_blank" rel="noreferrer">
 									Xe limousine
 								</a>
 							</li>
@@ -127,6 +126,15 @@ export default function Header() {
 							</li>
 							<li>
 								<a href="#news">Ưu đãi</a>
+							</li>
+							<li>
+								<a
+									onClick={() => {
+										history.push("/ticketLookup");
+									}}
+								>
+									Tra cứu vé
+								</a>
 							</li>
 							<li className="hotline">
 								<Popover placement="bottom" title="Số Điện Thoại Tổng Đài" content={"0937750843"} trigger="click">

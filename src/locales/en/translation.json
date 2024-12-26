@@ -1,197 +1,198 @@
 {
-    "tripManagement":{
-        "trip": "Trip",
-        "listOfTrips": "List Of Trip",
-        "searchTrip": "Search trip",
-        "searchForDestination": "Search for destination",
-        "addTrip": "Add trip",
-        "start": "Start",
-        "end": "End",
-        "startDate": "Start date",
-        "detailedTripList": "Detailed Trip List",
-        "trippassenger":{
-            "trippassengers": "Trip passenger",
-            "listOfTripsFrom": "List of trips from",
-            "to": "to",
-            "fromDate": "from date",
-            "aboutToDepart": "About to depart",
-            "run": "Running",
-            "canceled": "Canceled",
-            "complete" : "Complete",
-            "cancel": "Cancel",
-            "passenger": "Passenger",
-            "vehicle":"Vehicle",
-            "price":"Price",
-            "status":"Status",
-            "startTime": "Start time",
-            "endTime": "End time",
-            "ticketDetails": "Ticket details",
-            "action":"Action",
-            "diagram": "Diagram",
-            "busTicketList": "Bus ticket list",
-            "atTheTime":"At the time",
-            "ticketNumber": "Ticket number",
-            "time": "Time",
-            "update": "Update",
-            "totalNumberOfTickets": "Total number of tickets",
-            "phone": "Phone number",
-            "booked": "Booked",
-            "numberOfSeats": "Number of seats",
-            "pickUpPoint": "Pick up point",
-            "dropoff": "Drop off",
-            "floor": "Floor"
-        },
-        "mess":{
-            "updateTrip": "Update trip",
-            "deleteAccount": "Do you want to delete this account?",
-            "noDelete":"You are not allowed to delete this trip because it is in a cancelled status."
-        }
-    }, 
-    "addTrip":{
-      "fromStation": "From station",
-      "toStation": "To station",
-      "startDate": "Start Date",
-      "endDate": "End date",
-      "startTime": "Start time",
-      "endTime": "End time",
-      "price": "Price",
-      "vehicle": "Vehicle",
-      "passenger": "Passenger",
-      "selectPassenger": "Select passenger",
-      "selectVehicle": "Select vehicle",
-      "seat": "Seat",
-      "floor": "Floor",
-      "addTrip": "Add trip",
-      "departureTime": "Departure time",
-      "pickUpPoint": "Pick up point",
-      "dropOff": "Drop off",
-      "timePickUp": "Time pick up",
-      "timeDropOff": "Time drop off",
-      "timeEnd": "Time end",
-      "timeStart": "Time start",
-      "createTrip": "Create trip",
-      "createPassengerCar": "Create passenger - Car in Charge of a Trip",
-      "addPickupAndDropOffPoints": "Add pick up and drop Off points",
-      "messageError": {
-        "fromStation": "From station cannot be the same as to station",
-        "missingPoints": "Missing from station",
-        "missingToStation": "Missing to station",
-        "missingStartDate": "Missing start date",
-        "missingPassenger": "Missing passenger",
-        "missingVehicle": "Missing vehicle",
-        "missingEndTime": "Missing end time",
-        "missingStartTime": "Missing start time",
-        "missingPrice": "Missing price",
-        "missingSeat": "Missing seat",
-        "missingFloor": "Missing floor",
-        "missingTimeDropOff": "Missing time drop off",
-        "missingTimePickUp": "Missing time pick up",
-        "completeTripCreation": "Complete trip creation",
-        "pleaseCheckAgain": "Please check again"
-      }
-  },
-    "common": {
-      "add": "Add",
-      "edit": "Edit",
-      "delete": "Delete",
-      "save": "Save",
-      "cancel": "Cancel",
-      "confirm": "Confirm",
-      "search": "Search",
-      "loading": "Loading..."
-    },
-    "auth": {
-      "login": "Login",
-      "logout": "Logout",
-      "register": "Register",
-      "username": "Username",
-      "password": "Password"
-    },
-    "navigation": {
-      "home": "Home",
-      "about": "About",
-      "contact": "Contact",
-      "admin": "Admin",
-      "user": "User"
-    },
-    "station": {
-      "title": "Station List",
-      "name": "Station Name",
-      "address": "Address",
-      "province": "Province/City",
-      "pickupPoints": "Pickup/Drop-off Points",
-      "addStation": "Add Station",
-      "editStation": "Edit Station",
-      "deleteConfirm": "Do you want to delete this station?",
-      "searchByName": "Search by station name",
-      "searchByProvince": "Search by province/city"
-    },
-    "messages": {
-      "deleteSuccess": "Delete successful",
-      "deleteError": "Delete failed",
-      "updateSuccess": "Update successful",
-      "updateError": "Update failed",
-      "addSuccess": "Add successful",
-      "addError": "Add failed",
-      "deleteAccount": "Do you want to delete this account?",
-      "updateUser": "Do you want to update this account?"
-    },
-    "admin": {
-        "systemTitle": "VietBus Travel🚍- Management System",
-        "greeting": "Hello",
-        "footer": "Created 2024 To Minh Vu"
-      },
-      "button":{
-        "AddUser": "Add user",
-        "update": "Update",
-        "editUser": "Edit user"
-      },
-      "Sidebar":{
-        "userManagement": "User Management",
-        "tripManagement": "Trip Management",
-        "passengerManagement": "Passenger Management",
-        "vehicleManagement": "Vehicle Management",
-        "statistics": "Statistics",
-        "generalStatistics": "General statistics",
-        "ticketManagement": "Ticket Management",
-        "stationManagement": "Station Management"
-      },
-      "Search":{
-        "searchByUsername" : "Search by username"
-      },
-      "lable":{
-        "name": "Name",
-        "email": "Email",
-        "authorities": "Authorities",
-        "phone":"Phone number",
-        "password": "Password",
-        "confirmPass": "Confirm Password",
-        "action": "Action"
-      },
-      "placeholder":{
-        "pleaseSelectType": "Please select type",
-        "pleaseEnterName": "Please Enter Name",
-        "userType": "User type"
-      },
-      "validationRules":{
-        "email_min": "Email is too short!",
-        "email_max": "Email is too long!",
-        "email_required": "Please enter your email",
-        "name_min": "Name is too short!",
-        "name_max": "Name is too long!",
-        "name_required": "Please enter your name",
-        "password_min": "Password is too short!",
-        "password_max": "Password is too long!",
-        "password_required": "Please enter your password",
-        "phone_required": "Phone number cannot be empty",
-        "phone_invalid": "Invalid phone number",
-        "email_invalid": "Invalid email",
-        "confirm_password": "Passwords do not match"    
-      },
-      "messageConfirm": {
-        "update" :"Update",
-        "cancel":"Cancel",
-        "confirm": "Confirm"
-      }
-    
-  }
+	"tripManagement": {
+		"trip": "Trip",
+		"listOfTrips": "List Of Trip",
+		"searchTrip": "Search trip",
+		"searchForDestination": "Search for destination",
+		"addTrip": "Add trip",
+		"start": "Start",
+		"end": "End",
+		"startDate": "Start date",
+		"detailedTripList": "Detailed Trip List",
+		"trippassenger": {
+			"trippassengers": "Trip passenger",
+			"listOfTripsFrom": "List of trips from",
+			"to": "to",
+			"fromDate": "from date",
+			"aboutToDepart": "About to depart",
+			"run": "Running",
+			"canceled": "Canceled",
+			"complete": "Complete",
+			"cancel": "Cancel",
+			"passenger": "Passenger",
+			"vehicle": "Vehicle",
+			"price": "Price",
+			"status": "Status",
+			"startTime": "Start time",
+			"endTime": "End time",
+			"ticketDetails": "Ticket details",
+			"action": "Action",
+			"diagram": "Diagram",
+			"busTicketList": "Bus ticket list",
+			"atTheTime": "At the time",
+			"ticketNumber": "Ticket number",
+			"time": "Time",
+			"update": "Update",
+			"totalNumberOfTickets": "Total number of tickets",
+			"phone": "Phone number",
+			"booked": "Booked",
+			"numberOfSeats": "Number of seats",
+			"pickUpPoint": "Pick up point",
+			"dropoff": "Drop off",
+			"floor": "Floor"
+		},
+		"mess": {
+			"updateTrip": "Update trip",
+			"deleteAccount": "Do you want to delete this account?",
+			"noDelete": "You are not allowed to delete this trip because it is in a cancelled status.",
+			"deleteTrip": "Do you want to delete this trip?"
+		}
+	},
+	"addTrip": {
+		"fromStation": "From station",
+		"toStation": "To station",
+		"startDate": "Start Date",
+		"endDate": "End date",
+		"startTime": "Start time",
+		"endTime": "End time",
+		"price": "Price",
+		"vehicle": "Vehicle",
+		"passenger": "Passenger",
+		"selectPassenger": "Select passenger",
+		"selectVehicle": "Select vehicle",
+		"seat": "Seat",
+		"floor": "Floor",
+		"addTrip": "Add trip",
+		"departureTime": "Departure time",
+		"pickUpPoint": "Pick up point",
+		"dropOff": "Drop off",
+		"timePickUp": "Time pick up",
+		"timeDropOff": "Time drop off",
+		"timeEnd": "Time end",
+		"timeStart": "Time start",
+		"createTrip": "Create trip",
+		"createPassengerCar": "Create passenger - Car in Charge of a Trip",
+		"addPickupAndDropOffPoints": "Add pick up and drop Off points",
+		"messageError": {
+			"fromStation": "From station cannot be the same as to station",
+			"missingPoints": "Missing from station",
+			"missingToStation": "Missing to station",
+			"missingStartDate": "Missing start date",
+			"missingPassenger": "Missing passenger",
+			"missingVehicle": "Missing vehicle",
+			"missingEndTime": "Missing end time",
+			"missingStartTime": "Missing start time",
+			"missingPrice": "Missing price",
+			"missingSeat": "Missing seat",
+			"missingFloor": "Missing floor",
+			"missingTimeDropOff": "Missing time drop off",
+			"missingTimePickUp": "Missing time pick up",
+			"completeTripCreation": "Complete trip creation",
+			"pleaseCheckAgain": "Please check again"
+		}
+	},
+	"common": {
+		"add": "Add",
+		"edit": "Edit",
+		"delete": "Delete",
+		"save": "Save",
+		"cancel": "Cancel",
+		"confirm": "Confirm",
+		"search": "Search",
+		"loading": "Loading...",
+		"back": "Back"
+	},
+	"auth": {
+		"login": "Login",
+		"logout": "Logout",
+		"register": "Register",
+		"username": "Username",
+		"password": "Password"
+	},
+	"navigation": {
+		"home": "Home",
+		"about": "About",
+		"contact": "Contact",
+		"admin": "Admin",
+		"user": "User"
+	},
+	"station": {
+		"title": "Station List",
+		"name": "Station Name",
+		"address": "Address",
+		"province": "Province/City",
+		"pickupPoints": "Pickup/Drop-off Points",
+		"addStation": "Add Station",
+		"editStation": "Edit Station",
+		"deleteConfirm": "Do you want to delete this station?",
+		"searchByName": "Search by station name",
+		"searchByProvince": "Search by province/city"
+	},
+	"messages": {
+		"deleteSuccess": "Delete successful",
+		"deleteError": "Delete failed",
+		"updateSuccess": "Update successful",
+		"updateError": "Update failed",
+		"addSuccess": "Add successful",
+		"addError": "Add failed",
+		"deleteAccount": "Do you want to delete this account?",
+		"updateUser": "Do you want to update this account?"
+	},
+	"admin": {
+		"systemTitle": "VietBus Travel🚍- Management System",
+		"greeting": "Hello",
+		"footer": "Created 2024 To Minh Vu"
+	},
+	"button": {
+		"AddUser": "Add user",
+		"update": "Update",
+		"editUser": "Edit user"
+	},
+	"Sidebar": {
+		"userManagement": "User Management",
+		"tripManagement": "Trip Management",
+		"passengerManagement": "Passenger Management",
+		"vehicleManagement": "Vehicle Management",
+		"statistics": "Statistics",
+		"generalStatistics": "General statistics",
+		"ticketManagement": "Ticket Management",
+		"stationManagement": "Station Management"
+	},
+	"Search": {
+		"searchByUsername": "Search by username"
+	},
+	"lable": {
+		"name": "Name",
+		"email": "Email",
+		"authorities": "Authorities",
+		"phone": "Phone number",
+		"password": "Password",
+		"confirmPass": "Confirm Password",
+		"action": "Action"
+	},
+	"placeholder": {
+		"pleaseSelectType": "Please select type",
+		"pleaseEnterName": "Please Enter Name",
+		"userType": "User type"
+	},
+	"validationRules": {
+		"email_min": "Email is too short!",
+		"email_max": "Email is too long!",
+		"email_required": "Please enter your email",
+		"name_min": "Name is too short!",
+		"name_max": "Name is too long!",
+		"name_required": "Please enter your name",
+		"password_min": "Password is too short!",
+		"password_max": "Password is too long!",
+		"password_required": "Please enter your password",
+		"phone_required": "Phone number cannot be empty",
+		"phone_invalid": "Invalid phone number",
+		"email_invalid": "Invalid email",
+		"confirm_password": "Passwords do not match"
+	},
+	"messageConfirm": {
+		"update": "Update",
+		"cancel": "Cancel",
+		"confirm": "Confirm"
+	}
+}

@@ -8,7 +8,7 @@ const initialState = {
 	ticketBooking: {},
 };
 
-export default (state = initialState, action) => {
+const ticketReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_TICKET_USER: {
 			return {...state, ticketUser: action.ticketUser};
@@ -39,3 +39,5 @@ export default (state = initialState, action) => {
 			return state;
 	}
 };
+
+export default ticketReducer;

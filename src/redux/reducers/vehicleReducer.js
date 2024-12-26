@@ -16,7 +16,7 @@ const initialState = {
 	listSeatVehicle: [],
 };
 
-export default (state = initialState, action) => {
+const vehicleReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_LIST_VEHICLE: {
 			return {...state, listVehicle: action.listVehicle};
@@ -62,3 +62,5 @@ export default (state = initialState, action) => {
 			return state;
 	}
 };
+
+export default vehicleReducer;

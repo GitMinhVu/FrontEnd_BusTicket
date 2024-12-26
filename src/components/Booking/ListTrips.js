@@ -48,8 +48,8 @@ export default function ListTrips(props) {
 	}));
 	const renderTripPassenger = () => {
 		return listTripPassenger?.map((item, index) => {
-			if (item.status == "depart") {
-				let numberBlank = item.vehicle.seatVehicle.filter((x) => x.status == "chưa đặt").length;
+			if (item.status === "depart") {
+				let numberBlank = item.vehicle.seatVehicle.filter((x) => x.status === "chưa đặt").length;
 				let avgRatePassenger = _.meanBy(item.passenger.passengerRate, (rate) => rate.numberRate).toFixed(2);
 				return (
 					<Card style={{width: "100%"}} key={index}>
@@ -57,7 +57,7 @@ export default function ListTrips(props) {
 							<div className="col-span-3 logo-trips">
 								<div className="image" style={{position: "relative"}}>
 									<img className="operator lazyloaded" data-src={item.passenger.imageIntro} alt="Img" src={item.passenger.imageIntro} />
-									<img className="sticker ls-is-cached lazyloaded" data-src="https://storage.googleapis.com/fe-production/images/sticker-covid.png" alt="chuyến xe an toàn covid-19" src="https://storage.googleapis.com/fe-production/images/sticker-covid.png" />
+									{/* <img className="sticker ls-is-cached lazyloaded" data-src="https://storage.googleapis.com/fe-production/images/sticker-covid.png" alt="chuyến xe an toàn covid-19" src="https://storage.googleapis.com/fe-production/images/sticker-covid.png" /> */}
 									<div className="confirm-ticket">
 										<svg width={14} height={12} viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
 											<path fillRule="evenodd" clipRule="evenodd" d="M13.666 2v2.667c-.733 0-1.333.6-1.333 1.333 0 .734.6 1.334 1.333 1.334V10c0 .734-.6 1.334-1.333 1.334H1.666c-.733 0-1.333-.6-1.333-1.334V7.334a1.333 1.333 0 0 0 .006-2.667V2C.34 1.26.933.667 1.666.667h10.667c.733 0 1.333.593 1.333 1.333zM6.391 8.965c-.016.125.07.235.182.235a.18.18 0 0 0 .16-.103l.244-.475c.301-.586.832-1.619 1.595-3.098.07-.167 0-.235-.128-.235H7.322l.287-2.254c.016-.125-.07-.235-.182-.235a.183.183 0 0 0-.16.103l-.972 1.899c-.337.657-.616 1.2-.835 1.632l-.001.002c-.016.025-.173.275.1.275h1.12L6.39 8.965z" fill="#fff" />
@@ -74,8 +74,11 @@ export default function ListTrips(props) {
 										<button type="button" className="ant-btn bus-rating-button">
 											<div className="bus-rating">
 												<StarFilled />
+												{/* <span>
+													{avgRatePassenger} ({item.passenger.passengerRate.length === 0 ? "" : item.passenger.passengerRate.length})
+												</span> */}
 												<span>
-													{avgRatePassenger} ({item.passenger.passengerRate.length == 0 ? "" : item.passenger.passengerRate.length})
+													{isNaN(avgRatePassenger) ? 0 : avgRatePassenger} ({item.passenger.passengerRate.length})
 												</span>
 											</div>
 										</button>
@@ -113,13 +116,13 @@ export default function ListTrips(props) {
 									<Tag color="red" className="my-3">
 										Sạch sẽ
 									</Tag>
-									<Tag color="blue" className="my-3">
+									{/* <Tag color="blue" className="my-3">
 										{item.passenger.description}
-									</Tag>
+									</Tag> */}
 								</div>
 								<div className="ticket_pc">
 									<div className="info">
-										<div className="seat-available ">{numberBlank} chỗ trống</div>
+										<div className="seat-available ">{numberBlank} Chỗ trống</div>
 									</div>
 									<div className="action">
 										<button
@@ -171,6 +174,15 @@ export default function ListTrips(props) {
 				</h1>
 				<div className="sort">
 					<span className="sort-label mr-5">Sắp xếp theo:</span>
+					{/* <button
+						type="button"
+						className="ant-btn"
+						onClick={() => {
+							dispatch(getListStationAction());
+						}}
+					>
+						<span>Tất cả chuyến đi</span>
+					</button> */}
 					<button
 						type="button"
 						className="ant-btn"

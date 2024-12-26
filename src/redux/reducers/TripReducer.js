@@ -9,7 +9,7 @@ const initialState = {
 	tripPassengerCreated: {},
 };
 
-export default (state = initialState, action) => {
+const tripReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case GET_TRIP: {
 			return {...state, listTrip: action.listTrip};
@@ -33,3 +33,5 @@ export default (state = initialState, action) => {
 			return state;
 	}
 };
+
+export default tripReducer;

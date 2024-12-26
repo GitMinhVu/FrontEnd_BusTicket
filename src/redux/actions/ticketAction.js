@@ -36,6 +36,24 @@ export const getDetailTicket = (id) => {
 		}
 	};
 };
+
+//phone
+export const getTicketByPhoneAndId = (phone, ticketId) => {
+	return async (dispatch) => {
+		try {
+			const result = await ticketService.getTicketByPhoneAndId(phone, ticketId);
+			if (result.status == 200) {
+				dispatch({
+					type: SET_DETAIL_TICKET,
+					detailTicket: result.data,
+				});
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+};
+
 export const deleteTicket = (id) => {
 	return async (dispatch) => {
 		try {

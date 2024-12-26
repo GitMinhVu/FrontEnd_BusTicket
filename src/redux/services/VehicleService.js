@@ -34,5 +34,8 @@ export class VehicleService extends baseService {
 	getSeatVehicle = (id) => {
 		return this.get(`/seats?vehicleId=${id}`);
 	};
+	uploadVehicleImage = (id, formData) => {
+		return this.postImage(`/vehicles/upload/${id}`, formData);
+	};
 }
 export const vehicleService = new VehicleService();

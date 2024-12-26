@@ -10,7 +10,7 @@ const initialState = {
 	address: [],
 };
 
-export default (state = initialState, action) => {
+const pointReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_POINT_PICKUP: {
 			return {...state, listPointPickup: action.listPointPickup};
@@ -37,3 +37,5 @@ export default (state = initialState, action) => {
 			return state;
 	}
 };
+
+export default pointReducer;

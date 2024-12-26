@@ -5,7 +5,7 @@ const initialState = {
 	listCommentUser: [],
 };
 
-export default (state = initialState, action) => {
+const commentReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case GET_COMMENT_BY_PASSENGER: {
 			return {...state, listCommentPassenger: action.listCommentPassenger};
@@ -17,3 +17,5 @@ export default (state = initialState, action) => {
 			return state;
 	}
 };
+
+export default commentReducer;

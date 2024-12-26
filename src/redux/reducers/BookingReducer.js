@@ -19,7 +19,7 @@ const initialState = {
 	isSort: false,
 };
 
-export default (state = initialState, action) => {
+const bookingReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case GET_PROVINCE: {
 			return {...state, listProvince: action.listProvince};
@@ -47,7 +47,7 @@ export default (state = initialState, action) => {
 		case OPEN_CLOSE_BOOKING: {
 			let arrListTrip = [...state.listTripPassenger];
 			let indexOpen = arrListTrip.findIndex((item) => item.isOpen);
-			if (indexOpen == -1) {
+			if (indexOpen === -1) {
 				let index = arrListTrip.findIndex((item) => item.id === action.id);
 				if (index !== -1) {
 					if (!arrListTrip[index].openDetail) {
@@ -69,7 +69,7 @@ export default (state = initialState, action) => {
 		case OPEN_CLOSE_DETAILS: {
 			let arrListTrip = [...state.listTripPassenger];
 			let indexOpen = arrListTrip.findIndex((item) => item.isOpen);
-			if (indexOpen == -1) {
+			if (indexOpen === -1) {
 				let index = arrListTrip.findIndex((item) => item.id === action.id);
 				if (index !== -1) {
 					if (!arrListTrip[index].openBooking) {
@@ -88,7 +88,7 @@ export default (state = initialState, action) => {
 		case SELECT_BOOKING_SEAT: {
 			let arrSeatSelectcopy = [...state.listSeatSelected];
 			let index = arrSeatSelectcopy.findIndex((item) => item.id === action.seat.id);
-			if (index != -1) {
+			if (index !== -1) {
 				arrSeatSelectcopy.splice(index, 1);
 			} else {
 				if (arrSeatSelectcopy.length < 3) {
@@ -103,7 +103,7 @@ export default (state = initialState, action) => {
 			return {...state, tripRender: action.tripRender};
 		}
 		case SET_DROPOFF_PICKUP: {
-			if (action.title == "pickup") {
+			if (action.title === "pickup") {
 				state.pickup = action.pickup;
 			} else {
 				state.dropoff = action.dropoff;
@@ -135,3 +135,5 @@ export default (state = initialState, action) => {
 			return state;
 	}
 };
+
+export default bookingReducer;

@@ -10,6 +10,7 @@ export const LoginAction = (user) => {
 			const result = await userService.loginService(user);
 			console.log(result);
 			if (result.status == 200) {
+				localStorage.setItem("USER_LOGIN", JSON.stringify(result.data.user));
 				dispatch({
 					type: LOGIN,
 					token: result.data.token,
@@ -147,6 +148,30 @@ export const deleteUserAction = (id) => {
 			}
 		} catch (error) {
 			message.error("Xóa user thất bại");
+			console.log(error);
+		}
+	};
+};
+
+//avatar
+export const updateUserAvatarAction = (id, file) => {
+	return async (dispatch, getState) => {
+		try {
+			const result = await userService.updateImageUser(id, file);
+			if (result.status === 200) {
+				message.success("Cập nhật avatar thành công");
+				let userLogin = getState().userReducer.userLogin;
+				if (userLogin.id === result.data.id) {
+					localStorage.setItem(USER_LOGIN, JSON.stringify(result.data));
+					dispatch({
+						type: SET_USER,
+						userLogin: result.data,
+					});
+				}
+				dispatch(getUserAction());
+			}
+		} catch (error) {
+			message.error("Cập nhật avatar thất bại");
 			console.log(error);
 		}
 	};

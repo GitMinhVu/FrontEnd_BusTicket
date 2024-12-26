@@ -6,7 +6,7 @@ const initialState = {
 	content: "",
 };
 
-export default (state = initialState, action) => {
+const drawerReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case OPEN_DRAWER: {
 			return {
@@ -23,3 +23,5 @@ export default (state = initialState, action) => {
 			return state;
 	}
 };
+
+export default drawerReducer;

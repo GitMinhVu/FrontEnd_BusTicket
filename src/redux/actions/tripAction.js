@@ -58,7 +58,7 @@ export const createTripPassengerAction = (tripPassenger, next) => {
 				next();
 			}
 		} catch (error) {
-			message.error("Phân nhà xe cho chuyến đi không thành công");
+			message.error("Xe đã được phân vào chuyến khác vui lòng chọn xe hoặc nhà xe khác");
 			console.log(error);
 		}
 	};
@@ -462,3 +462,18 @@ export const FilterRateTripPassengerAction = (rate) => {
 };
 
 //
+
+export const deleteTripAction = (tripId) => {
+	return async (dispatch) => {
+		try {
+			const result = await tripService.deleteTrip(tripId);
+			if (result.status === 200) {
+				message.success("Xóa chuyến xe thành công");
+				dispatch(getTripAction());
+			}
+		} catch (error) {
+			message.error("Xóa chuyến xe thất bại");
+			console.error("Error deleting trip:", error.response?.data || error.message);
+		}
+	};
+};

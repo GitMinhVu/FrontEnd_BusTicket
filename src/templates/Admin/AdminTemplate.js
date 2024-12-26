@@ -8,8 +8,8 @@ import {Redirect, Route} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {history} from "../../App";
 import {CHANGE_KEY} from "../../redux/types/AdminTypes";
-import {TOKEN, USER_LOGIN} from "../../util/settings/config";
-import { useTranslation } from 'react-i18next'; 
+import {TOKEN, USER_LOGIN, ADMIN_LOGIN, ADMIN_TOKEN} from "../../util/settings/config";
+import {useTranslation} from "react-i18next";
 import LanguageSwitcher from "../../components/LanguageSwitch/LanguageSwitch";
 const {Header, Content, Footer, Sider} = Layout;
 const {SubMenu} = Menu;
@@ -20,29 +20,43 @@ export default function AdminTemplate(props) {
 	const dispatch = useDispatch();
 	const {Component, ...restProps} = props;
 	const [collapsed, setCollapsed] = useState(false);
-	const{t, i18n} = useTranslation();
-	
+	const {t, i18n} = useTranslation();
+
 	const changeCollapsed = () => {
 		setCollapsed(!collapsed);
 	};
-	
+
+	// // Kiểm tra đăng nhập admin
+	// if (!localStorage.getItem(ADMIN_LOGIN)) {
+	// 	alert("Bạn không có quyền truy cập vào trang này!");
+	// 	return <Redirect to="/admin/login" />;
+	// }
+
+	// const adminLogin = JSON.parse(localStorage.getItem(ADMIN_LOGIN));
+	// if (adminLogin?.type !== "ADMIN") {
+	// 	alert("Bạn không có quyền truy cập vào trang này!");
+	// 	return <Redirect to="/" />;
+	// }
+
+	// Cập nhật menu logout
 	const menu = (
 		<Menu>
 			<Menu.Item
 				key="0"
 				onClick={() => {
-					localStorage.removeItem(USER_LOGIN);
-					localStorage.removeItem(TOKEN);
-					window.location.reload();
+					localStorage.removeItem(ADMIN_LOGIN);
+					localStorage.removeItem(ADMIN_TOKEN);
+					alert("Đăng xuất thành công!");
+					history.push("/admin/login");
 				}}
 			>
-				<a>{t('auth.logout')}</a>
+				<a>{t("auth.logout")}</a>
 			</Menu.Item>
 		</Menu>
 	);
 	// if (!localStorage.getItem(USER_LOGIN)) {
 	// 	alert("Bạn không có quyền truy cập vào trang này !");
-	// 	return <Redirect to="/" />;
+	// 	return <Redirect to="/admin/login" />;
 	// }
 
 	// if (userLogin.type !== "ADMIN") {
@@ -60,15 +74,15 @@ export default function AdminTemplate(props) {
 								<div className="logo flex justify-center items-center mt-5">
 									{/* <span style={{color:"white"}}>VietBusTravel- Admin</span> */}
 									{/* <img src="https://www.shutterstock.com/image-vector/big-black-bus-vector-image-600nw-2473900693.jpg" alt={123} className="mb-5" /> */}
-									<img 
-										src="/images/original.png" 
-										alt="VietBus Logo" 
+									<img
+										src="/images/original.png"
+										alt="VietBus Logo"
 										style={{
-											width: '70%',
-											marginBottom: '20px',
-											borderRadius: '50%', 
-											aspectRatio:'1/1',
-											objectFit:'cover'
+											width: "70%",
+											marginBottom: "20px",
+											borderRadius: "50%",
+											aspectRatio: "1/1",
+											objectFit: "cover",
 										}}
 									/>
 								</div>
@@ -84,7 +98,7 @@ export default function AdminTemplate(props) {
 											});
 										}}
 									>
-										{t('Sidebar.userManagement')}
+										{t("Sidebar.userManagement")}
 									</Menu.Item>
 									<Menu.Item
 										key="2"
@@ -97,7 +111,7 @@ export default function AdminTemplate(props) {
 											});
 										}}
 									>
-										{t('Sidebar.tripManagement')}
+										{t("Sidebar.tripManagement")}
 									</Menu.Item>
 									<Menu.Item
 										key="3"
@@ -110,7 +124,7 @@ export default function AdminTemplate(props) {
 											});
 										}}
 									>
-										{t('Sidebar.passengerManagement')}
+										{t("Sidebar.passengerManagement")}
 									</Menu.Item>
 									<Menu.Item
 										key="4"
@@ -123,18 +137,17 @@ export default function AdminTemplate(props) {
 											});
 										}}
 									>
-										{t('Sidebar.vehicleManagement')}
-
+										{t("Sidebar.vehicleManagement")}
 									</Menu.Item>
 
-									<SubMenu key="sub2" icon={<MoneyCollectOutlined />} title={t('Sidebar.statistics')}>
+									<SubMenu key="sub2" icon={<MoneyCollectOutlined />} title={t("Sidebar.statistics")}>
 										<Menu.Item
 											key="5"
 											onClick={() => {
 												history.push("/admin/turnover");
 											}}
 										>
-											{t('Sidebar.generalStatistics')}
+											{t("Sidebar.generalStatistics")}
 										</Menu.Item>
 									</SubMenu>
 									<Menu.Item
@@ -148,7 +161,7 @@ export default function AdminTemplate(props) {
 											});
 										}}
 									>
-										{t('Sidebar.ticketManagement')}
+										{t("Sidebar.ticketManagement")}
 									</Menu.Item>
 									<Menu.Item
 										key="8"
@@ -157,14 +170,14 @@ export default function AdminTemplate(props) {
 											history.push("/admin/station");
 										}}
 									>
-										{t('Sidebar.stationManagement')}
+										{t("Sidebar.stationManagement")}
 									</Menu.Item>
 								</Menu>
 							</Sider>
 							<Layout className="site-layout">
 								<Header className="site-layout-background flex justify-end" style={{padding: 0, background: "#fff"}}>
 									<div className="flex items-center justify-between w-full px-5">
-										<span className="font-bold text-xl">{t('admin.systemTitle')}</span>
+										<span className="font-bold text-xl">{t("admin.systemTitle")}</span>
 										<div className="flex items-center gap-4">
 											<LanguageSwitcher />
 											<Dropdown overlay={menu} trigger={["click"]} className="cursor-pointer">
@@ -172,7 +185,9 @@ export default function AdminTemplate(props) {
 													<Avatar style={{verticalAlign: "middle", background: "#7265e6", marginRight: 10}} size="large">
 														{userLogin?.name}
 													</Avatar>
-													<span className="text-xl">{t('admin.greeting')} , {userLogin?.name}</span>
+													<span className="text-xl">
+														{t("admin.greeting")} , {userLogin?.name}
+													</span>
 												</div>
 											</Dropdown>
 										</div>

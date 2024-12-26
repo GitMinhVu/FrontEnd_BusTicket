@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import {useDispatch, useSelector} from "react-redux";
 import {MinusCircleOutlined, PlusOutlined, FormOutlined, DeleteOutlined} from "@ant-design/icons";
-import {Form, Input, Button, Space, Select, message, Popover, Checkbox, Row, Col} from "antd";
+import {Form, Input, Button, Select, Row, Col} from "antd";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {getDetailStationAction, updateStationAction, createStationAction} from "../../redux/actions/stationAction";
@@ -14,9 +14,11 @@ export default function AddStation(props) {
 	const dispatch = useDispatch();
 	const {stationDetail} = useSelector((state) => state.StationReducer);
 	const {listProvince} = useSelector((state) => state.BookingReducer);
+
 	useEffect(() => {
 		dispatch(getProvinceAction());
 	}, [props.id]);
+
 	const ListProvince = listProvince?.map((item, index) => {
 		if (item.name.includes("Tỉnh")) {
 			return item.name.substring(5, item.name.length);
@@ -26,11 +28,13 @@ export default function AddStation(props) {
 			return item.name;
 		}
 	});
+
 	const renderProvince = () => {
 		return ListProvince.map((item, index) => {
 			return {label: `${item}`, value: item};
 		});
 	};
+
 	const finish = (values) => {
 		console.log("file: AddStation.js ~ line 35 ~ finish ~ values", values);
 		dispatch(createStationAction(values));
@@ -38,6 +42,7 @@ export default function AddStation(props) {
 			type: CLOSE_DRAWER,
 		});
 	};
+
 	return (
 		<Form layout="vertical" name="basic" autoComplete="off" onFinish={finish} requiredMark={true}>
 			<Row gutter={16}>

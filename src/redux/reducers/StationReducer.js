@@ -5,7 +5,7 @@ const initialState = {
 	stationDetail: {},
 };
 
-export default (state = initialState, action) => {
+const stationReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_LIST_STATION: {
 			return {...state, listStation: action.listStation};
@@ -17,3 +17,5 @@ export default (state = initialState, action) => {
 			return state;
 	}
 };
+
+export default stationReducer;

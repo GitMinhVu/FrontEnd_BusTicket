@@ -8,7 +8,7 @@ const initialState = {
 	isSuccess: false,
 };
 
-export default (state = initialState, action) => {
+const loadingReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_LOADING: {
 			return {...state, isLoading: true};
@@ -44,3 +44,5 @@ export default (state = initialState, action) => {
 			return state;
 	}
 };
+
+export default loadingReducer;

@@ -79,14 +79,38 @@ export const bookingSeatAction = (seat) => {
 	};
 };
 
+// export const bookingTicketAction = (ticket, passenger) => {
+// 	return async (dispatch) => {
+// 		try {
+// 			const result = await bookingService.booking(ticket);
+// 			console.log(result);
+// 			if (result.status == 200) {
+// 				message.success("Đặt vé thành công");
+// 				dispatch(PayAction(ticket, passenger));
+// 			} else {
+// 				message.error("đặt vé không thành công vì bạn đã đặt vé cho chuyến này rồi");
+// 			}
+// 		} catch (error) {
+// 			message.error("đặt vé không thành công vì bạn đã đặt vé cho chuyến này rồi");
+// 			console.log(error);
+// 		}
+// 	};
+// };
+
 export const bookingTicketAction = (ticket, passenger) => {
 	return async (dispatch) => {
 		try {
 			const result = await bookingService.booking(ticket);
 			console.log(result);
 			if (result.status == 200) {
-				message.success("đặt vé thành công");
-				dispatch(PayAction(ticket, passenger));
+				message.success("Đặt vé thành công");
+				if (ticket.paymentMethod === "cash") {
+					setTimeout(() => {
+						window.location.href = "/";
+					}, 1000);
+				} else {
+					dispatch(PayAction(ticket, passenger));
+				}
 			} else {
 				message.error("đặt vé không thành công vì bạn đã đặt vé cho chuyến này rồi");
 			}

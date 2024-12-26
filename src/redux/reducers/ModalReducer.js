@@ -6,8 +6,7 @@ const initialState = {
 	content: "",
 	width: "",
 };
-
-export default (state = initialState, action) => {
+const modalReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_MODAL: {
 			return {...state, visibleModal: true, title: action.title, content: action.content, width: action.width};
@@ -19,3 +18,17 @@ export default (state = initialState, action) => {
 			return state;
 	}
 };
+// export default (state = initialState, action) => {
+// 	switch (action.type) {
+// 		case SET_MODAL: {
+// 			return {...state, visibleModal: true, title: action.title, content: action.content, width: action.width};
+// 		}
+// 		case HIDE_MODAL: {
+// 			return {...state, visibleModal: false};
+// 		}
+// 		default:
+// 			return state;
+// 	}
+// };
+
+export default modalReducer;

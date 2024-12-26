@@ -90,7 +90,7 @@ export default function AdminPassenger() {
 			title: "Đánh Giá",
 			render: (text, passenger) => {
 				let rate;
-				if (passenger.passengerRate.length == 0) {
+				if (passenger.passengerRate.length === 0) {
 					rate = 0;
 				} else {
 					rate = _.meanBy(passenger.passengerRate, (rate) => rate.numberRate);
@@ -142,9 +142,7 @@ export default function AdminPassenger() {
 		setSearchText(e.target.value);
 	};
 
-	const filteredPassengers = listPassenger.filter(passenger =>
-		passenger.name.toLowerCase().includes(searchText.toLowerCase())
-	);
+	const filteredPassengers = listPassenger.filter((passenger) => passenger.name.toLowerCase().includes(searchText.toLowerCase()));
 
 	return (
 		<Content style={{margin: "0 16px"}}>
@@ -154,20 +152,15 @@ export default function AdminPassenger() {
 			</Breadcrumb>
 			<div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
 				<h1>Danh sách các nhà xe</h1>
-				<div style={{ 
-					display: 'flex', 
-					justifyContent: 'space-between',
-					alignItems: 'center',
-					marginBottom: 16 
-				}}>
-					<Input
-						placeholder="Tìm kiếm theo tên nhà xe"
-						prefix={<SearchOutlined />}
-						value={searchText}
-						onChange={handleSearch}
-						style={{ width: 300 }}
-						allowClear
-					/>
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "space-between",
+						alignItems: "center",
+						marginBottom: 16,
+					}}
+				>
+					<Input placeholder="Tìm kiếm theo tên nhà xe" prefix={<SearchOutlined />} value={searchText} onChange={handleSearch} style={{width: 300}} allowClear />
 					<Button
 						type="primary"
 						onClick={() => {
@@ -177,9 +170,9 @@ export default function AdminPassenger() {
 								content: <AddPassenger />,
 							});
 						}}
-						style={{display:'flex', alignItems:'center'}}
+						style={{display: "flex", alignItems: "center"}}
 					>
-						<AddBusinessIcon className="mr-2"style={{marginRight:8}} />
+						<AddBusinessIcon className="mr-2" style={{marginRight: 8}} />
 						Thêm Nhà Xe
 					</Button>
 				</div>

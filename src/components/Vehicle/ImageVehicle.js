@@ -21,51 +21,6 @@ export default function ImageVehicle(props) {
 	useEffect(() => {
 		dispatch(getDetailVehicleOfImageAction(id));
 	}, [id]);
-
-	// const [state, setState] = useState({
-	// 	previewVisible: false,
-	// 	previewImage: "",
-	// 	previewTitle: "",
-	// 	fileList: [
-	// 		{
-	// 			uid: "-1",
-	// 			name: "image.png",
-	// 			status: "done",
-	// 			url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-	// 		},
-	// 		{
-	// 			uid: "-2",
-	// 			name: "image.png",
-	// 			status: "done",
-	// 			url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-	// 		},
-	// 		// {
-	// 		// 	uid: "-3",
-	// 		// 	name: "image.png",
-	// 		// 	status: "done",
-	// 		// 	url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-	// 		// },
-	// 		// {
-	// 		// 	uid: "-4",
-	// 		// 	name: "image.png",
-	// 		// 	status: "done",
-	// 		// 	url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-	// 		// },
-	// 		{
-	// 			uid: "-xxx",
-	// 			percent: 50,
-	// 			name: "image.png",
-	// 			status: "uploading",
-	// 			url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-	// 		},
-	// 		// {
-	// 		// 	uid: "-5",
-	// 		// 	name: "image.png",
-	// 		// 	status: "error",
-	// 		// },
-	// 	],
-	// });
-
 	const handleCancel = (e) => {
 		dispatch({type: CANCEL_PREVIEW});
 	};
@@ -91,10 +46,15 @@ export default function ImageVehicle(props) {
 		var bodyFormData = new FormData();
 		bodyFormData.append("imagevehicle", e);
 		dispatch(CreateImgVehicleAction(vehicleDetail.id, bodyFormData));
-		return true;
+		return false;
 	};
-	const remove = (e) => {
-		dispatch(deleteImgVehicleAction(e.id));
+	const remove = (file) => {
+		// Check if file has uid (for new uploads) or id (for existing images)
+		const imageId = file.response?.id || file.id;
+		if (imageId) {
+			dispatch(deleteImgVehicleAction(imageId));
+		}
+		return true;
 	};
 	// const {previewVisible, previewImage, fileList, previewTitle} = fileImageVehicle;
 	const uploadButton = (
@@ -106,7 +66,7 @@ export default function ImageVehicle(props) {
 
 	return (
 		<>
-			<Upload listType="picture-card" fileList={fileImageVehicle?.fileList} onPreview={handlePreview} onChange={handleChange} onRemove={remove} beforeUpload={uploadChange}>
+			<Upload action={`${DOMAIN}/vehicles/upload`} listType="picture-card" fileList={fileImageVehicle?.fileList} onPreview={handlePreview} onChange={handleChange} onRemove={remove} beforeUpload={uploadChange}>
 				{fileImageVehicle.fileList?.length >= 8 ? null : uploadButton}
 			</Upload>
 			<Modal visible={fileImageVehicle.previewVisible} title={fileImageVehicle.previewTitle} footer={null} onCancel={handleCancel}>

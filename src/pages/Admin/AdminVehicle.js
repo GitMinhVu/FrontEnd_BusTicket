@@ -61,16 +61,11 @@ export default function AdminVehicle() {
 			title: "Hình Ảnh",
 			render: (text, vehicle) => {
 				return (
-					<div style={{ display: 'flex', alignItems: 'center' }}> {/* Thêm style này */}
+					<div style={{display: "flex", alignItems: "center"}}>
+						{" "}
+						{/* Thêm style này */}
 						{vehicle.vehicleOfImage.map((item, index) => {
-							return <Image 
-								preview={{visible: vehicle.visible}} 
-								width={75} 
-								height={60} 
-								style={{borderRadius: "50%"}} 
-								src={item.link} 
-								key={index} 
-							/>;
+							return <Image preview={{visible: vehicle.visible}} width={75} height={60} style={{borderRadius: "50%"}} src={item.link} key={index} />;
 						})}
 						<Button
 							type="link"
@@ -174,9 +169,7 @@ export default function AdminVehicle() {
 	const handleSearch = (e) => {
 		setSearchText(e.target.value);
 	};
-	const filteredVehicles = listVehicle.filter(vehicle =>
-		vehicle.name.toLowerCase().includes(searchText.toLowerCase())
-	);
+	const filteredVehicles = listVehicle.filter((vehicle) => vehicle.name.toLowerCase().includes(searchText.toLowerCase()));
 	return (
 		<Content style={{margin: "0 16px"}}>
 			<Breadcrumb style={{margin: "16px 0"}}>
@@ -185,16 +178,9 @@ export default function AdminVehicle() {
 			</Breadcrumb>
 			<div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
 				<h1>Danh sách xe</h1>
-				
-				<div style={{ display: 'flex', gap: '16px', marginBottom: 16, justifyContent:'space-between' }}>
-					<Input
-						placeholder="Tìm kiếm theo tên xe"
-						allowClear	
-						prefix={<SearchOutlined />}
-						value={searchText}
-						onChange={handleSearch}
-						style={{ width: 300 }}
-					/>
+
+				<div style={{display: "flex", gap: "16px", marginBottom: 16, justifyContent: "space-between"}}>
+					<Input placeholder="Tìm kiếm theo tên xe" allowClear prefix={<SearchOutlined />} value={searchText} onChange={handleSearch} style={{width: 300}} />
 					<Button
 						type="primary"
 						onClick={() => {
@@ -204,9 +190,9 @@ export default function AdminVehicle() {
 								content: <AddVehicle />,
 							});
 						}}
-						style={{ display: 'flex', alignItems: 'center' }}
+						style={{display: "flex", alignItems: "center"}}
 					>
-						<LocalCarWashIcon style={{ marginRight: 8 }}/>
+						<LocalCarWashIcon style={{marginRight: 8}} />
 						Thêm Xe
 					</Button>
 				</div>

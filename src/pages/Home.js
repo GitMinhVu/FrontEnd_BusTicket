@@ -28,7 +28,7 @@ export default function Home() {
 	return (
 		<>
 			<div className="home_banner">
-				<img src="https://onetour.vn/Media/Images/OneTour/tin-tuc/2019/thang%209/ruong-bac-thang-tren-vung-cao-viet-nam-1.jpg" alt="123" className="img_banner" />
+				<img src="https://onetour.vn/Media/Images/OneTour/tin-tuc/2019/thang%209/ruong-bac-thang-tren-vung-cao-viet-nam-1.jpg" alt="background-header" className="img_banner" />
 				<div className="home_content">
 					<div className="home_around w-full">
 						<div className="title_banner">

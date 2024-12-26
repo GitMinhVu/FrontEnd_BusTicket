@@ -1,15 +1,26 @@
 .ticket .ticket-container {
-  margin: 0 auto;
-  width: 70%;
+	margin: 0 auto;
+	width: 70%;
 }
 
 .ticket .ticket-container .ant-card-body {
-  padding: 12px !important;
+	padding: 12px !important;
 }
 
 .ticket .ticket-container .ant-card-body .card-item span {
-  margin-left: 8px;
-  color: #484848;
-  font-size: 12px;
+	margin-left: 8px;
+	color: #484848;
+	font-size: 12px;
 }
 /*# sourceMappingURL=ticket.css.map */
+
+.comment-list .ant-comment-actions {
+	position: absolute;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.comment-list .ant-comment {
+	position: relative;
+}

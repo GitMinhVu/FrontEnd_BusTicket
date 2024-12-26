@@ -32,6 +32,9 @@ export class TripService extends baseService {
 	deleteTripPassenger = (id) => {
 		return this.delete(`/tripPassenger/${id}`);
 	};
+	deleteTrip = (id) => {
+		return this.delete(`/trips/${id}`);
+	};
 	confirmTripPassenger = (id, status) => {
 		return this.put(`/tripPassenger/confirm/${id}`, status);
 	};

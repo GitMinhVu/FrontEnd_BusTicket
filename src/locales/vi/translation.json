@@ -1,199 +1,200 @@
 {
-    "tripManagement": {
-        "trip": "Chuyến đi",
-        "listOfTrips": "Danh sách các chuyến đi",
-        "searchTrip": "Tìm kiếm điểm đi",
-        "searchForDestination": "Tìm kiếm điểm đến",
-        "addTrip": "Thêm chuyến đi",
-        "start": "Nơi bắt đầu",
-        "end": "Nơi đến",
-        "startDate": "Ngày bắt đầu",
-        "detailedTripList": "Danh sách chuyến đi chi tiết",
-        "trippassenger":{
-            "trippassengers": "Hành khách chuyến đi",
-            "listOfTripsFrom": "Danh sách các chuyến đi từ ",
-            "to": "Đến",
-            "fromDate": "Từ ngày",
-            "aboutToDepart": "Sắp xuất phát",
-            "run": "Đang chạy",
-            "canceled" : "Đã hủy",
-            "complete": "Hoàn thành",
-            "cancel": "Hủy",
-            "passenger": "Nhà xe",
-            "vehicle":"Xe",
-            "price":"Giá",
-            "status":"Trạng thái",
-            "startTime": "Giờ bắt đầu",
-            "endTime": "Giờ kết thúc",
-            "ticketDetails": "Chi tiết về vé",
-            "action":"Tùy chọn",
-            "diagram": "Sơ đồ",
-            "busTicketList": "Danh sách vé của nhà xe",
-            "atTheTime":"Lúc",
-            "ticketNumber": "Số vé",
-            "time": "Thời gian",
-            "update": "Cập nhật",
-            "totalNumberOfTickets": "Tổng số vé",
-            "phone": "Số điện thoại",
-            "booked": "Đặt lúc",
-            "numberOfSeats": "Số ghế",
-            "pickUpPoint": "Điểm đón",
-            "dropoff": "Điểm trả",
-            "floor": "Tầng"
-        },
-        "mess": {
-            "updateTrip": "Cập nhật chuyến xe",
-            "deleteAccount": "Bạn có muốn xóa tài khoản này?",
-            "noDelete":"Bạn không được phép xóa chuyến đi này vì đang ở không ở trạng thái hủy"
-        }
-    },
-    "addTrip":{
-        "fromStation": "Điểm đi",
-        "toStation": "Điểm đến",
-        "startDate": "Ngày bắt đầu",
-        "endDate": "Ngày kết thúc",
-        "startTime": "Giờ bắt đầu",
-        "endTime": "Giờ kết thúc",
-        "price": "Giá",
-        "vehicle": "Xe",
-        "passenger": "Nhà xe",
-        "selectPassenger": "Chọn nhà xe",
-        "selectVehicle": "Chọn xe",
-        "seat": "Ghế",
-        "floor": "Tầng",
-        "addTrip": "Thêm chuyến đi",
-        "departureTime": "Thời gian khởi hành",
-        "back": "Quay lại",
-        "create": "Tạo",
-        "pickUpPoint": "Điểm đón",
-        "dropOff": "Điểm trả",
-        "timePickUp": "Thời gian đón",  
-        "timeDropOff": "Thời gian trả",
-        "timeEnd": "Thời gian kết thúc",
-        "timeStart": "Thời gian khởi hành",
-        "createTrip": "Tạo chuyến đi",
-        "createPassengerCar": "Tạo Nhà Xe - Xe Phụ Trách Chuyến Đi",
-        "addPickupAndDropOffPoints": "Thêm Điểm Đón - Trả",
-        "messageError": {
-          "fromStation": "Điểm đi không được trùng với điểm đến",
-          "missingPoints": "Thiếu điểm đi",
-          "missingToStation": "Thiếu điểm đến",
-          "missingStartDate": "Thiếu ngày xuất phát",
-          "missingPassenger": "Thiếu nhà xe",
-          "missingVehicle": "Thiếu xe",
-          "missingEndTime": "Thiếu thời gian kết thúc",
-          "missingStartTime": "Thiếu thời gian khởi hành",
-          "missingPrice": "Thiếu giá",
-          "missingSeat": "Thiếu số ghế",
-          "missingFloor": "Thiếu tầng",
-          "missingTimeDropOff": "Thiếu thời gian trả",
-          "missingTimePickUp": "Thiếu thời gian đón",
-          "completeTripCreation": "Hoàn thành tạo chuyến đi",
-          "pleaseCheckAgain": "Vui lòng kiểm tra lại"
-        }
-    },
-    "common": {
-      "add": "Thêm",
-      "edit": "Sửa",
-      "delete": "Xóa",
-      "save": "Lưu",
-      "cancel": "Hủy",
-      "confirm": "Xác nhận",
-      "search": "Tìm kiếm",
-      "loading": "Đang tải..."
-    },
-    "auth": {
-      "login": "Đăng nhập",
-      "logout": "Đăng xuất",
-      "register": "Đăng ký",
-      "username": "Tên đăng nhập",
-      "password": "Mật khẩu"
-    },
-    "navigation": {
-      "home": "Trang chủ",
-      "about": "Giới thiệu",
-      "contact": "Liên hệ",
-      "admin": "Quản trị viên",
-      "user": "Người dùng"
-    },
-    "station": {
-      "title": "Danh sách bến xe",
-      "name": "Tên bến xe",
-      "address": "Địa chỉ",
-      "province": "Tỉnh/Thành phố",
-      "pickupPoints": "Điểm đón/trả",
-      "addStation": "Thêm bến xe",
-      "editStation": "Cập nhật bến xe",
-      "deleteConfirm": "Bạn có muốn xóa bến xe này?",
-      "searchByName": "Tìm kiếm theo tên bến xe",
-      "searchByProvince": "Tìm kiếm theo tỉnh/thành phố"
-    },
-    "messages": {
-      "deleteSuccess": "Xóa thành công",
-      "deleteError": "Xóa thất bại",
-      "updateSuccess": "Cập nhật thành công",
-      "updateError": "Cập nhật thất bại",
-      "addSuccess": "Thêm mới thành công",
-      "addError": "Thêm mới thất bại",
-      "deleteAccount": "Bạn có muốn xóa tài khoản này",
-      "updateUser" : "Bạn có muốn cập nhật tài khoản này?"
-    },
-    "admin": {
-        "systemTitle": "VietBus Travel🚍- Hệ Thống Quản Lý",
-        "greeting": "Xin chào",
-        "footer": "Created 2024 To Minh Vu"
-       
-      },
-      "button":{
-        "AddUser": "Thêm người dùng",
-        "update": "Cập nhật",
-        "editUser": "Chỉnh sửa thông tin người dùng"
-      },
-      "Sidebar":{
-        "userManagement": "Quản Lý Người Dùng",
-        "tripManagement": "Quản Lý Chuyến Xe",
-        "passengerManagement": "Quản Lý Nhà Xe",
-        "vehicleManagement": "Quản Lý Xe",
-        "statistics": "Thống Kê",
-        "generalStatistics": "Thống kê tổng hợp",
-        "ticketManagement": "Quản Lý Vé",
-        "stationManagement": "Quản Lý Bến Xe"
-      },
-      "Search":{
-        "searchByUsername" : "Tìm kiếm theo tên người dùng"
-      },
-      "lable":{
-        "name": "Tên",
-        "email": "Email",
-        "authorities": "Quyền",
-        "phone":"Số điện thoại",
-        "password": "Mật khẩu",
-        "confirmPass": "Xác nhận mật khẩu",
-        "action": "Tùy chọn"
-      },
-      "placeholder":{
-        "pleaseSelectType": "Chọn quyền",
-        "pleaseEnterName": "Đặt tên người dùng",
-        "userType": "Loại người dùng"
-      },
-      "validationRules":{
-        "email_min": "Email quá ngắn!",
-        "email_max": "Email quá dài!",
-        "email_invalid": "Email không hợp lệ",
-        "email_required": "Vui lòng nhập email",
-        "name_min": "Tên quá ngắn!",
-        "name_max": "Tên quá dài!",
-        "name_required": "Vui lòng nhập tên",
-        "password_min": "Password quá ngắn!",
-        "password_max": "Password quá dài!",
-        "password_required": "Vui lòng nhập password",
-        "phone_required": "Không được bỏ trống số điện thoại",
-        "phone_invalid": "Số điện thoại không hợp lệ",
-        "confirm_password": "Mật khẩu không trùng"
-      },
-      "messageConfirm": {
-        "update" :"Cập nhật",
-        "cancel":"Hủy",
-        "confirm": "Xác nhận"
-      }
-  }
+	"tripManagement": {
+		"trip": "Chuyến đi",
+		"listOfTrips": "Danh sách các chuyến đi",
+		"searchTrip": "Tìm kiếm điểm đi",
+		"searchForDestination": "Tìm kiếm điểm đến",
+		"addTrip": "Thêm chuyến đi",
+		"start": "Nơi bắt đầu",
+		"end": "Nơi đến",
+		"startDate": "Ngày bắt đầu",
+		"detailedTripList": "Danh sách chuyến đi chi tiết",
+		"trippassenger": {
+			"trippassengers": "Hành khách chuyến đi",
+			"listOfTripsFrom": "Danh sách các chuyến đi từ ",
+			"to": "Đến",
+			"fromDate": "Từ ngày",
+			"aboutToDepart": "Sắp xuất phát",
+			"run": "Đang chạy",
+			"canceled": "Đã hủy",
+			"complete": "Hoàn thành",
+			"cancel": "Hủy",
+			"passenger": "Nhà xe",
+			"vehicle": "Xe",
+			"price": "Giá",
+			"status": "Trạng thái",
+			"startTime": "Giờ bắt đầu",
+			"endTime": "Giờ kết thúc",
+			"ticketDetails": "Chi tiết về vé",
+			"action": "Tùy chọn",
+			"diagram": "Sơ đồ",
+			"busTicketList": "Danh sách vé của nhà xe",
+			"atTheTime": "Lúc",
+			"ticketNumber": "Số vé",
+			"time": "Thời gian",
+			"update": "Cập nhật",
+			"totalNumberOfTickets": "Tổng số vé",
+			"phone": "Số điện thoại",
+			"booked": "Đặt lúc",
+			"numberOfSeats": "Số ghế",
+			"pickUpPoint": "Điểm đón",
+			"dropoff": "Điểm trả",
+			"floor": "Tầng"
+		},
+		"mess": {
+			"updateTrip": "Cập nhật chuyến xe",
+			"deleteAccount": "Bạn có muốn xóa tài khoản này?",
+			"noDelete": "Bạn không được phép xóa chuyến đi này vì đang ở không ở trạng thái hủy",
+			"deleteTrip": "Bạn có muốn xóa chuyến đi này?"
+		}
+	},
+	"addTrip": {
+		"fromStation": "Điểm đi",
+		"toStation": "Điểm đến",
+		"startDate": "Ngày bắt đầu",
+		"endDate": "Ngày kết thúc",
+		"startTime": "Giờ bắt đầu",
+		"endTime": "Giờ kết thúc",
+		"price": "Giá",
+		"vehicle": "Xe",
+		"passenger": "Nhà xe",
+		"selectPassenger": "Chọn nhà xe",
+		"selectVehicle": "Chọn xe",
+		"seat": "Ghế",
+		"floor": "Tầng",
+		"addTrip": "Thêm chuyến đi",
+		"departureTime": "Thời gian khởi hành",
+		"back": "Quay lại",
+		"create": "Tạo",
+		"pickUpPoint": "Điểm đón",
+		"dropOff": "Điểm trả",
+		"timePickUp": "Thời gian đón",
+		"timeDropOff": "Thời gian trả",
+		"timeEnd": "Thời gian kết thúc",
+		"timeStart": "Thời gian khởi hành",
+		"createTrip": "Tạo chuyến đi",
+		"createPassengerCar": "Tạo Nhà Xe - Xe Phụ Trách Chuyến Đi",
+		"addPickupAndDropOffPoints": "Thêm Điểm Đón - Trả",
+		"messageError": {
+			"fromStation": "Điểm đi không được trùng với điểm đến",
+			"missingPoints": "Thiếu điểm đi",
+			"missingToStation": "Thiếu điểm đến",
+			"missingStartDate": "Thiếu ngày xuất phát",
+			"missingPassenger": "Thiếu nhà xe",
+			"missingVehicle": "Thiếu xe",
+			"missingEndTime": "Thiếu thời gian kết thúc",
+			"missingStartTime": "Thiếu thời gian khởi hành",
+			"missingPrice": "Thiếu giá",
+			"missingSeat": "Thiếu số ghế",
+			"missingFloor": "Thiếu tầng",
+			"missingTimeDropOff": "Thiếu thời gian trả",
+			"missingTimePickUp": "Thiếu thời gian đón",
+			"completeTripCreation": "Hoàn thành tạo chuyến đi",
+			"pleaseCheckAgain": "Vui lòng kiểm tra lại"
+		}
+	},
+	"common": {
+		"add": "Thêm",
+		"edit": "Sửa",
+		"delete": "Xóa",
+		"save": "Lưu",
+		"cancel": "Hủy",
+		"confirm": "Xác nhận",
+		"search": "Tìm kiếm",
+		"loading": "Đang tải...",
+		"back": "Quay lại"
+	},
+	"auth": {
+		"login": "Đăng nhập",
+		"logout": "Đăng xuất",
+		"register": "Đăng ký",
+		"username": "Tên đăng nhập",
+		"password": "Mật khẩu"
+	},
+	"navigation": {
+		"home": "Trang chủ",
+		"about": "Giới thiệu",
+		"contact": "Liên hệ",
+		"admin": "Quản trị viên",
+		"user": "Người dùng"
+	},
+	"station": {
+		"title": "Danh sách bến xe",
+		"name": "Tên bến xe",
+		"address": "Địa chỉ",
+		"province": "Tỉnh/Thành phố",
+		"pickupPoints": "Điểm đón/trả",
+		"addStation": "Thêm bến xe",
+		"editStation": "Cập nhật bến xe",
+		"deleteConfirm": "Bạn có muốn xóa bến xe này?",
+		"searchByName": "Tìm kiếm theo tên bến xe",
+		"searchByProvince": "Tìm kiếm theo tỉnh/thành phố"
+	},
+	"messages": {
+		"deleteSuccess": "Xóa thành công",
+		"deleteError": "Xóa thất bại",
+		"updateSuccess": "Cập nhật thành công",
+		"updateError": "Cập nhật thất bại",
+		"addSuccess": "Thêm mới thành công",
+		"addError": "Thêm mới thất bại",
+		"deleteAccount": "Bạn có muốn xóa tài khoản này",
+		"updateUser": "Bạn có muốn cập nhật tài khoản này?"
+	},
+	"admin": {
+		"systemTitle": "VietBus Travel🚍- Hệ Thống Quản Lý",
+		"greeting": "Xin chào",
+		"footer": "Created 2024 To Minh Vu"
+	},
+	"button": {
+		"AddUser": "Thêm người dùng",
+		"update": "Cập nhật",
+		"editUser": "Chỉnh sửa thông tin người dùng"
+	},
+	"Sidebar": {
+		"userManagement": "Quản Lý Người Dùng",
+		"tripManagement": "Quản Lý Chuyến Xe",
+		"passengerManagement": "Quản Lý Nhà Xe",
+		"vehicleManagement": "Quản Lý Xe",
+		"statistics": "Thống Kê",
+		"generalStatistics": "Thống kê tổng hợp",
+		"ticketManagement": "Quản Lý Vé",
+		"stationManagement": "Quản Lý Bến Xe"
+	},
+	"Search": {
+		"searchByUsername": "Tìm kiếm theo tên người dùng"
+	},
+	"lable": {
+		"name": "Tên",
+		"email": "Email",
+		"authorities": "Quyền",
+		"phone": "Số điện thoại",
+		"password": "Mật khẩu",
+		"confirmPass": "Xác nhận mật khẩu",
+		"action": "Tùy chọn"
+	},
+	"placeholder": {
+		"pleaseSelectType": "Chọn quyền",
+		"pleaseEnterName": "Đặt tên người dùng",
+		"userType": "Loại người dùng"
+	},
+	"validationRules": {
+		"email_min": "Email quá ngắn!",
+		"email_max": "Email quá dài!",
+		"email_invalid": "Email không hợp lệ",
+		"email_required": "Vui lòng nhập email",
+		"name_min": "Tên quá ngắn!",
+		"name_max": "Tên quá dài!",
+		"name_required": "Vui lòng nhập tên",
+		"password_min": "Password quá ngắn!",
+		"password_max": "Password quá dài!",
+		"password_required": "Vui lòng nhập password",
+		"phone_required": "Không được bỏ trống số điện thoại",
+		"phone_invalid": "Số điện thoại không hợp lệ",
+		"confirm_password": "Mật khẩu không trùng"
+	},
+	"messageConfirm": {
+		"update": "Cập nhật",
+		"cancel": "Hủy",
+		"confirm": "Xác nhận"
+	}
+}

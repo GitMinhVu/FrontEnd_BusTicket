@@ -1,18 +1,18 @@
 import React, {useEffect} from "react";
 import "../../Sass/css/ticket.css";
-import {Breadcrumb, Card, Tabs, Avatar, Form, Popconfirm, message, Button, Collapse, Comment, Tooltip, List, Input} from "antd";
+import {Breadcrumb, Dropdown, Menu, Card, Tabs, Rate, Avatar, Form, Modal, Popconfirm, message, Button, Collapse, Comment, Tooltip, List, Input} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {SET_MODAL} from "../../redux/types/ModalTypes";
 import DetailsTicket from "./DetailsTicket";
-
+//
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import {HomeOutlined, UserOutlined, EditOutlined, EllipsisOutlined, SettingOutlined, DeleteFilled} from "@ant-design/icons";
+import {HomeOutlined, UserOutlined, MoreOutlined, EditOutlined, EllipsisOutlined, SettingOutlined, DeleteFilled, DeleteOutlined} from "@ant-design/icons";
 import moment from "moment";
 import {cancelTicketUser, getTicketUser} from "../../redux/actions/ticketAction";
 import {TOKEN, USER_LOGIN} from "../../util/settings/config";
 import {history} from "../../App";
 import {getAllPassenger} from "../../redux/actions/passengerAction";
-import {createCommentUserAction, getCommentUserAction} from "../../redux/actions/commentAction";
+import {createCommentUserAction, updateCommentAction, getCommentUserAction, deleteCommentAction} from "../../redux/actions/commentAction";
 const {TextArea} = Input;
 
 const {TabPane} = Tabs;
@@ -36,10 +36,16 @@ export default function CommentManagement(props) {
 		}
 	};
 	const onfinish = (values, id) => {
+		if (!values.content || values.content.trim() === "") {
+			message.error("Vui lòng nhập nội dung bình luận");
+			return;
+		}
+
 		let usercomment = {
 			userId: userLogin.id,
-			content: values.content,
+			content: values.content.trim(),
 			passengerId: id,
+			rate: values.rate,
 		};
 		dispatch(createCommentUserAction(usercomment));
 	};
@@ -54,7 +60,65 @@ export default function CommentManagement(props) {
 							dataSource={listCommentUser}
 							renderItem={(item) => (
 								<li>
-									<Comment actions={item.actions} author={item.userComment?.name} avatar={"https://joeschmoe.io/api/v1/random"} content={item.content} datetime={item.datetime} />
+									<Comment
+										actions={[
+											<Dropdown
+												overlay={
+													<Menu>
+														<Menu.Item key="edit">
+															<span
+																onClick={() => {
+																	Modal.confirm({
+																		title: "Chỉnh sửa bình luận",
+																		content: (
+																			<TextArea
+																				defaultValue={item.content}
+																				onChange={(e) => {
+																					window.newComment = e.target.value;
+																				}}
+																			/>
+																		),
+																		onOk() {
+																			if (!window.newComment || window.newComment.trim() === "") {
+																				message.error("Vui lòng nhập nội dung bình luận");
+																				return;
+																			}
+																			let updatedComment = {
+																				id: item.id,
+																				content: window.newComment.trim(),
+																				userId: userLogin.id,
+																				passengerId: item.passengerId,
+																			};
+																			dispatch(updateCommentAction(updatedComment));
+																		},
+																	});
+																}}
+															>
+																<EditOutlined /> Edit
+															</span>
+														</Menu.Item>
+														<Menu.Item key="delete">
+															<Popconfirm title="Bạn có chắc muốn xóa bình luận này?" onConfirm={() => dispatch(deleteCommentAction(item.id, userLogin.id, item.passengerId))} okText="Có" cancelText="Không">
+																<DeleteOutlined /> Delete
+															</Popconfirm>
+														</Menu.Item>
+													</Menu>
+												}
+												trigger={["click"]}
+											>
+												<MoreOutlined style={{fontSize: "16px"}} />
+											</Dropdown>,
+										]}
+										author={item.userComment?.name}
+										avatar={"https://cdn-icons-png.flaticon.com/512/9187/9187604.png"}
+										content={
+											<div>
+												<Rate disabled defaultValue={item.rate} />
+												<p>{item.content}</p>
+											</div>
+										}
+										datetime={item.datetime}
+									/>
 								</li>
 							)}
 						/>
@@ -65,6 +129,9 @@ export default function CommentManagement(props) {
 								onfinish(values, item.id);
 							}}
 						>
+							<Form.Item name="rate" label="Đánh giá">
+								<Rate allowHalf defaultValue={0} />
+							</Form.Item>
 							<Form.Item name="content">
 								<TextArea rows={4} />
 							</Form.Item>
@@ -104,7 +171,7 @@ export default function CommentManagement(props) {
 											history.push("/usermgt");
 										}}
 									>
-										<img src="https://storage.googleapis.com/fe-production/images/Auth/account-circle.svg" width={24} height={16} alt />
+										<img src="https://storage.googleapis.com/fe-production/images/Auth/account-circle.svg" width={24} height={16} alt="" />
 										<span color="text" className="core__Text-sc-1c81tsc-1 kCMizM">
 											Thông tin tài khoản
 										</span>
@@ -116,7 +183,7 @@ export default function CommentManagement(props) {
 											history.push("/ticketmgt");
 										}}
 									>
-										<img src="https://storage.googleapis.com/fe-production/images/ticket.svg" width={24} height={16} alt />
+										<img src="https://storage.googleapis.com/fe-production/images/ticket.svg" width={24} height={16} alt="" />
 										<span color="text" className="core__Text-sc-1c81tsc-1 kCMizM">
 											Vé của tôi
 										</span>

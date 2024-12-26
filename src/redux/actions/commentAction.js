@@ -54,3 +54,31 @@ export const createCommentUserAction = (userComment) => {
 		}
 	};
 };
+export const deleteCommentAction = (commentId, userId, passengerId) => {
+	return async (dispatch) => {
+		try {
+			const result = await commentService.deleteComment(commentId);
+			if (result.status === 200) {
+				message.success("Xóa bình luận thành công");
+				dispatch(getCommentUserAction(userId, passengerId));
+			}
+		} catch (error) {
+			console.log(error);
+			message.error("Xóa bình luận thất bại");
+		}
+	};
+};
+export const updateCommentAction = (comment) => {
+	return async (dispatch) => {
+		try {
+			const result = await commentService.updateCommentUserPassenger(comment);
+			if (result.status === 200) {
+				message.success("Cập nhật bình luận thành công");
+				dispatch(getCommentUserAction(comment.userId, comment.passengerId));
+			}
+		} catch (error) {
+			console.log(error);
+			message.error("Cập nhật bình luận thất bại");
+		}
+	};
+};

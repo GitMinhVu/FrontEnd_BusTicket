@@ -13,5 +13,11 @@ export class CommentService extends baseService {
 	createCommentUserPassenger = (userComment) => {
 		return this.post(`/comment`, userComment);
 	};
+	deleteComment = (commentId) => {
+		return this.delete(`/comment/${commentId}`);
+	};
+	updateCommentUserPassenger = (comment) => {
+		return this.put(`/comment/${comment.id}`, comment);
+	};
 }
 export const commentService = new CommentService();

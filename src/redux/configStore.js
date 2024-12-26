@@ -16,12 +16,12 @@ import StationReducer from "./reducers/StationReducer";
 import PointReducer from "./reducers/PointReducer";
 
 const rootReducer = combineReducers({
+	AdminReducer,
 	BookingReducer,
 	userReducer,
 	LoadingReducer,
 	ModalReducer,
 	TicketReducer,
-	AdminReducer,
 	TripReducer,
 	DrawerReducer,
 	PassengerReducer,
@@ -32,4 +32,5 @@ const rootReducer = combineReducers({
 	PointReducer,
 });
 
+//middleware
 export const store = createStore(rootReducer, applyMiddleware(thunk));

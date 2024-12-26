@@ -2,7 +2,7 @@ import {CHANGE_KEY} from "../types/AdminTypes";
 const initialState = {
 	key: "1",
 };
-export default (state = initialState, action) => {
+const adminReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case CHANGE_KEY: {
 			return {...state, key: action.key};
@@ -11,3 +11,5 @@ export default (state = initialState, action) => {
 			return state;
 	}
 };
+
+export default adminReducer;
