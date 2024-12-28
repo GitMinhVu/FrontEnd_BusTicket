@@ -110,9 +110,7 @@ export default function DetailSeatVehicle(props) {
 
 	//ex2
 
-	const renderSeatRows = (seats) => {
-		//renderSeat and renderFloor
-		// Chia ghế thành các nhóm 3 ghế
+	const renderSeatRows = (seats, startIndex) => {
 		const rows = [];
 		for (let i = 0; i < seats.length; i += 3) {
 			rows.push(seats.slice(i, i + 3));
@@ -128,6 +126,8 @@ export default function DetailSeatVehicle(props) {
 					}
 					let disabled = seat.status === "đã đặt";
 					let arrClass = [classDaDat, classDangDat];
+					const seatNumber = startIndex + rowIndex * 3 + index + 1;
+
 					const content = (
 						<div className="flex justify-center">
 							<Button
@@ -161,9 +161,10 @@ export default function DetailSeatVehicle(props) {
 
 					return (
 						<td key={index} className="seat">
-							<Popover title={`Ghế: ${seat.name}, Giá: ${seat.price.toLocaleString()} VNĐ`} content={content} placement="top">
+							<Popover title={`Ghế ${seatNumber}: ${seat.name}, Giá: ${seat.price.toLocaleString()} VNĐ`} content={content} placement="top">
 								<button className="seat" style={{border: "none"}} disabled={disabled}>
 									<div className="seat-container">
+										<div style={{position: "absolute", top: "-15px", fontSize: "12px"}}>{seatNumber}</div>
 										<Seat arrClass={arrClass} />
 									</div>
 								</button>
@@ -177,8 +178,9 @@ export default function DetailSeatVehicle(props) {
 
 	const renderFloor = () => {
 		let floors = [];
+		let totalSeatsBeforeFloor = 0;
+
 		for (let index = 1; index <= vehicleDetail.numberFloors; index++) {
-			// Lọc ghế theo tầng
 			let seatsInFloor = vehicleDetail.seatVehicle.filter((seat) => seat.floor === index);
 
 			floors.push(
@@ -194,13 +196,13 @@ export default function DetailSeatVehicle(props) {
 										</div>
 									</td>
 								</tr>
-								{/* Hiển thị ghế theo hàng */}
-								{renderSeatRows(seatsInFloor)}
+								{renderSeatRows(seatsInFloor, totalSeatsBeforeFloor)}
 							</tbody>
 						</table>
 					</div>
 				</div>
 			);
+			totalSeatsBeforeFloor += seatsInFloor.length;
 		}
 		return floors;
 	};
@@ -215,7 +217,7 @@ export default function DetailSeatVehicle(props) {
 			try {
 				if (filterFloor1 >= 20) {
 					if (seatFloor2 >= 20) {
-						message.error("thêm ghế xe thất bại");
+						message.error("Thêm ghế xe thất bại");
 					} else {
 						dispatch(CreateSeatVehicleAction(vehicleDetail.id, listSeat));
 					}

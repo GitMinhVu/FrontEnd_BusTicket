@@ -8,17 +8,18 @@ import {getDetailTripPassengerAction, updateTripPassengerAction} from "../../red
 import moment from "moment";
 import {updatePassengerAction} from "../../redux/actions/passengerAction";
 import {CLOSE_DRAWER} from "../../redux/types/DrawerTypes";
-import { useTranslation } from 'react-i18next'; 
+import {useTranslation} from "react-i18next";
 const {Option} = Select;
 
 export default function EditTrip(props) {
 	const dispatch = useDispatch();
-	const { t } = useTranslation();
+	const {t} = useTranslation();
 	const {tripPassengerDetail} = useSelector((state) => state.TripReducer);
 	console.log(tripPassengerDetail);
 	useEffect(() => {
 		dispatch(getDetailTripPassengerAction(props.idTripPassenger));
 	}, [props.idTripPassenger]);
+
 	const formik = useFormik({
 		enableReinitialize: true,
 		initialValues: {
@@ -43,6 +44,7 @@ export default function EditTrip(props) {
 				startTime: values.startTime,
 				endTime: values.endTime,
 				vehicleId: values.vehicleId,
+				description: values.description,
 			};
 			let passengerUpdate = {...tripPassengerDetail.passenger, price: values.price};
 			dispatch(updateTripPassengerAction(tripPassengerUpdate, tripPassengerDetail.id));
@@ -78,22 +80,22 @@ export default function EditTrip(props) {
 						<Select placeholder="Please select status" value={formik.values.status} onChange={changeOption}>
 							<Option value="depart">
 								<Tag icon={<ClockCircleOutlined spin />} color="default">
-								{t("tripManagement.trippassenger.aboutToDepart")}
+									{t("tripManagement.trippassenger.aboutToDepart")}
 								</Tag>
 							</Option>
 							<Option value="progress">
 								<Tag icon={<SyncOutlined spin />} color="processing">
-								{t("tripManagement.trippassenger.run")}
+									{t("tripManagement.trippassenger.run")}
 								</Tag>
 							</Option>
 							<Option value="cancel">
 								<Tag icon={<CloseCircleOutlined />} color="error">
-								{t("tripManagement.trippassenger.canceled")}
+									{t("tripManagement.trippassenger.canceled")}
 								</Tag>
 							</Option>
 							<Option value="success">
 								<Tag icon={<CheckCircleOutlined />} color="success">
-								{t("tripManagement.trippassenger.complete")}
+									{t("tripManagement.trippassenger.complete")}
 								</Tag>
 							</Option>
 						</Select>
@@ -130,7 +132,7 @@ export default function EditTrip(props) {
 							},
 						]}
 					>
-						<Input.TextArea rows={4} name="description" placeholder="please enter url description" value={formik.values.description} />
+						<Input.TextArea rows={4} name="description" placeholder="please enter url description" value={formik.values.description} onChange={(e) => formik.setFieldValue("description", e.target.value)} />{" "}
 					</Form.Item>
 				</Col>
 			</Row>

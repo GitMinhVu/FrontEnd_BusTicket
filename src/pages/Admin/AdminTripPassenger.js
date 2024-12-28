@@ -12,11 +12,11 @@ import {OPEN_DRAWER} from "../../redux/types/DrawerTypes";
 import EditTrip from "../../components/Edit/EditTrip";
 import _ from "lodash";
 import AdminDetailTicket from "../../components/AdminDetailTicKet/AdminDetailTicket";
-import { useTranslation } from 'react-i18next'; 
+import {useTranslation} from "react-i18next";
 
 export default function AdminTripPassenger(props) {
 	const dispatch = useDispatch();
-	const { t } = useTranslation();
+	const {t} = useTranslation();
 	const {id} = props.match.params;
 	const {listTripPassenger, tripDetail} = useSelector((state) => state.TripReducer);
 	console.log("file: AdminTripPassenger.js ~ line 19 ~ AdminTripPassenger ~ listTripPassenger", listTripPassenger);
@@ -32,19 +32,19 @@ export default function AdminTripPassenger(props) {
 		return {value: item.endTime, text: item.endTime};
 	});
 	const renderStatus = (trip) => {
-		if (trip.status == "depart") {
+		if (trip.status === "depart") {
 			return (
 				<Tag icon={<ClockCircleOutlined spin />} color="default">
 					{t("tripManagement.trippassenger.aboutToDepart")}
 				</Tag>
 			);
-		} else if (trip.status == "progress") {
+		} else if (trip.status === "progress") {
 			return (
 				<Tag icon={<SyncOutlined spin />} color="processing">
 					{t("tripManagement.trippassenger.run")}
 				</Tag>
 			);
-		} else if (trip.status == "cancel") {
+		} else if (trip.status === "cancel") {
 			return (
 				<Tag icon={<CloseCircleOutlined />} color="error">
 					{t("tripManagement.trippassenger.canceled")}
@@ -69,7 +69,7 @@ export default function AdminTripPassenger(props) {
 						}}
 					>
 						<Tag icon={<SyncOutlined spin />} color="default">
-						{t("tripManagement.trippassenger.run")}
+							{t("tripManagement.trippassenger.run")}
 						</Tag>
 					</Button>
 					<Button
@@ -79,7 +79,7 @@ export default function AdminTripPassenger(props) {
 						}}
 					>
 						<Tag icon={<CloseCircleOutlined spin />} color="error">
-						{t("tripManagement.trippassenger.cancel")}
+							{t("tripManagement.trippassenger.cancel")}
 						</Tag>
 					</Button>
 					<Button
@@ -89,12 +89,12 @@ export default function AdminTripPassenger(props) {
 						}}
 					>
 						<Tag icon={<CheckCircleOutlined spin />} color="success">
-						{t("tripManagement.trippassenger.complete")}
+							{t("tripManagement.trippassenger.complete")}
 						</Tag>
 					</Button>
 				</>
 			);
-		} else if (trip.status == "progress") {
+		} else if (trip.status === "progress") {
 			return (
 				<>
 					<Button
@@ -104,7 +104,7 @@ export default function AdminTripPassenger(props) {
 						}}
 					>
 						<Tag icon={<CheckCircleOutlined spin />} color="success">
-						{t("tripManagement.trippassenger.complete")}
+							{t("tripManagement.trippassenger.complete")}
 						</Tag>
 					</Button>
 					<Button
@@ -114,12 +114,12 @@ export default function AdminTripPassenger(props) {
 						}}
 					>
 						<Tag icon={<CloseCircleOutlined spin />} color="error">
-						{t("tripManagement.trippassenger.cancel")}
+							{t("tripManagement.trippassenger.cancel")}
 						</Tag>
 					</Button>
 				</>
 			);
-		} else if (trip.status == "cancel") {
+		} else if (trip.status === "cancel") {
 			return (
 				<Tag icon={<CloseCircleOutlined />} color="error">
 					{t("tripManagement.trippassenger.canceled")}
@@ -160,9 +160,9 @@ export default function AdminTripPassenger(props) {
 									content: <Vehicle vehicle={trip.vehicle} />,
 								});
 							}}
-							style={{ cursor: 'pointer' }}
+							style={{cursor: "pointer"}}
 						>
-							{trip.vehicle.name}{" "}	
+							{trip.vehicle.name}{" "}
 						</a>
 					</div>
 				);
@@ -238,8 +238,7 @@ export default function AdminTripPassenger(props) {
 			},
 		},
 		{
-			title: (t("tripManagement.trippassenger.action")),
-
+			title: t("tripManagement.trippassenger.action"),
 			render: (text, item) => {
 				return (
 					<Fragment>
@@ -258,9 +257,9 @@ export default function AdminTripPassenger(props) {
 							</button>
 							<Popconfirm
 								placement="topLeft"
-								title = {t("tripManagement.mess.deleteAccount")} 
+								title={t("tripManagement.mess.deleteAccount")}
 								onConfirm={() => {
-									if (item.status != "cancel") {
+									if (item.status !== "cancel") {
 										message.error(t("tripManagement.mess.noDelete"));
 									} else {
 										dispatch(deleteTripPassengerAction(item));
@@ -288,7 +287,8 @@ export default function AdminTripPassenger(props) {
 			</Breadcrumb>
 			<div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
 				<h1>
-					{t("tripManagement.trippassenger.listOfTripsFrom")}{""} {tripDetail.from?.province} - {tripDetail.from?.address} {t("tripManagement.trippassenger.to")} {tripDetail.to?.province} - {tripDetail.to?.address} {t("tripManagement.trippassenger.fromDate")} {moment(tripDetail?.startTime).format("DD-MM-YYYY")}
+					{t("tripManagement.trippassenger.listOfTripsFrom")}
+					{""} {tripDetail.from?.province} - {tripDetail.from?.address} {t("tripManagement.trippassenger.to")} {tripDetail.to?.province} - {tripDetail.to?.address} {t("tripManagement.trippassenger.fromDate")} {moment(tripDetail?.startTime).format("DD-MM-YYYY")}
 				</h1>
 				<Table columns={columns} dataSource={listTripPassenger} />
 			</div>

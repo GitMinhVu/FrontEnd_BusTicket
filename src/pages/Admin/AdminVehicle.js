@@ -125,7 +125,7 @@ export default function AdminVehicle() {
 				);
 			},
 			filters: arrFilterPassenger,
-			onFilter: (value, record) => record.passengerCarId == value,
+			onFilter: (value, record) => record.passengerCarId === value,
 			filterSearch: true,
 		},
 		{

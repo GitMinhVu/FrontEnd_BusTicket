@@ -27,7 +27,7 @@ export default function AdminPassenger() {
 	});
 	const columns = [
 		{
-			title: "Tên Nhà Xe",
+			title: "Tên nhà xe",
 			dataIndex: "name",
 			sorter: (a, b) => a.name.length - b.name.length,
 			sortDirections: ["descend"],
@@ -36,7 +36,7 @@ export default function AdminPassenger() {
 			filterSearch: true,
 		},
 		{
-			title: "Mô Tả",
+			title: "Mô tả",
 			dataIndex: "description",
 			onFilter: (value, record) => record.description.indexOf(value) === 0,
 			sorter: (a, b) => a.description.length - b.description.length,
@@ -44,7 +44,7 @@ export default function AdminPassenger() {
 		},
 
 		{
-			title: "Loại Xác Nhận",
+			title: "Loại Xác nhận",
 			dataIndex: "confirmType",
 			filters: arrFilterType,
 			onFilter: (value, record) => record.confirmType.startsWith(value),
@@ -55,7 +55,7 @@ export default function AdminPassenger() {
 			render: (text, passenger) => {
 				return (
 					<div>
-						<Image width={150} src={passenger.imageIntro} style={{borderRadius: "50%"}} />
+						<Image width={180} src={passenger.imageIntro} style={{borderRadius: "20%"}} />
 					</div>
 				);
 			},

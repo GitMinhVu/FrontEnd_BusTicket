@@ -360,6 +360,19 @@ export default function Details(props) {
 						</>
 					)}
 				</TabPane>
+				<TabPane tab="Mô tả" key="6">
+					<div className="vehicle-description p-4">
+						<div className="mt-4 p-3" style={{backgroundColor: "#f5f5f5", borderRadius: "4px"}}>
+							<i>Thông báo từ nhà xe sẽ được ghi ở đây</i>
+						</div>
+						<div className="grid grid-cols-2 gap-4">
+							<div className="info-item">
+								<p className="font-semibold">Mô tả-Thông báo từ xe:</p>
+								<p>{props.tripPassenger?.vehicle?.description}</p>
+							</div>
+						</div>
+					</div>
+				</TabPane>
 			</Tabs>
 		</div>
 	);

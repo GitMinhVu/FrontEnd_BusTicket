@@ -1,21 +1,22 @@
 import React, {useEffect, useState} from "react";
-import {List, Avatar, Pagination} from "antd";
+import {List, Avatar, Pagination, Table} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllTicketByTrip} from "../../redux/actions/ticketAction";
-import { useTranslation } from 'react-i18next'; 
+import {useTranslation} from "react-i18next";
 import moment from "moment";
 
 export default function AdminDetailTicket(props) {
 	const dispatch = useDispatch();
-	const { t } = useTranslation();
+	const {t} = useTranslation();
 	const {listTicketTrip} = useSelector((state) => state.TicketReducer);
 	console.log("listTicketTrip", listTicketTrip);
 	useEffect(() => {
 		dispatch(getAllTicketByTrip(props.id));
 	}, [props.id]);
+	const numEachPage = 5;
+
 	const [minValue, setminValue] = useState(0);
-	const [maxValue, setmaxValue] = useState(1);
-	const numEachPage = 4;
+	const [maxValue, setmaxValue] = useState(numEachPage);
 
 	let dataReduce = listTicketTrip.slice(minValue, maxValue);
 	const handleChange = (value) => {
@@ -33,6 +34,7 @@ export default function AdminDetailTicket(props) {
 			</span>
 		);
 	};
+
 	const renderSeat = (ticket) => {
 		return ticket.ticketSeatId.map((item, index) => {
 			return (
@@ -42,43 +44,63 @@ export default function AdminDetailTicket(props) {
 			);
 		});
 	};
+	const columns = [
+		{
+			title: "Khách hàng",
+			key: "user",
+			render: (text, record) => (
+				<div style={{display: "flex", alignItems: "center", gap: "10px"}}>
+					<Avatar src={record.user.avatar} />
+					<span>{record.user.name}</span>
+				</div>
+			),
+		},
+		{
+			title: "Số diện thoại",
+			dataIndex: ["user", "numberPhone"],
+			key: "phone",
+		},
+		{
+			title: "Số vé	",
+			dataIndex: "id",
+			key: "ticketNumber",
+		},
+		{
+			title: "Thời gian đặt",
+			key: "bookingTime",
+			render: (text, record) => moment(record.createdAt).format("DD-MM-YYYY HH:mm:ss"),
+		},
+		{
+			title: "Ghế",
+			key: "seats",
+			render: (text, record) => renderSeat(record),
+		},
+		{
+			title: "Điểm đón",
+			key: "pickup",
+			render: (text, record) => renderPoint(record, "pickup"),
+		},
+		{
+			title: "Điểm trả",
+			key: "dropoff",
+			render: (text, record) => renderPoint(record, "dropoff"),
+		},
+	];
 	return (
 		<div>
 			<div className="text-xl">
-			{t("tripManagement.trippassenger.totalNumberOfTickets")} : <span className="font-bold">{listTicketTrip.length}</span>
+				{t("tripManagement.trippassenger.totalNumberOfTickets")} :<span className="font-bold">{listTicketTrip.length}</span>
 			</div>
-			<List
-				itemLayout="horizontal"
-				dataSource={dataReduce}
-				renderItem={(item) => (
-					<List.Item>
-						<List.Item.Meta
-							avatar={<Avatar src={item.user.avatar} />}
-							title={
-								<a>
-									{item.user.name} - {t("tripManagement.trippassenger.phone")}: {item.user.numberPhone} - {t("tripManagement.trippassenger.ticketNumber")}: {item.id}
-								</a>
-							}
-							description={
-								<div className="flex justify-around">
-									<p className="font-semibold">{t("tripManagement.trippassenger.booked")}: {moment(item.createdAt).format("DD-MM-YYYY HH:mm:ss")}</p>
-									<p className="font-bold">{t("tripManagement.trippassenger.numberOfSeats")}: {renderSeat(item)} </p>
-									<p className="font-bold">{t("tripManagement.trippassenger.pickUpPoint")}: ({renderPoint(item, "pickup")})</p>
-									<p className="font-bold">{t("tripManagement.trippassenger.dropoff")}: ({renderPoint(item, "dropoff")})</p>
-								</div>
-							}
-						/>
-					</List.Item>
-				)}
+
+			<Table
+				columns={columns}
+				dataSource={listTicketTrip}
+				pagination={{
+					pageSize: 5,
+					total: listTicketTrip.length,
+				}}
+				rowKey="id"
 			/>
-			<div className="flex justify-end mt-3">
-				<Pagination
-					defaultCurrent={2}
-					defaultPageSize={numEachPage} //default size of page
-					onChange={handleChange}
-					total={10} //total number of card data available
-				/>
-			</div>
 		</div>
 	);
 }

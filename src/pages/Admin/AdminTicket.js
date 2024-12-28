@@ -291,7 +291,7 @@ export default function AdminTicket(props) {
 		setSearchPhone(e.target.value);
 	};
 
-	const filteredTickets = listTicket.filter(ticket => {
+	const filteredTickets = listTicket.filter((ticket) => {
 		const nameMatch = ticket.user?.name?.toLowerCase().includes(searchName.toLowerCase());
 		const phoneMatch = ticket.user?.numberPhone?.toLowerCase().includes(searchPhone.toLowerCase());
 		return nameMatch && phoneMatch;
@@ -305,29 +305,17 @@ export default function AdminTicket(props) {
 			</Breadcrumb>
 			<div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
 				<h1>Danh sách các vé</h1>
-				<div style={{ 
-					display: 'flex', 
-					justifyContent: 'flex-start',
-					alignItems: 'center',
-					marginBottom: 16,
-					gap: '16px'
-				}}>
-					<Input
-						placeholder="Tìm kiếm theo người đặt"
-						prefix={<SearchOutlined />}
-						value={searchName}
-						onChange={handleSearchName}
-						style={{ width: 250 }}
-						allowClear
-					/>
-					<Input
-						placeholder="Tìm kiếm theo số điện thoại"
-						prefix={<SearchOutlined />}
-						value={searchPhone}
-						onChange={handleSearchPhone}
-						style={{ width: 250 }}
-						allowClear
-					/>
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "flex-start",
+						alignItems: "center",
+						marginBottom: 16,
+						gap: "16px",
+					}}
+				>
+					<Input placeholder="Tìm kiếm theo người đặt" prefix={<SearchOutlined />} value={searchName} onChange={handleSearchName} style={{width: 250}} allowClear />
+					<Input placeholder="Tìm kiếm theo số điện thoại" prefix={<SearchOutlined />} value={searchPhone} onChange={handleSearchPhone} style={{width: 250}} allowClear />
 				</div>
 				<Table columns={columns} dataSource={filteredTickets} />
 			</div>
