@@ -1,6 +1,11 @@
 import Axios from "axios";
-import {DOMAIN, TOKEN} from "../../util/settings/config";
+import {DOMAIN, TOKEN, ADMIN_TOKEN, USER_TOKEN} from "../../util/settings/config";
 export class baseService {
+	getToken() {
+		// Check if the URL contains 'admin' to determine which token to use
+		const isAdminRoute = window.location.pathname.includes("/admin");
+		return localStorage.getItem(isAdminRoute ? ADMIN_TOKEN : USER_TOKEN);
+	}
 	//put json về phía backend
 	put = (url, model) => {
 		return Axios({
@@ -39,7 +44,7 @@ export class baseService {
 		return Axios({
 			url: `${DOMAIN}${url}`,
 			method: "GET",
-			headers: {token: localStorage.getItem(TOKEN)}, //token yêu cầu từ backend chứng minh user đã đăng nhập rồi
+			headers: {token: this.getToken()},
 		});
 	};
 	delete = (url) => {

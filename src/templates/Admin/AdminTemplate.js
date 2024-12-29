@@ -21,13 +21,20 @@ export default function AdminTemplate(props) {
 	const {Component, ...restProps} = props;
 	const [collapsed, setCollapsed] = useState(false);
 	const {t, i18n} = useTranslation();
-
+	const adminData = JSON.parse(localStorage.getItem(ADMIN_LOGIN));
 	const changeCollapsed = () => {
 		setCollapsed(!collapsed);
 	};
 
 	// // Kiểm tra đăng nhập admin
-	// if (!localStorage.getItem(ADMIN_LOGIN)) {
+
+	// Change the userLogin selector
+	const adminLogin = JSON.parse(localStorage.getItem(ADMIN_LOGIN));
+
+	// Replace userLogin with adminLogin in the template
+	<span className="text-xl">
+		{t("admin.greeting")} , {adminLogin?.name}
+	</span>; // if (!localStorage.getItem(ADMIN_LOGIN)) {
 	// 	alert("Bạn không có quyền truy cập vào trang này!");
 	// 	return <Redirect to="/admin/login" />;
 	// }
@@ -183,10 +190,10 @@ export default function AdminTemplate(props) {
 											<Dropdown overlay={menu} trigger={["click"]} className="cursor-pointer">
 												<div className="flex items-center">
 													<Avatar style={{verticalAlign: "middle", background: "#7265e6", marginRight: 10}} size="large">
-														{userLogin?.name}
+														{adminData?.email}
 													</Avatar>
 													<span className="text-xl">
-														{t("admin.greeting")} , {userLogin?.name}
+														{t("admin.greeting")} , {adminData?.email}
 													</span>
 												</div>
 											</Dropdown>
