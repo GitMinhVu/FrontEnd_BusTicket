@@ -292,8 +292,8 @@ function AddPoint(props) {
 			{isSuccess ? (
 				<Result
 					status="success"
-					title={t("addTrip.completeTripCreation")}
-					subTitle={t("addTrip.pleaseCheckAgain")}
+					title={t("addTrip.messageError.completeTripCreation")}
+					subTitle={t("addTrip.messageError.pleaseCheckAgain")}
 					extra={[
 						<Button
 							type="primary"

@@ -28,12 +28,13 @@ export default function Home() {
 	return (
 		<>
 			<div className="home_banner">
-				<img src="https://onetour.vn/Media/Images/OneTour/tin-tuc/2019/thang%209/ruong-bac-thang-tren-vung-cao-viet-nam-1.jpg" alt="background-header" className="img_banner" />
+				<img src="./images/backGround.png" alt="background-header" className="img_banner" />
+
 				<div className="home_content">
 					<div className="home_around w-full">
 						<div className="title_banner">
 							<a href="https://vexere.com/vi-VN/nhung-cau-hoi-thuong-gap.html" target="_blank" rel="noreferrer">
-								<h2 className="homepage__Title-bs2n93-3 LVkvx">VietBus - Mua vé xe online trực tuyến</h2>
+								<h2 className="homepage__Title-bs2n93-3 ">VietBus - Mua vé xe online trực tuyến</h2>
 							</a>
 						</div>
 					</div>
