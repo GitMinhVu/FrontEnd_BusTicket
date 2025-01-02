@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {LineChart, PieChart} from "react-chartkick";
+import {LineChart, PieChart, ColumnChart, BarChart, AreaChart} from "react-chartkick";
 import "chartkick/chart.js";
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
@@ -8,7 +8,7 @@ export default function ChartTurnOver(props) {
 	const {id} = props;
 	const dispatch = useDispatch();
 	const {passengerDetail} = useSelector((state) => state.PassengerReducer);
-	console.log("file: ChartTurnOver.js ~ line 10 ~ ChartTurnOver ~ passengerDetail", passengerDetail);
+	// console.log("file: ChartTurnOver.js ~ line 10 ~ ChartTurnOver ~ passengerDetail", passengerDetail);
 
 	useEffect(() => {
 		dispatch(getDetailPassenger(id));
@@ -30,7 +30,7 @@ export default function ChartTurnOver(props) {
 	let data2 = Mydata();
 	return (
 		<div>
-			<LineChart data={data2} />
+			<AreaChart data={data2} />
 		</div>
 	);
 }

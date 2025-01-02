@@ -1,25 +1,25 @@
-import React, {Fragment, useEffect} from "react";
-import {Layout, Menu, Breadcrumb, Table, Input, Space, Popconfirm, Tag, Divider, Button, message} from "antd";
+import React, {useEffect} from "react";
+import {Breadcrumb, Table} from "antd";
 import {useDispatch, useSelector} from "react-redux";
-
-import {AudioOutlined, EditOutlined, SearchOutlined, DeleteOutlined, CalendarOutlined, FolderViewOutlined, CheckCircleOutlined, SyncOutlined, CloseCircleOutlined, ExclamationCircleOutlined, ClockCircleOutlined, MinusCircleOutlined, AreaChartOutlined, PieChartOutlined} from "@ant-design/icons";
-import moment from "moment";
-import {getAllTripPassengerAction} from "../../../redux/actions/tripAction";
+import {AreaChartOutlined, PieChartOutlined} from "@ant-design/icons";
+// import moment from "moment";
+// import {getAllTripPassengerAction} from "../../../redux/actions/tripAction";
 import {getAllPassenger} from "../../../redux/actions/passengerAction";
 import {Content} from "antd/lib/layout/layout";
 import {SET_MODAL} from "../../../redux/types/ModalTypes";
+//chart
 import ChartTurnOver from "../../../components/Chart/ChartTurnOver";
 import ChartTicket from "../../../components/Chart/ChartTicket";
 import ChartVehicle from "../../../components/Chart/ChartVehicle";
 
 export default function AdminTurnOver(props) {
 	const dispatch = useDispatch();
-
 	const {listPassenger} = useSelector((state) => state.PassengerReducer);
-	console.log("file: AdminTurnOver.js ~ line 14 ~ AdminTurnOver ~ listTripPassenger", listPassenger);
+	// console.log("file: AdminTurnOver.js ~ line 14 ~ AdminTurnOver ~ listTripPassenger", listPassenger);
 	useEffect(() => {
 		dispatch(getAllPassenger());
 	}, []);
+
 	const renderTotalAmountTicket = (passenger) => {
 		let total = 0;
 		passenger.passenger.forEach((item) => {
@@ -29,6 +29,7 @@ export default function AdminTurnOver(props) {
 		});
 		return total;
 	};
+
 	const renderNumberTicket = (passenger) => {
 		let lengthTotal = 0;
 		passenger?.passenger?.forEach((item) => {
@@ -36,6 +37,7 @@ export default function AdminTurnOver(props) {
 		});
 		return lengthTotal;
 	};
+
 	const columns = [
 		{
 			title: "Tên Nhà Xe",

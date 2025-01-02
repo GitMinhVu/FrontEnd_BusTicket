@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {LineChart, PieChart} from "react-chartkick";
+import {LineChart, PieChart, ColumnChart, AreaChart} from "react-chartkick";
 import "chartkick/chart.js";
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
@@ -38,7 +38,7 @@ export default function ChartVehicle(props) {
 	let data = dataFunc();
 	return (
 		<div>
-			<PieChart data={data} />
+			<PieChart data={data} donut={true} />
 		</div>
 	);
 }

@@ -13,6 +13,7 @@ export default function ChartTicket(props) {
 	useEffect(() => {
 		dispatch(getDetailPassenger(id));
 	}, [id]);
+
 	const dataFunc = () => {
 		let dataTotal = [];
 		let dataDepart = ["Chuyến Sắp Đi"];
@@ -47,7 +48,7 @@ export default function ChartTicket(props) {
 	let data = dataFunc();
 	return (
 		<div>
-			<PieChart data={data} />
+			<PieChart data={data} donut={true} />
 		</div>
 	);
 }
