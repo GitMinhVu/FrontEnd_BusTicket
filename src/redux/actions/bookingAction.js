@@ -22,46 +22,54 @@ export const getProvinceAction = () => {
 		}
 	};
 };
-export const getTripPassengerAction = (id) => {
+export const getTripPassengerAction = (tripIds) => {
 	return async (dispatch) => {
 		dispatch({
 			type: SET_LOADING,
 		});
 
-		const result = await bookingService.getTripPassenger(id);
-		if (result.status == 200) {
-			const dataNew = result.data.map((item, index) => {
-				return {...item, openDetail: false, openBooking: false, isOpen: false};
-			});
+		// Handle array of trip IDs
+		if (Array.isArray(tripIds)) {
+			const promises = tripIds.map((id) => bookingService.getTripPassenger(id));
+			const results = await Promise.all(promises);
+
+			// Combine all results
+			const allTrips = results.flatMap((result) =>
+				result.data.map((item) => ({
+					...item,
+					openDetail: false,
+					openBooking: false,
+					isOpen: false,
+				}))
+			);
+
 			dispatch({
 				type: GET_TRIP_PASSENGER,
-				listTripPassenger: dataNew,
+				listTripPassenger: allTrips,
 			});
 		}
 
-		setTimeout(function () {
-			dispatch({
-				type: HIDE_LOADING,
-			});
-		}, 500);
+		dispatch({
+			type: HIDE_LOADING,
+		});
 	};
 };
 
 export const getTripByUserAction = (trip) => {
 	return async (dispatch) => {
 		const result = await bookingService.getTripByUser(trip);
-		console.log("sd", result);
 		if (result.status == 200) {
 			dispatch({
 				type: GET_TRIP_BY_USER,
 				tripByUser: result.data,
 			});
-			let first = "NoTrip";
-			if (!_.isEmpty(result.data[0])) {
-				first = result.data[0]?.id;
-			}
-			history.push(`/booking/${first}/${trip.fromStation}/${trip.toStation}/${trip.startTime}`);
-			dispatch(getTripPassengerAction(result.data[0]?.id));
+
+			// Gọi getTripPassengerAction với tất cả các chuyến
+			const allTrips = result.data.map((item) => item.id);
+			dispatch(getTripPassengerAction(allTrips));
+
+			history.push(`/booking/${result.data[0]?.id || "NoTrip"}/${trip.fromStation}/${trip.toStation}/${trip.startTime}`);
+
 			dispatch({
 				type: HIDE_LOADING_BUTTON,
 			});

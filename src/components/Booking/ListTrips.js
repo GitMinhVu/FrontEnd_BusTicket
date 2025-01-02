@@ -14,7 +14,6 @@ import {getImgVehicleAction} from "../../redux/actions/bookingAction";
 import {OPEN_CLOSE_BOOKING, OPEN_CLOSE_DETAILS} from "../../redux/types/BookingTypes";
 import {getImageVehicleAction, getSeatVehicleAction} from "../../redux/actions/vehicleAction";
 import {getTimePointTripAction} from "../../redux/actions/timePointAction";
-
 import LoadingSpin from "../Loading/LoadingSpin";
 import {SortPriceTripPassengerAction, SortTimeTripPassengerAction} from "../../redux/actions/tripAction";
 export default function ListTrips(props) {
@@ -47,6 +46,11 @@ export default function ListTrips(props) {
 		}),
 	}));
 	const renderTripPassenger = () => {
+		// console.log("Tất cả chuyến:", listTripPassenger);
+		// console.log(
+		// 	"Chuyến đã lọc:",
+		// 	listTripPassenger?.filter((item) => item.status === "depart")
+		// );
 		return listTripPassenger?.map((item, index) => {
 			if (item.status === "depart") {
 				let numberBlank = item.vehicle.seatVehicle.filter((x) => x.status === "chưa đặt").length;

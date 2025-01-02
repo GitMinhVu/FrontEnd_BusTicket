@@ -30,6 +30,7 @@ export default function InputSearchTrip(props) {
 		}
 	});
 	const handleClick = () => {
+		// console.log("Search params:", tripSearch);
 		if (tripSearch.fromStation == "" || tripSearch.toStation == "" || tripSearch.startTime == "") {
 			openNotificationWithIcon("error");
 		} else {
