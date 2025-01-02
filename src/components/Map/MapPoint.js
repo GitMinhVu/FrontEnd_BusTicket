@@ -20,7 +20,6 @@ export default function MapPoint(props) {
 	useEffect(() => {
 		let arrPosition = [];
 		Axios?.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${item.name}${item.address}.json?country=vn&limit=10&proximity=ip&types=place%2Cpostcode%2Caddress%2Cdistrict%2Cregion%2Clocality%2Ccountry%2Cpoi%2Cneighborhood&access_token=pk.eyJ1IjoicGh1MjAwMCIsImEiOiJjbDJpMHFyMGwwYmVhM2NxNjF4bHFweGN2In0.7I6NlXWnksUc-rWyuWhQoA`)
-
 			.then((res) => {
 				// arrPosition = {long: res?.data?.features[0]?.center[0], lat: res?.data?.features[0]?.center[1], placename: item?.address};
 				arrPosition.push(res?.data?.features[0]?.center[0]);
@@ -31,7 +30,7 @@ export default function MapPoint(props) {
 				});
 			})
 			.catch((err) => {
-				console.log(err);
+				console.log("Error", err);
 			});
 	}, [item]);
 

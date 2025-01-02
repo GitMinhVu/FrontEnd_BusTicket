@@ -1,4 +1,4 @@
-import React from "react";
+import Reac, {useState} from "react";
 import {Form, Input, Button, Card} from "antd";
 import {UserOutlined, LockOutlined} from "@ant-design/icons";
 import {useDispatch} from "react-redux";
@@ -8,10 +8,12 @@ import {adminService} from "../../../redux/services/AdminService";
 import {ADMIN_LOGIN, ADMIN_TOKEN} from "../../../util/settings/config";
 
 export default function LoginAdmin() {
+	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
 	const onFinish = async (values) => {
+		setLoading(true);
 		try {
 			const result = await adminService.login(values);
 
@@ -25,6 +27,8 @@ export default function LoginAdmin() {
 			}
 		} catch (error) {
 			alert("Tài khoản này không có quyền truy cập vào trang Admin!");
+		} finally {
+			setLoading(false);
 		}
 	};
 	// const onFinish = async (values) => {
@@ -64,7 +68,7 @@ export default function LoginAdmin() {
 					</Form.Item>
 
 					<Form.Item>
-						<Button type="primary" htmlType="submit" className="w-full">
+						<Button type="primary" htmlType="submit" className="w-full" loading={loading}>
 							Login
 						</Button>
 					</Form.Item>
