@@ -74,7 +74,9 @@ export default function ListTrips(props) {
 							<div className="col-span-9 mb-10">
 								<div className="bus-info flex justify-between">
 									<div className="bus-name">
-										<span className="bus-title">{item.passenger.name}</span>
+										<span className="bus-title" style={{fontFamily: "Roboto, sans-serif", fontSize: "18px", fontWeight: "500"}}>
+											{item.passenger.name}
+										</span>{" "}
 										<button type="button" className="ant-btn bus-rating-button">
 											<div className="bus-rating">
 												<StarFilled />
@@ -87,9 +89,7 @@ export default function ListTrips(props) {
 											</div>
 										</button>
 									</div>
-									<div class="fare">
-										<div>{item.passenger.price.toLocaleString()} VNĐ</div>
-									</div>
+									<div style={{fontFamily: "Roboto, sans-serif", fontSize: "16px", fontWeight: "bold"}}>{item.passenger.price.toLocaleString()} VNĐ</div>
 								</div>
 								<div className="seat-type">{item.vehicle.name}</div>
 								<div className="from-to">
@@ -173,9 +173,10 @@ export default function ListTrips(props) {
 	return (
 		<div className="list_trips">
 			<div className="trip-style">
-				<h1 id="seo-heading">
-					Đặt mua vé xe đi {tripRender.toStation} từ {tripRender.fromStation} chất lượng cao và giá vé ưu đãi nhất :{listTripPassenger.filter((item) => item.status == "depart").length} chuyến
+				<h1 id="seo-heading" style={{fontFamily: "Roboto, sans-serif", fontSize: "24px", fontWeight: "bold"}}>
+					Đặt mua vé xe đi {tripRender.toStation}: Từ {tripRender.fromStation} chất lượng cao và giá vé ưu đãi nhất
 				</h1>
+				<h1 style={{fontFamily: "Roboto, sans-serif", fontSize: "20px"}}>Kết quả: {listTripPassenger.filter((item) => item.status == "depart").length} chuyến</h1>{" "}
 				<div className="sort">
 					<span className="sort-label mr-5">Sắp xếp theo:</span>
 					{/* <button
