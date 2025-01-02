@@ -24,7 +24,6 @@ export default function PointStation(props) {
 	const genExtra = () => (
 		<SettingOutlined
 			onClick={(event) => {
-				// If you don't want click extra trigger collapse, you can prevent this:
 				event.stopPropagation();
 			}}
 		/>

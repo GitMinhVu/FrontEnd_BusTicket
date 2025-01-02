@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from "react";
-import ReactMapboxGl, {Layer, Feature, Marker} from "react-mapbox-gl";
+import React, {useEffect} from "react";
+import ReactMapboxGl, {Marker} from "react-mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import {Tooltip, Button, Divider} from "antd";
+import {Tooltip} from "antd";
+import {EnvironmentFilled} from "@ant-design/icons";
 
 import Axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
@@ -10,7 +11,7 @@ import {SET_ADDRESS_POINT} from "../../redux/types/PointTypes";
 export default function MapPoint(props) {
 	const dispatch = useDispatch();
 	const {address} = useSelector((state) => state.PointReducer);
-	console.log("file: MapPoint.js ~ line 13 ~ MapPoint ~ address", address);
+	// console.log("file: MapPoint.js ~ line 13 ~ MapPoint ~ address", address);
 	let {item} = props;
 	const Map = ReactMapboxGl({
 		accessToken: "pk.eyJ1IjoicGh1MjAwMCIsImEiOiJjbDJpMHFyMGwwYmVhM2NxNjF4bHFweGN2In0.7I6NlXWnksUc-rWyuWhQoA",
@@ -38,7 +39,7 @@ export default function MapPoint(props) {
 		<>
 			{address.length > 0 ? (
 				<Map
-					style="mapbox://styles/mapbox/streets-v9"
+					style="mapbox://styles/mapbox/streets-v11"
 					containerStyle={{
 						height: "300px",
 						width: "100%",
@@ -46,15 +47,15 @@ export default function MapPoint(props) {
 					zoom={[15]}
 					center={address}
 				>
-					<Tooltip color={"#108ee9"} title={item.address} key={1}>
+					<Tooltip title={item.address} key={1}>
 						<Marker coordinates={address} anchor="bottom">
-							<img src="https://xuonginthanhpho.com/wp-content/uploads/2020/03/map-marker-icon.png" style={{width: "50px", height: "50px"}} />
+							<EnvironmentFilled style={{fontSize: "20px", color: "#f5222d"}} />
 						</Marker>
 					</Tooltip>
 				</Map>
 			) : (
 				<Map
-					style="mapbox://styles/mapbox/streets-v9"
+					style={{version: 8, sources: {}, layers: []}}
 					containerStyle={{
 						height: "300px",
 						width: "100%",
