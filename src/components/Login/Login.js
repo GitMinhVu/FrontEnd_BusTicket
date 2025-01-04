@@ -1,12 +1,17 @@
-import React from "react";
-import {Form, Input, Button, Checkbox} from "antd";
+import React, {useState} from "react";
+import {Form, Input, Button, Checkbox, Modal, Row, Col} from "antd";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {useDispatch} from "react-redux";
 import {LoginAction} from "../../redux/actions/UserAction";
+import axios from "axios";
 
 export default function Login(props) {
 	const dispatch = useDispatch();
+	const [isForgotPassword, setIsForgotPassword] = useState(false);
+	const [email, setEmail] = useState("");
+	const [verificationCode, setVerificationCode] = useState("");
+	const [newPassword, setNewPassword] = useState("");
 	const SignupSchema = Yup.object().shape({
 		email: Yup.string().min(2, "Email quá ngắn!").max(50, "Password quá dài!").email("Email không hợp lệ").required("Vui lòng nhập email"),
 		passWord: Yup.string().min(2, "Password quá ngắn!").max(50, "Password quá dài!").required("Vui lòng nhập password"),
@@ -26,6 +31,30 @@ export default function Login(props) {
 		},
 	});
 
+	// mail
+	const handleForgotPassword = async () => {
+		try {
+			const response = await axios.post("http://localhost:7000/api/v1/users/forgot-password", {email});
+			alert(response.data.message);
+		} catch (error) {
+			alert(error.response?.data?.message || "Something went wrong");
+		}
+	};
+
+	const handleResetPassword = async () => {
+		try {
+			const response = await axios.post("http://localhost:7000/api/v1/users/reset-password", {
+				email,
+				code: verificationCode,
+				newPassword,
+			});
+			alert(response.data.message);
+			setIsForgotPassword(false);
+		} catch (error) {
+			alert(error.response?.data?.message || "Có lỗi xảy ra");
+		}
+	};
+
 	return (
 		<Form name="basic" autoComplete="off" onFinish={formik.handleSubmit}>
 			<Form.Item label="Email" name="email">
@@ -39,9 +68,43 @@ export default function Login(props) {
 			</Form.Item>
 
 			<Form.Item name="remember" valuePropName="checked">
-				<Checkbox>Ghi nhớ</Checkbox>
+				<Row justify="space-between">
+					<Col>
+						<Checkbox>Ghi nhớ</Checkbox>
+					</Col>
+					<Col>
+						<Button type="link" onClick={() => setIsForgotPassword(true)}>
+							Quên mật khẩu?
+						</Button>
+					</Col>
+				</Row>
 			</Form.Item>
 
+			<Modal title="Quên mật khẩu" visible={isForgotPassword} onCancel={() => setIsForgotPassword(false)} footer={null}>
+				<Form layout="vertical">
+					<Form.Item label="Email">
+						<Row gutter={8}>
+							<Col span={16}>
+								<Input value={email} onChange={(e) => setEmail(e.target.value)} />
+							</Col>
+							<Col span={8}>
+								<Button type="primary" onClick={handleForgotPassword} block>
+									Gửi mã xác nhận
+								</Button>
+							</Col>
+						</Row>
+					</Form.Item>
+					<Form.Item label="Mã xác nhận">
+						<Input value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} />
+					</Form.Item>
+					<Form.Item label="Mật khẩu mới">
+						<Input.Password value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+					</Form.Item>
+					<Button type="primary" onClick={handleResetPassword} block>
+						Đặt lại mật khẩu
+					</Button>
+				</Form>
+			</Modal>
 			<Form.Item wrapperCol={{offset: 8, span: 8}}>
 				<Button
 					type="primary"
