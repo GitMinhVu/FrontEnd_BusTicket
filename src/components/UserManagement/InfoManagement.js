@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "../../Sass/css/user.css";
-import {Breadcrumb, Card, Tabs, Avatar, Dropdown, Menu, Radio, Space, Form, Input, InputNumber, Button, Upload, message} from "antd";
+import {Breadcrumb, Card, Tabs, Avatar, Dropdown, Menu, Radio, Space, Form, Input, InputNumber, Button, Upload, message, DatePicker} from "antd";
 import {HomeOutlined, UserOutlined, EditOutlined, EllipsisOutlined, SettingOutlined} from "@ant-design/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {history} from "../../App";
@@ -12,6 +12,7 @@ import {UpdatelUserAction} from "../../redux/actions/UserAction";
 import {updateUserAvatarAction} from "../../redux/actions/UserAction";
 import {Modal} from "antd";
 import {userService} from "../../redux/services/UserService";
+import moment from "moment";
 
 const {TabPane} = Tabs;
 const {Meta} = Card;
@@ -56,6 +57,11 @@ export default function InfoManagement(props) {
 		phone: Yup.string()
 			.required("Không được bỏ trống số điện thoại")
 			.matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/, "Số điện thoại không hợp lệ"),
+		gender: Yup.string().required("Vui lòng chọn giới tính").oneOf(["male", "female"], "Giới tính không hợp lệ"),
+
+		dateOfBirth: Yup.date().required("Vui lòng chọn ngày sinh").max(new Date(), "Ngày sinh không thể trong tương lai").min(new Date(1900, 0, 1), "Ngày sinh không hợp lệ"),
+
+		address: Yup.string().required("Vui lòng nhập địa chỉ").min(5, "Địa chỉ quá ngắn").max(200, "Địa chỉ quá dài"),
 	});
 	const formik = useFormik({
 		enableReinitialize: true,
@@ -65,6 +71,9 @@ export default function InfoManagement(props) {
 			email: userLogin.email,
 			passWord: userLogin.password,
 			type: userLogin.type,
+			dateOfBirth: userLogin.dateOfBirth,
+			address: userLogin.address,
+			gender: userLogin.gender,
 			avatar: userLogin.avatar,
 		},
 		validationSchema: SignupSchema,
@@ -76,6 +85,9 @@ export default function InfoManagement(props) {
 				numberPhone: values.phone,
 				avatar: values.avatar,
 				type: values.type,
+				dateOfBirth: values.dateOfBirth,
+				address: values.address,
+				gender: values.gender,
 			};
 			dispatch(UpdatelUserAction(user, userLogin.id));
 		},
@@ -189,6 +201,18 @@ export default function InfoManagement(props) {
 									<Input onChange={(e) => formik.setFieldValue("phone", e.target.value)} name="phone" value={formik.values.phone} />
 									<p className="text-red-500 text-xs italic mb-0">{formik.errors.phone}</p>
 								</Form.Item>
+								<Form.Item label="Giới tính">
+									<Input onChange={(e) => formik.setFieldValue("gender", e.target.value)} name="gender" value={formik.values.gender} />
+									<p className="text-red-500 text-xs italic mb-0">{formik.errors.gender}</p>
+								</Form.Item>
+								<Form.Item label="Ngày sinh">
+									<DatePicker format="DD-MM-YYYY" onChange={(date) => formik.setFieldValue("dateOfBirth", date)} value={moment(formik.values.dateOfBirth)} style={{width: "100%"}} />
+									<p className="text-red-500 text-xs italic mb-0">{formik.errors.dateOfBirth}</p>
+								</Form.Item>
+								<Form.Item label="Địa chỉ">
+									<Input onChange={(e) => formik.setFieldValue("address", e.target.value)} name="address" value={formik.values.address} />
+									<p className="text-red-500 text-xs italic mb-0">{formik.errors.address}</p>
+								</Form.Item>
 								{/* <Form.Item label="Mật Khẩu" rules={[{required: true}]}>
 									<Input.Password onChange={(e) => formik.setFieldValue("passWord", e.target.value)} name="passWord" value={formik.values.passWord} />
 									<p className="text-red-500 text-xs italic mb-0">{formik.errors.passWord}</p>
@@ -218,6 +242,15 @@ export default function InfoManagement(props) {
 										<Form.Item label="Họ tên">
 											<Input value={formik.values.name} onChange={(e) => formik.setFieldValue("name", e.target.value)} />
 										</Form.Item>
+										<Form.Item label="Giới tính">
+											<Input value={formik.values.gender} onChange={(e) => formik.setFieldValue("gender", e.target.value)} />
+										</Form.Item>
+										<Form.Item label="Ngày sinh">
+											<Input value={formik.values.dateOfBirth} onChange={(e) => formik.setFieldValue("dateOfBirth", e.target.value)} />
+										</Form.Item>
+										<Form.Item label="Địa chỉ">
+											<Input value={formik.values.address} onChange={(e) => formik.setFieldValue("address", e.target.value)} />
+										</Form.Item>
 										<Form.Item label="Email">
 											<Input value={formik.values.email} onChange={(e) => formik.setFieldValue("email", e.target.value)} />
 										</Form.Item>
@@ -236,7 +269,6 @@ export default function InfoManagement(props) {
 												message.error("Mật khẩu mới không khớp!");
 												return;
 											}
-
 											dispatch(
 												UpdatelUserAction(
 													{

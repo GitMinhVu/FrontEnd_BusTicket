@@ -168,7 +168,15 @@
 		"phone": "Phone number",
 		"password": "Password",
 		"confirmPass": "Confirm Password",
-		"action": "Action"
+		"action": "Action",
+		"gender": "Gender",
+		"role": "Role",
+		"dateOfBirth": "Birthday",
+		"address": "Address"
+	},
+	"gender": {
+		"male": "Male",
+		"female": "Female"
 	},
 	"placeholder": {
 		"pleaseSelectType": "Please select type",
@@ -188,7 +196,13 @@
 		"phone_required": "Phone number cannot be empty",
 		"phone_invalid": "Invalid phone number",
 		"email_invalid": "Invalid email",
-		"confirm_password": "Passwords do not match"
+		"confirm_password": "Passwords do not match",
+		"address_min": "Address is too short!",
+		"address_max": "Address is too long!",
+		"address_required": "Please enter your address",
+		"dateOfBirth_required": "Please enter your date of birth",
+		"dateOfBirth_future": "Date of birth cannot be in the future",
+		"dateOfBirth_past": "Invalid date of birth"
 	},
 	"messageConfirm": {
 		"update": "Update",

@@ -170,8 +170,17 @@
 		"phone": "Số điện thoại",
 		"password": "Mật khẩu",
 		"confirmPass": "Xác nhận mật khẩu",
-		"action": "Tùy chọn"
+		"action": "Tùy chọn",
+		"gender": "Giới tính",
+		"dateOfBirth": "Ngày sinh",
+		"address": "Địa chỉ",
+		"role": "Quyền"
 	},
+	"gender": {
+		"male": "Nam",
+		"female": "Nữ"
+	},
+
 	"placeholder": {
 		"pleaseSelectType": "Chọn quyền",
 		"pleaseEnterName": "Đặt tên người dùng",
@@ -190,7 +199,14 @@
 		"password_required": "Vui lòng nhập password",
 		"phone_required": "Không được bỏ trống số điện thoại",
 		"phone_invalid": "Số điện thoại không hợp lệ",
-		"confirm_password": "Mật khẩu không trùng"
+		"confirm_password": "Mật khẩu không trùng",
+		"address_min": "Địa chỉ phải có ít nhất 5 ký tự",
+		"address_max": "Địa chỉ không được vượt quá 200 ký tự",
+		"address_required": "Vui lòng nhập địa chỉ",
+		"gender_required": "Vui lòng chọn giới tính",
+		"dateOfBirth_required": "Vui lòng chọn ngày sinh",
+		"dateOfBirth_future": "Ngày sinh không thể trong tương lai",
+		"dateOfBirth_past": "Ngày sinh không hợp lệ"
 	},
 	"messageConfirm": {
 		"update": "Cập nhật",
