@@ -15,7 +15,9 @@ import ChartVehicle from "../../../components/Chart/ChartVehicle";
 export default function AdminTurnOver(props) {
 	const dispatch = useDispatch();
 	const {listPassenger} = useSelector((state) => state.PassengerReducer);
+
 	// console.log("file: AdminTurnOver.js ~ line 14 ~ AdminTurnOver ~ listTripPassenger", listPassenger);
+
 	useEffect(() => {
 		dispatch(getAllPassenger());
 	}, []);
