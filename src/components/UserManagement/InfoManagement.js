@@ -150,12 +150,23 @@ export default function InfoManagement(props) {
 								<div className="card-item">
 									<a
 										onClick={() => {
-											localStorage.removeItem(USER_LOGIN);
-											localStorage.removeItem(TOKEN);
-											window.location.reload();
+											Modal.confirm({
+												title: "Xác nhận đăng xuất",
+												content: "Bạn có chắc chắn muốn đăng xuất không?",
+												okText: "Đăng xuất",
+												cancelText: "Hủy",
+												onOk: () => {
+													message.loading("Đang đăng xuất...", 1.5).then(() => {
+														localStorage.removeItem(USER_LOGIN);
+														localStorage.removeItem(TOKEN);
+														message.success("Đăng xuất thành công!");
+														window.location.reload();
+													});
+												},
+											});
 										}}
 									>
-										<img src="https://storage.googleapis.com/fe-production/images/Auth/logout.svg" width={24} height={16} alt />
+										<img src="https://storage.googleapis.com/fe-production/images/Auth/logout.svg" width={24} height={16} alt="" />
 										<span color="text" className="core__Text-sc-1c81tsc-1 kCMizM">
 											Đăng xuất
 										</span>
@@ -165,59 +176,38 @@ export default function InfoManagement(props) {
 						</div>
 						<div className="col-span-8">
 							<div className="title font-bold text-xl">Thông tin cá nhân</div>
-							{/* <Form.Item label="Avatar" name="avatar">
-								<Upload
-									name="avatar"
-									listType="picture-circle"
-									className="avatar-uploader"
-									showUploadList={false}
-									customRequest={({file, onSuccess}) => {
-										setTimeout(() => {
-											onSuccess("ok");
-										}, 0);
-									}}
-									onChange={handleAvatarChange}
-								>
-									{formik.values.avatar ? (
-										<img src={formik.values.avatar} alt="avatar" style={{width: "100%", height: "100%", borderRadius: "50%"}} />
-									) : (
-										<div>
-											<PlusOutlined />
-											<div style={{marginTop: 8}}>Upload Avatar</div>
-										</div>
-									)}
-								</Upload>
-							</Form.Item> */}
 							<Form {...layout} name="nest-messages">
-								<Form.Item label="Họ tên" rules={[{required: true}]}>
-									<Input onChange={(e) => formik.setFieldValue("name", e.target.value)} name="name" value={formik.values.name} />
-									<p className="text-red-500 text-xs italic mb-0">{formik.errors.name}</p>
-								</Form.Item>
-								<Form.Item label="Email">
-									<Input onChange={(e) => formik.setFieldValue("email", e.target.value)} name="email" value={formik.values.email} />
-									<p className="text-red-500 text-xs italic mb-0">{formik.errors.email}</p>
-								</Form.Item>
-								<Form.Item label="Số điện thoại">
-									<Input onChange={(e) => formik.setFieldValue("phone", e.target.value)} name="phone" value={formik.values.phone} />
-									<p className="text-red-500 text-xs italic mb-0">{formik.errors.phone}</p>
-								</Form.Item>
-								<Form.Item label="Giới tính">
-									<Input onChange={(e) => formik.setFieldValue("gender", e.target.value)} name="gender" value={formik.values.gender} />
-									<p className="text-red-500 text-xs italic mb-0">{formik.errors.gender}</p>
-								</Form.Item>
-								<Form.Item label="Ngày sinh">
-									<DatePicker format="DD-MM-YYYY" onChange={(date) => formik.setFieldValue("dateOfBirth", date)} value={moment(formik.values.dateOfBirth)} style={{width: "100%"}} />
-									<p className="text-red-500 text-xs italic mb-0">{formik.errors.dateOfBirth}</p>
-								</Form.Item>
-								<Form.Item label="Địa chỉ">
-									<Input onChange={(e) => formik.setFieldValue("address", e.target.value)} name="address" value={formik.values.address} />
-									<p className="text-red-500 text-xs italic mb-0">{formik.errors.address}</p>
-								</Form.Item>
+								<div className="grid grid-cols-2 gap-4">
+									<Form.Item label="Họ tên">
+										<Input readOnly value={formik.values.name} />
+									</Form.Item>
+
+									<Form.Item label="Email">
+										<Input readOnly value={formik.values.email} />
+									</Form.Item>
+
+									<Form.Item label="Số điện thoại">
+										<Input readOnly value={formik.values.phone} />
+									</Form.Item>
+
+									<Form.Item label="Giới tính">
+										<Input readOnly value={formik.values.gender} />
+									</Form.Item>
+
+									<Form.Item label="Ngày sinh">
+										<DatePicker readOnly format="DD-MM-YYYY" value={moment(formik.values.dateOfBirth)} style={{width: "100%"}} />
+									</Form.Item>
+
+									<Form.Item label="Địa chỉ">
+										<Input readOnly value={formik.values.address} />
+									</Form.Item>
+								</div>
+
 								{/* <Form.Item label="Mật Khẩu" rules={[{required: true}]}>
 									<Input.Password onChange={(e) => formik.setFieldValue("passWord", e.target.value)} name="passWord" value={formik.values.passWord} />
 									<p className="text-red-500 text-xs italic mb-0">{formik.errors.passWord}</p>
 								</Form.Item> */}
-								<Form.Item>
+								<Form.Item style={{textAlign: "right"}}>
 									<Space>
 										<Button type="primary" onClick={() => setIsEditModalVisible(true)}>
 											Chỉnh sửa thông tin

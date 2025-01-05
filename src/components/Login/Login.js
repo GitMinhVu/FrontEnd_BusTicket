@@ -56,7 +56,7 @@ export default function Login(props) {
 	};
 
 	return (
-		<Form name="basic" autoComplete="off" onFinish={formik.handleSubmit}>
+		<Form name="basic" autoComplete="off" onFinish={formik.handleSubmit} layout="horizontal" labelAlign="left" labelCol={{span: 4}} wrapperCol={{span: 20}}>
 			<Form.Item label="Email" name="email">
 				<Input onChange={(e) => formik.setFieldValue("email", e.target.value)} name="email" />
 				<p className="text-red-500 text-xs italic mb-0">{formik.errors.email}</p>
@@ -66,14 +66,13 @@ export default function Login(props) {
 				<Input.Password onChange={(e) => formik.setFieldValue("passWord", e.target.value)} name="passWord" />
 				<p className="text-red-500 text-xs italic mb-0">{formik.errors.passWord}</p>
 			</Form.Item>
-
 			<Form.Item name="remember" valuePropName="checked">
-				<Row justify="space-between">
+				<Row justify="space-between" align="middle">
 					<Col>
 						<Checkbox>Ghi nhớ</Checkbox>
 					</Col>
-					<Col>
-						<Button type="link" onClick={() => setIsForgotPassword(true)}>
+					<Col style={{marginLeft: "auto"}}>
+						<Button type="link" onClick={() => setIsForgotPassword(true)} style={{marginLeft: "70%"}}>
 							Quên mật khẩu?
 						</Button>
 					</Col>

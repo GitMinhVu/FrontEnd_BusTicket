@@ -1,9 +1,29 @@
-import React from "react";
+import React, {useEffect} from "react";
 import InputSearchTrip from "../components/Input/InputSearchTrip";
 import Slider from "react-slick";
-import {List, Card} from "antd";
+import {List, Card, Modal} from "antd";
 import "../Sass/css/Home.css";
 export default function Home() {
+	useEffect(() => {
+		Modal.success({
+			title: "🎊 Chúc Mừng Năm Mới Giáp Thìn 2024 🎊",
+			content: (
+				<div style={{fontSize: "16px", lineHeight: "1.6"}}>
+					🌟 Kính chúc quý khách một năm mới an khang, thịnh vượng, sức khỏe dồi dào, và vạn sự như ý!
+					<br />
+					<br />
+					🚍 Hãy để VietBus đồng hành cùng bạn trên mọi hành trình, mang đến những chuyến đi an toàn, tiện lợi và hạnh phúc trọn vẹn!
+					<br />
+					<br />
+					🌸 Xuân mới, niềm vui mới – Đặt vé ngay hôm nay để khởi đầu hành trình may mắn!
+				</div>
+			),
+			centered: true,
+			width: 600,
+			icon: null,
+		});
+	}, []);
+
 	const data = [
 		{
 			title: "VietBusTravel và nhà xe tài trợ 4000 vé xe Tết 2024 cho sinh viên",
@@ -25,16 +45,28 @@ export default function Home() {
 		slidesToShow: 3,
 		swipeToSlide: true,
 	};
+
 	return (
 		<>
 			<div className="home_banner">
-				<img src="./images/backGround.png" alt="background-header" className="img_banner" />
-
+				<img src="https://hoanghamobile.com/tin-tuc/wp-content/webp-express/webp-images/uploads/2024/04/anh-tet-2025.jpg.webp" alt="background-header" className="img_banner" style={{width: "100%", height: "600px", objectFit: "cover"}} />
 				<div className="home_content">
 					<div className="home_around w-full">
 						<div className="title_banner">
 							<a href="https://vexere.com/vi-VN/nhung-cau-hoi-thuong-gap.html" target="_blank" rel="noreferrer">
-								<h2 className="homepage__Title-bs2n93-3 ">VietBus - Mua vé xe online trực tuyến</h2>
+								<h2
+									className="homepage__Title-bs2n93-3"
+									style={{
+										fontFamily: '"Google Sans", roboto, "Noto Sans Myanmar UI", arial, sans-serif',
+										fontSize: "3rem",
+										color: "#FFFFFF",
+										textShadow: "2px 2px 4px rgba(255,255,255,0.5)",
+										letterSpacing: "2px",
+										fontWeight: "bold",
+									}}
+								>
+									VietBus - Mua vé xe online trực tuyến
+								</h2>
 							</a>
 						</div>
 					</div>
@@ -43,7 +75,7 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
-			<div className="home_slide">
+			<div className="home_slide" style={{marginTop: "100px"}}>
 				<div className="home_slide_content">
 					<h2 className="home_slide_title mt-5">Ưu đãi nổi bật</h2>
 					<div className="home_slide_carousel">

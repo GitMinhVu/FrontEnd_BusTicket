@@ -26,7 +26,7 @@ export const LoginAction = (user) => {
 			dispatch({
 				type: NOFICATION,
 				title: "error",
-				text: "Lỗi Đăng Nhập, Vui lòng thử lại!",
+				text: "Email hoặc mật khẩu không đúng!",
 			});
 		}
 	};

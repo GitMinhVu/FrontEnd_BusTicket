@@ -20,24 +20,28 @@ export default function Header() {
 		<Menu>
 			<Menu.Item key="1">
 				<a
-					onClick={() => {
+					href="/usermgt"
+					onClick={(e) => {
+						e.preventDefault();
 						history.push("/usermgt");
 					}}
 				>
 					<span>
-						<img src="https://storage.googleapis.com/fe-production/images/Auth/account-circle.svg" width={16} height={16} alt className="mr-2" />
+						<img src="https://storage.googleapis.com/fe-production/images/Auth/account-circle.svg" width={16} height={16} alt="" className="mr-2" />
 						<span style={{fontSize: 12}}>Thông tin tài khoản</span>
 					</span>
 				</a>
 			</Menu.Item>
 			<Menu.Item key="2">
 				<a
-					onClick={() => {
+					href="/ticketmgt"
+					onClick={(e) => {
+						e.preventDefault();
 						history.push("/ticketmgt");
 					}}
 				>
 					<span>
-						<img src="https://storage.googleapis.com/fe-production/images/ticket.svg" width={16} height={16} alt className="mr-2" />
+						<img src="https://storage.googleapis.com/fe-production/images/ticket.svg" width={16} height={16} alt="" className="mr-2" />
 
 						<span style={{fontSize: 12}}>Vé của tôi</span>
 					</span>
@@ -45,22 +49,34 @@ export default function Header() {
 			</Menu.Item>
 			<Menu.Item key="3">
 				<a
-					onClick={() => {
+					href="/commentmgt"
+					onClick={(e) => {
+						e.preventDefault();
 						history.push("/commentmgt");
 					}}
 				>
 					<span>
-						<img src="https://storage.googleapis.com/fe-production/images/review.svg" width={16} height={16} alt className="mr-2" />
+						<img src="https://storage.googleapis.com/fe-production/images/review.svg" width={16} height={16} alt="" className="mr-2" />
 						<span style={{fontSize: 12}}>Nhận xét của tôi</span>
 					</span>
 				</a>
 			</Menu.Item>
 			<Menu.Item key="4">
 				<a
-					onClick={() => {
-						localStorage.removeItem(USER_LOGIN);
-						localStorage.removeItem(TOKEN);
-						window.location.reload();
+					href="#"
+					onClick={(e) => {
+						e.preventDefault();
+						Modal.confirm({
+							title: "Xác nhận đăng xuất",
+							content: "Bạn có chắc chắn muốn đăng xuất không?",
+							okText: "Đăng xuất",
+							cancelText: "Hủy",
+							onOk: () => {
+								localStorage.removeItem(USER_LOGIN);
+								localStorage.removeItem(TOKEN);
+								window.location.reload();
+							},
+						});
 					}}
 				>
 					<span>
@@ -75,7 +91,7 @@ export default function Header() {
 		if (_.isEmpty(userLogin)) {
 			return (
 				<Button className="btn_login" type="primary" shape="round" size={"small"} onClick={() => setModal(true)}>
-					<img src="https://storage.googleapis.com/fe-production/images/Auth/account-circle-fill.svg" alt height={16} width={16} />
+					<img src="https://storage.googleapis.com/fe-production/images/Auth/account-circle-fill.svg" alt="" height={16} width={16} />
 					Đăng nhập
 				</Button>
 			);
@@ -83,7 +99,7 @@ export default function Header() {
 		return (
 			<Dropdown overlay={menu}>
 				<Button className="btn_login" type="primary" shape="round" size={"small"}>
-					<img src="https://storage.googleapis.com/fe-production/images/Auth/account-circle-fill.svg" alt height={16} width={16} />
+					<img src="https://storage.googleapis.com/fe-production/images/Auth/account-circle-fill.svg" alt="" height={16} width={16} />
 					<DownOutlined />
 				</Button>
 			</Dropdown>
@@ -97,7 +113,9 @@ export default function Header() {
 					<div className="header_right text-3xl col-span-2">
 						<div className="logo">
 							<a
-								onClick={() => {
+								href="/"
+								onClick={(e) => {
+									e.preventDefault();
 									history.push("/");
 								}}
 							>
@@ -129,7 +147,9 @@ export default function Header() {
 							</li>
 							<li>
 								<a
-									onClick={() => {
+									href="/ticketLookup"
+									onClick={(e) => {
+										e.preventDefault();
 										history.push("/ticketLookup");
 									}}
 								>
@@ -138,8 +158,8 @@ export default function Header() {
 							</li>
 							<li className="hotline">
 								<Popover placement="bottom" title="Số Điện Thoại Tổng Đài" content={"0937750843"} trigger="click">
-									<a href="#">
-										<img src="https://storage.googleapis.com/fe-production/svgIcon/hotline-icon.svg" alt className="object-cover" />
+									<a href="tel:0937750843">
+										<img src="https://storage.googleapis.com/fe-production/svgIcon/hotline-icon.svg" alt="" className="object-cover" />
 										Hotline
 									</a>
 								</Popover>

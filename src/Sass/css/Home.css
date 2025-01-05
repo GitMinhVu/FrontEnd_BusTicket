@@ -214,4 +214,9 @@
 	opacity: -0.4;
 	border-radius: 3px;
 }
+.img_banner {
+	width: 100%;
+	height: 600px; /* Tăng chiều cao */
+	object-fit: cover; /* Đảm bảo ảnh không bị méo */
+}
 /*# sourceMappingURL=Home.css.map */
