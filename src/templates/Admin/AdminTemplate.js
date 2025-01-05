@@ -27,14 +27,14 @@ export default function AdminTemplate(props) {
 	};
 
 	// // Kiểm tra đăng nhập admin
-
 	// Change the userLogin selector
 	const adminLogin = JSON.parse(localStorage.getItem(ADMIN_LOGIN));
 
 	// Replace userLogin with adminLogin in the template
 	<span className="text-xl">
 		{t("admin.greeting")} , {adminLogin?.name}
-	</span>; // if (!localStorage.getItem(ADMIN_LOGIN)) {
+	</span>;
+	// if (!localStorage.getItem(ADMIN_LOGIN)) {
 	// 	alert("Bạn không có quyền truy cập vào trang này!");
 	// 	return <Redirect to="/admin/login" />;
 	// }
@@ -77,10 +77,20 @@ export default function AdminTemplate(props) {
 				return (
 					<Fragment>
 						<Layout style={{minHeight: "100vh"}}>
-							<Sider collapsible collapsed={collapsed} onCollapse={changeCollapsed}>
+							<Sider
+								collapsible
+								collapsed={collapsed}
+								onCollapse={changeCollapsed}
+								style={{
+									overflow: "auto",
+									height: "100vh",
+									position: "fixed",
+									left: 0,
+									top: 0,
+									bottom: 0,
+								}}
+							>
 								<div className="logo flex justify-center items-center mt-5">
-									{/* <span style={{color:"white"}}>VietBusTravel- Admin</span> */}
-									{/* <img src="https://www.shutterstock.com/image-vector/big-black-bus-vector-image-600nw-2473900693.jpg" alt={123} className="mb-5" /> */}
 									<img
 										src="/images/original.png"
 										alt="VietBus Logo"
@@ -181,7 +191,7 @@ export default function AdminTemplate(props) {
 									</Menu.Item>
 								</Menu>
 							</Sider>
-							<Layout className="site-layout">
+							<Layout className="site-layout" style={{marginLeft: collapsed ? 80 : 200}}>
 								<Header className="site-layout-background flex justify-end" style={{padding: 0, background: "#fff"}}>
 									<div className="flex items-center justify-between w-full px-5">
 										<span className="font-bold text-xl">{t("admin.systemTitle")}</span>

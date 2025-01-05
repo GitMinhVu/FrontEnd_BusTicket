@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -7,19 +7,21 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import LoadingButton from "@mui/lab/LoadingButton";
 import {SELECT_TRIP, TRIP_RENDER} from "../../redux/types/BookingTypes";
-import {getProvinceAction, getTripByUserAction, getTripPassengerAction} from "../../redux/actions/bookingAction";
+import {getProvinceAction, getTripByUserAction} from "../../redux/actions/bookingAction";
 import moment from "moment";
 import {openNotificationWithIcon} from "../../util/lib/Nofication";
-import {SET_LOADING_BUTTON, HIDE_LOADING_BUTTON} from "../../redux/types/LoadingTypes";
+import {SET_LOADING_BUTTON} from "../../redux/types/LoadingTypes";
 
 export default function InputSearchTrip(props) {
 	let {listProvince, tripByUser, tripSearch} = useSelector((state) => state.BookingReducer);
 	console.log("file: InputSearchTrip.js ~ line 17 ~ InputSearchTrip ~ tripSearch", tripSearch);
 	let {loadingButton} = useSelector((state) => state.LoadingReducer);
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		dispatch(getProvinceAction());
 	}, []);
+
 	const ListProvince = listProvince?.map((item, index) => {
 		if (item.name.includes("Tỉnh")) {
 			return item.name.substring(5, item.name.length);
@@ -29,6 +31,7 @@ export default function InputSearchTrip(props) {
 			return item.name;
 		}
 	});
+
 	const handleClick = () => {
 		// console.log("Search params:", tripSearch);
 		if (tripSearch.fromStation == "" || tripSearch.toStation == "" || tripSearch.startTime == "") {
