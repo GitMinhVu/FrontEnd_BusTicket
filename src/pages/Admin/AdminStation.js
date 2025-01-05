@@ -3,7 +3,7 @@ import {Layout, Menu, Breadcrumb, Image, Table, Statistic, Button, Rate, Popconf
 import {useDispatch, useSelector} from "react-redux";
 import {AudioOutlined, EditOutlined, SearchOutlined, DeleteOutlined, CalendarOutlined, FolderViewOutlined, CarOutlined} from "@ant-design/icons";
 import {OPEN_DRAWER} from "../../redux/types/DrawerTypes";
-
+import {ADMIN_LOGIN} from "../../util/settings/config";
 import DirectionsRailwayFilledIcon from "@mui/icons-material/DirectionsRailwayFilled";
 import {getListStationAction, deleteStationAction} from "../../redux/actions/stationAction";
 import EditStation from "../../components/Edit/EditStation";
@@ -29,12 +29,16 @@ export default function AdminStation() {
 		setSearchProvince(e.target.value);
 	};
 
-	const filteredStations = listStation.filter(station => {
+	const filteredStations = listStation.filter((station) => {
 		const nameMatch = station.name.toLowerCase().includes(searchName.toLowerCase());
 		const provinceMatch = station.province.toLowerCase().includes(searchProvince.toLowerCase());
 		return nameMatch && provinceMatch;
 	});
-
+	useEffect(() => {
+		const token = localStorage.getItem(ADMIN_LOGIN);
+		console.log("Admin token:", token);
+		dispatch(getListStationAction());
+	}, []);
 	useEffect(() => {
 		dispatch(getListStationAction());
 	}, []);
@@ -75,7 +79,7 @@ export default function AdminStation() {
 									width: 900,
 								});
 							}}
-							style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+							style={{display: "flex", alignItems: "center", gap: "8px"}}
 						>
 							<DirectionsRailwayFilledIcon />
 							<span>Điểm Đón / Dừng</span>
@@ -129,29 +133,17 @@ export default function AdminStation() {
 			</Breadcrumb>
 			<div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
 				<h1>Danh sách bến xe</h1>
-				<div style={{ 
-					display: 'flex', 
-					justifyContent: 'space-between',
-					alignItems: 'center',
-					marginBottom: 16 
-				}}>
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "space-between",
+						alignItems: "center",
+						marginBottom: 16,
+					}}
+				>
 					<Space size="middle">
-						<Input
-							placeholder="Tìm kiếm theo tên bến xe"
-							allowClear
-							prefix={<SearchOutlined />}
-							value={searchName}
-							onChange={handleSearchName}
-							style={{ width: 250 }}
-						/>
-						<Input
-							placeholder="Tìm kiếm theo tỉnh/thành phố"
-							allowClear
-							prefix={<SearchOutlined />}
-							value={searchProvince}
-							onChange={handleSearchProvince}
-							style={{ width: 250 }}
-						/>
+						<Input placeholder="Tìm kiếm theo tên bến xe" allowClear prefix={<SearchOutlined />} value={searchName} onChange={handleSearchName} style={{width: 250}} />
+						<Input placeholder="Tìm kiếm theo tỉnh/thành phố" allowClear prefix={<SearchOutlined />} value={searchProvince} onChange={handleSearchProvince} style={{width: 250}} />
 					</Space>
 					<Button
 						type="primary"
@@ -162,7 +154,7 @@ export default function AdminStation() {
 								content: <AddStation />,
 							});
 						}}
-						style={{display:'flex', alignItems:'center'}}
+						style={{display: "flex", alignItems: "center"}}
 					>
 						<AddBusinessIcon className="mr-2" style={{marginRight: 8}} />
 						Thêm Bến Xe

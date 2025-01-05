@@ -47,11 +47,16 @@ export default function EditPassenger(props) {
 				price: values.price,
 				description: values.description,
 			};
-			var bodyFormData = new FormData();
-			bodyFormData.append("passenger", values.file);
-			console.log(bodyFormData);
+			if (values.file) {
+				var bodyFormData = new FormData();
+				bodyFormData.append("passenger", values.file);
+				dispatch(updateImagePassengerAction(passengerDetail.id, bodyFormData));
+			}
+			// var bodyFormData = new FormData();
+			// bodyFormData.append("passenger", values.file);
+			// console.log(bodyFormData);
 			dispatch(updatePassengerAction(passengerUpdate, passengerDetail.id));
-			dispatch(updateImagePassengerAction(passengerDetail.id, bodyFormData));
+			// dispatch(updateImagePassengerAction(passengerDetail.id, bodyFormData));
 			dispatch({type: CLOSE_DRAWER});
 		},
 	});
