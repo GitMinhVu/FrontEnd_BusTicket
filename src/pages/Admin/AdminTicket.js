@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {Layout, Menu, Breadcrumb, Image, Table, Statistic, Button, Rate, Popconfirm, Tag, Spin, message, Input, Space} from "antd";
+import {Layout, Menu, Breadcrumb, Image, Table, Statistic, Descriptions, Button, Rate, Popconfirm, Tag, Spin, message, Input, Space} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {deletePassenger, getAllPassenger} from "../../redux/actions/passengerAction";
 import _ from "lodash";
@@ -15,6 +15,8 @@ const {Header, Content, Footer, Sider} = Layout;
 
 export default function AdminTicket(props) {
 	const dispatch = useDispatch();
+	const [selectedTicket, setSelectedTicket] = useState(null);
+
 	const {listTicket} = useSelector((state) => state.TicketReducer);
 	console.log("file: AdminTicket.js ~ line 19 ~ AdminTicket ~ listTicket", listTicket);
 	useEffect(() => {
@@ -57,6 +59,8 @@ export default function AdminTicket(props) {
 			</span>
 		);
 	};
+
+	//Process
 	const renderStatus = (ticket) => {
 		if (ticket.status == "pending") {
 			return (
@@ -98,188 +102,310 @@ export default function AdminTicket(props) {
 			);
 		}
 	};
-	const columns = [
+
+	//detail ticket
+	const showTicketDetails = (ticket) => {
+		setSelectedTicket(ticket);
+		dispatch({
+			type: SET_MODAL,
+			title: `Chi tiết vé #${ticket.id}`,
+			content: (
+				<div>
+					<Descriptions bordered column={1}>
+						<Descriptions.Item label="Nhà xe">{ticket.tripPassengerTicket.passenger.name}</Descriptions.Item>
+						<Descriptions.Item label="Xe">{ticket.tripPassengerTicket.vehicle.name}</Descriptions.Item>
+						<Descriptions.Item label="Ghế đã đặt">{renderSeat(ticket)}</Descriptions.Item>
+						<Descriptions.Item label="Điểm đón/trả">
+							<div style={{color: "#8CCEEA"}}>
+								{" "}
+								<strong>Điểm đón:</strong> {renderPoint(ticket, "pickup")}
+							</div>
+							<div style={{color: "#FFB347"}}>
+								{" "}
+								<strong>Điểm trả:</strong> {renderPoint(ticket, "dropoff")}
+							</div>
+						</Descriptions.Item>
+
+						<Descriptions.Item label="Tổng tiền">
+							{new Intl.NumberFormat("vi-VN", {
+								style: "currency",
+								currency: "VND",
+							}).format(ticket.totalAmount)}
+						</Descriptions.Item>
+						<Descriptions.Item label="Phương thức thanh toán">
+							<Tag color={ticket.payment_method === "tiền mặt" ? "green" : "pink"}>{ticket.payment_method}</Tag>
+						</Descriptions.Item>
+					</Descriptions>
+				</div>
+			),
+		});
+	};
+
+	//columns
+	const essentialColumns = [
 		{
 			title: "Số Vé",
-			render: (text, ticket) => {
-				return (
-					<div>
-						<h4>Số Vé {ticket.id}</h4>
-					</div>
-				);
-			},
+			render: (text, ticket) => <div>#{ticket.id}</div>,
 			sorter: (a, b) => a.id - b.id,
-			sortDirections: ["descend"],
-			filters: arrFilterId,
-			onFilter: (value, record) => record.name.startsWith(value),
-			filterSearch: true,
 		},
 		{
 			title: "Người Đặt",
-			render: (text, ticket) => {
-				return (
-					<div>
-						<a>{ticket.user.name}</a>
-					</div>
-				);
-			},
-			filters: arrFilterName,
-			onFilter: (value, record) => record.user_id == value,
-			filterSearch: true,
+			render: (text, ticket) => <div>{ticket.user.name}</div>,
 		},
 		{
-			title: "Số Điện Thoại Người Đặt",
-			render: (text, ticket) => {
-				return (
-					<div>
-						<a>{ticket.user.numberPhone}</a>
-					</div>
-				);
-			},
-			filters: arrFilterPhone,
-			onFilter: (value, record) => record.user_id == value,
-			filterSearch: true,
+			title: "Số điện thoại",
+			render: (text, numberPhone) => <div>{text.user.numberPhone}</div>,
 		},
 		{
-			title: "Từ",
-			render: (text, ticket) => {
-				return (
-					<div>
-						<h4>
-							{ticket.tripPassengerTicket.trip.from.province} - ({ticket.tripPassengerTicket.trip.from?.name}) - ({ticket.tripPassengerTicket.trip.from.address})
-						</h4>
-					</div>
-				);
-			},
-		},
-		{
-			title: "Đến",
-			render: (text, ticket) => {
-				return (
-					<div>
-						<h4>
-							{ticket.tripPassengerTicket.trip.to.province} - ({ticket.tripPassengerTicket.trip.to?.name}) - ({ticket.tripPassengerTicket.trip.to.address})
-						</h4>
-					</div>
-				);
-			},
+			title: "Hành Trình",
+			render: (text, ticket) => (
+				<div>
+					{ticket.tripPassengerTicket.trip.from.province} →{ticket.tripPassengerTicket.trip.to.province}
+				</div>
+			),
 		},
 		{
 			title: "Ngày Đặt",
-			render: (text, ticket) => {
-				return (
-					<div>
-						<a>{moment(ticket.createdAt).format("DD-MM-YYYY h:mm:ss")}</a>
-					</div>
-				);
-			},
+			render: (text, ticket) => <div>{moment(ticket.createdAt).format("DD-MM-YYYY")}</div>,
 		},
-		{
-			title: "Nhà Xe - Xe",
-			render: (text, ticket) => {
-				return (
-					<div>
-						<h4 style={{fontSize: 12}}>
-							Nhà xe {ticket.tripPassengerTicket.passenger.name} ({ticket.tripPassengerTicket.passenger.description})
-						</h4>
-						<h4 style={{fontSize: 12}}>
-							{ticket.tripPassengerTicket.vehicle.name} ({ticket.tripPassengerTicket.vehicle.description})
-						</h4>
-						<Image width={50} src={ticket.tripPassengerTicket.passenger.imageIntro} style={{borderRadius: "50%"}} />
-					</div>
-				);
-			},
-		},
-		{
-			title: "Tổng tiền",
-			render: (text, ticket) => {
-				return (
-					<div>
-						<h4>{ticket.totalAmount}</h4>
-					</div>
-				);
-			},
-			onFilter: (value, record) => record.totalAmount.indexOf(value) === 0,
-			sorter: (a, b) => a.totalAmount - b.totalAmount,
-			sortDirections: ["descend"],
-		},
-
 		{
 			title: "Trạng Thái",
-			render: (text, ticket) => {
-				return (
-					<div>
-						<h4>{renderStatus(ticket)}</h4>
-					</div>
-				);
-			},
-			filters: arrFilterStatus,
-			onFilter: (value, record) => record.status.startsWith(value),
-			filterSearch: true,
+			render: (text, ticket) => renderStatus(ticket),
 		},
 		{
-			title: "Ghế Đã Đặt",
-			render: (text, ticket) => {
-				return <div>{renderSeat(ticket)}</div>;
-			},
-		},
-		{
-			title: "Điểm Đón - Trả",
-			render: (text, ticket) => {
-				return (
-					<>
-						<div style={{fontSize: 12}}>
-							<span className="font-bold">Điểm đón</span>: <p>{renderPoint(ticket, "pickup")}</p>
-						</div>
-						<div style={{fontSize: 12}}>
-							<span className="font-bold">Điểm trả</span>: <p>{renderPoint(ticket, "dropoff")}</p>
-						</div>
-					</>
-				);
-			},
-		},
-
-		{
-			title: "Action",
-			render: (text, item) => {
-				return (
-					<Fragment>
-						<div>
-							<button
-								className="mr-3"
-								onClick={() => {
-									dispatch({
-										type: OPEN_DRAWER,
-										title: "Cập nhật vé",
-										content: <EditTicket id={item.id} />,
-									});
-								}}
-							>
-								<EditOutlined />
-							</button>
-							<Popconfirm
-								placement="topLeft"
-								title={"Bạn có muốn xóa vé này"}
-								onConfirm={() => {
-									if (item.status !== "cancel") {
-										message.error("Vé đang không ở trạng thái đã hủy");
-									} else {
-										dispatch(deleteTicket(item.id));
-									}
-								}}
-								okText="Yes"
-								cancelText="No"
-							>
-								<button className="text-red-700">
-									<DeleteOutlined />
-								</button>
-							</Popconfirm>
-						</div>
-					</Fragment>
-				);
-			},
+			title: "Actions",
+			render: (text, ticket) => (
+				<Space>
+					<Button icon={<FolderViewOutlined />} onClick={() => showTicketDetails(ticket)}>
+						Chi tiết
+					</Button>
+					<Button
+						icon={<EditOutlined />}
+						onClick={() => {
+							dispatch({
+								type: OPEN_DRAWER,
+								title: "Cập nhật vé",
+								content: <EditTicket id={ticket.id} />,
+							});
+						}}
+					/>
+					<Popconfirm
+						placement="topLeft"
+						title={"Bạn có muốn xóa vé này"}
+						onConfirm={() => {
+							if (ticket.status !== "cancel") {
+								message.error("Vé đang không ở trạng thái đã hủy");
+							} else {
+								dispatch(deleteTicket(ticket.id));
+							}
+						}}
+						okText="Yes"
+						cancelText="No"
+					>
+						<Button icon={<DeleteOutlined />} danger />
+					</Popconfirm>
+				</Space>
+			),
 		},
 	];
+
+	// const columns = [
+	// 	{
+	// 		title: "Số Vé",
+	// 		render: (text, ticket) => {
+	// 			return (
+	// 				<div>
+	// 					<h4>Số Vé {ticket.id}</h4>
+	// 				</div>
+	// 			);
+	// 		},
+	// 		sorter: (a, b) => a.id - b.id,
+	// 		sortDirections: ["descend"],
+	// 		filters: arrFilterId,
+	// 		onFilter: (value, record) => record.name.startsWith(value),
+	// 		filterSearch: true,
+	// 	},
+	// 	{
+	// 		title: "Người Đặt",
+	// 		render: (text, ticket) => {
+	// 			return (
+	// 				<div>
+	// 					<a>{ticket.user.name}</a>
+	// 				</div>
+	// 			);
+	// 		},
+	// 		filters: arrFilterName,
+	// 		onFilter: (value, record) => record.user_id == value,
+	// 		filterSearch: true,
+	// 	},
+	// 	// {
+	// 	// 	title: "Số Điện Thoại Người Đặt",
+	// 	// 	render: (text, ticket) => {
+	// 	// 		return (
+	// 	// 			<div>
+	// 	// 				<a>{ticket.user.numberPhone}</a>
+	// 	// 			</div>
+	// 	// 		);
+	// 	// 	},
+	// 	// 	filters: arrFilterPhone,
+	// 	// 	onFilter: (value, record) => record.user_id == value,
+	// 	// 	filterSearch: true,
+	// 	// },
+	// 	{
+	// 		title: "Từ",
+	// 		render: (text, ticket) => {
+	// 			return (
+	// 				<div>
+	// 					<h4>
+	// 						{ticket.tripPassengerTicket.trip.from.province} - ({ticket.tripPassengerTicket.trip.from?.name}) - ({ticket.tripPassengerTicket.trip.from.address})
+	// 					</h4>
+	// 				</div>
+	// 			);
+	// 		},
+	// 	},
+	// 	{
+	// 		title: "Đến",
+	// 		render: (text, ticket) => {
+	// 			return (
+	// 				<div>
+	// 					<h4>
+	// 						{ticket.tripPassengerTicket.trip.to.province} - ({ticket.tripPassengerTicket.trip.to?.name}) - ({ticket.tripPassengerTicket.trip.to.address})
+	// 					</h4>
+	// 				</div>
+	// 			);
+	// 		},
+	// 	},
+	// 	{
+	// 		title: "Ngày Đặt",
+	// 		render: (text, ticket) => {
+	// 			return (
+	// 				<div>
+	// 					<a>{moment(ticket.createdAt).format("DD-MM-YYYY h:mm:ss")}</a>
+	// 				</div>
+	// 			);
+	// 		},
+	// 	},
+	// 	{
+	// 		title: "Nhà Xe - Xe",
+	// 		render: (text, ticket) => {
+	// 			return (
+	// 				<div>
+	// 					<h4 style={{fontSize: 12}}>
+	// 						Nhà xe {ticket.tripPassengerTicket.passenger.name} ({ticket.tripPassengerTicket.passenger.description})
+	// 					</h4>
+	// 					<h4 style={{fontSize: 12}}>
+	// 						{ticket.tripPassengerTicket.vehicle.name} ({ticket.tripPassengerTicket.vehicle.description})
+	// 					</h4>
+	// 					<Image width={50} src={ticket.tripPassengerTicket.passenger.imageIntro} style={{borderRadius: "50%"}} />
+	// 				</div>
+	// 			);
+	// 		},
+	// 	},
+	// 	{
+	// 		title: "Tổng tiền",
+	// 		render: (text, ticket) => {
+	// 			return (
+	// 				<div>
+	// 					<h4>
+	// 						{new Intl.NumberFormat("vi-VN", {
+	// 							style: "currency",
+	// 							currency: "VND",
+	// 						}).format(ticket.totalAmount)}
+	// 					</h4>
+	// 				</div>
+	// 			);
+	// 		},
+	// 		onFilter: (value, record) => record.totalAmount.indexOf(value) === 0,
+	// 		sorter: (a, b) => a.totalAmount - b.totalAmount,
+	// 		sortDirections: ["descend"],
+	// 	},
+
+	// 	{
+	// 		title: "Trạng Thái",
+	// 		render: (text, ticket) => {
+	// 			return (
+	// 				<div>
+	// 					<h4>{renderStatus(ticket)}</h4>
+	// 				</div>
+	// 			);
+	// 		},
+	// 		filters: arrFilterStatus,
+	// 		onFilter: (value, record) => record.status.startsWith(value),
+	// 		filterSearch: true,
+	// 	},
+	// 	{
+	// 		title: "Ghế Đã Đặt",
+	// 		render: (text, ticket) => {
+	// 			return <div>{renderSeat(ticket)}</div>;
+	// 		},
+	// 	},
+	// 	{
+	// 		title: "Điểm Đón - Trả",
+	// 		render: (text, ticket) => {
+	// 			return (
+	// 				<>
+	// 					<div style={{fontSize: 12}}>
+	// 						<span className="font-bold">Điểm đón</span>: <p>{renderPoint(ticket, "pickup")}</p>
+	// 					</div>
+	// 					<div style={{fontSize: 12}}>
+	// 						<span className="font-bold">Điểm trả</span>: <p>{renderPoint(ticket, "dropoff")}</p>
+	// 					</div>
+	// 				</>
+	// 			);
+	// 		},
+	// 	},
+	// 	{
+	// 		title: "Phương thức thanh toán",
+	// 		render: (text, ticket) => {
+	// 			return (
+	// 				<div>
+	// 					<Tag color={ticket.payment_method === "tiền mặt" ? "green" : "pink"}>{ticket.payment_method}</Tag>
+	// 				</div>
+	// 			);
+	// 		},
+	// 	},
+
+	// 	{
+	// 		title: "Action",
+	// 		render: (text, item) => {
+	// 			return (
+	// 				<Fragment>
+	// 					<div>
+	// 						<button
+	// 							className="mr-3"
+	// 							onClick={() => {
+	// 								dispatch({
+	// 									type: OPEN_DRAWER,
+	// 									title: "Cập nhật vé",
+	// 									content: <EditTicket id={item.id} />,
+	// 								});
+	// 							}}
+	// 						>
+	// 							<EditOutlined />
+	// 						</button>
+	// 						<Popconfirm
+	// 							placement="topLeft"
+	// 							title={"Bạn có muốn xóa vé này"}
+	// 							onConfirm={() => {
+	// 								if (item.status !== "cancel") {
+	// 									message.error("Vé đang không ở trạng thái đã hủy");
+	// 								} else {
+	// 									dispatch(deleteTicket(item.id));
+	// 								}
+	// 							}}
+	// 							okText="Yes"
+	// 							cancelText="No"
+	// 						>
+	// 							<button className="text-red-700">
+	// 								<DeleteOutlined />
+	// 							</button>
+	// 						</Popconfirm>
+	// 					</div>
+	// 				</Fragment>
+	// 			);
+	// 		},
+	// 	},
+	// ];
 	const [searchName, setSearchName] = useState("");
 	const [searchPhone, setSearchPhone] = useState("");
 
@@ -317,7 +443,16 @@ export default function AdminTicket(props) {
 					<Input placeholder="Tìm kiếm theo người đặt" prefix={<SearchOutlined />} value={searchName} onChange={handleSearchName} style={{width: 250}} allowClear />
 					<Input placeholder="Tìm kiếm theo số điện thoại" prefix={<SearchOutlined />} value={searchPhone} onChange={handleSearchPhone} style={{width: 250}} allowClear />
 				</div>
-				<Table columns={columns} dataSource={filteredTickets} />
+				<Table
+					columns={essentialColumns}
+					dataSource={filteredTickets}
+					pagination={{
+						pageSize: 5,
+						total: filteredTickets.length,
+						showTotal: (total) => `Tổng ${total} vé`,
+						showSizeChanger: false,
+					}}
+				/>
 			</div>
 		</Content>
 	);

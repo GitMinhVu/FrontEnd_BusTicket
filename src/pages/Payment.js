@@ -113,7 +113,6 @@ export default function Payment(props) {
 						</div>
 						<div className="col-span-4">
 							<div class="header-label mb-5">Thông tin chuyến đi</div>
-
 							<Card style={{width: "100%", height: "auto", border: " 1px solid rgb(192, 192, 192)"}}>
 								<div className="table-info">
 									<div className="edit-info">
@@ -226,15 +225,32 @@ export default function Payment(props) {
 								style={{width: "100%", marginTop: "20px"}}
 								className="btn-payment"
 								onClick={() => {
+									console.log("Selected payment type:", typePay);
+
 									if (typePay === "") {
 										message.error("Vui lòng chọn phương thức thanh toán");
 									} else if (typePay === 1) {
-										// For cash payment option
-										dispatch(bookingTicketAction({...ticketBooking, paymentMethod: "cash"}, tripPassengerDetail?.passenger));
-										// message.success("Đặt vé thành công! Vui lòng kiểm tra email của bạn.");
+										dispatch(
+											bookingTicketAction(
+												{
+													...ticketBooking,
+													payment_method: "Tiền mặt",
+													payment_status: "pending",
+												},
+												tripPassengerDetail?.passenger
+											)
+										);
 									} else if (typePay === 2) {
-										// For MoMo payment
-										dispatch(bookingTicketAction({...ticketBooking, paymentMethod: "momo"}, tripPassengerDetail?.passenger));
+										dispatch(
+											bookingTicketAction(
+												{
+													...ticketBooking,
+													payment_method: "MoMo",
+													payment_status: "pending",
+												},
+												tripPassengerDetail?.passenger
+											)
+										);
 									}
 								}}
 							>

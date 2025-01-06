@@ -39,7 +39,8 @@
 			"numberOfSeats": "Số ghế",
 			"pickUpPoint": "Điểm đón",
 			"dropoff": "Điểm trả",
-			"floor": "Tầng"
+			"floor": "Tầng",
+			"bookedTickets": "Vé đã đặt"
 		},
 		"mess": {
 			"updateTrip": "Cập nhật chuyến xe",

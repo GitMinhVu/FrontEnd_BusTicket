@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {Layout, Menu, Breadcrumb, Image, Table, Statistic, Button, Rate, Popconfirm, Input} from "antd";
+import {Layout, Menu, Breadcrumb, Image, Space, Tag, Table, Statistic, Button, Rate, Popconfirm, Input} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import _, {templateSettings} from "lodash";
 import {AudioOutlined, EditOutlined, SearchOutlined, DeleteOutlined, CalendarOutlined, FolderViewOutlined, CarOutlined, EyeOutlined} from "@ant-design/icons";
@@ -41,92 +41,56 @@ export default function AdminVehicle() {
 			filterSearch: true,
 		},
 		{
-			title: "Mô Tả",
-			dataIndex: "description",
-			onFilter: (value, record) => record.description.indexOf(value) === 0,
-			sorter: (a, b) => a.description?.length - b.description?.length,
-			sortDirections: ["descend"],
-		},
-
-		{
 			title: "Loại Xe",
 			render: (text, vehicle) => {
-				return <div>{vehicle.type == "limouse" ? "Xe Limouse Vip" : "Xe Thường"}</div>;
+				return <Tag color={vehicle.type === "limouse" ? "gold" : "blue"}>{vehicle.type === "limouse" ? "Xe Limouse Vip" : "Xe Thường"}</Tag>;
 			},
-			filters: arrFilterType,
-			onFilter: (value, record) => record.type.startsWith(value),
-			filterSearch: true,
 		},
 		{
-			title: "Hình Ảnh",
+			title: "Hình Ảnh & Thông tin",
 			render: (text, vehicle) => {
 				return (
-					<div style={{display: "flex", alignItems: "center"}}>
-						{" "}
-						{/* Thêm style này */}
-						{vehicle.vehicleOfImage.map((item, index) => {
-							return <Image preview={{visible: vehicle.visible}} width={75} height={60} style={{borderRadius: "50%"}} src={item.link} key={index} />;
-						})}
-						<Button
-							type="link"
-							icon={<EyeOutlined />}
-							onClick={() => {
-								dispatch({
-									type: SET_MODAL,
-									title: "Cập Nhật Ảnh Xe",
-									content: <ImageVehicle id={vehicle.id} />,
-									width: 1000,
-								});
-							}}
-						/>
-					</div>
+					<Space>
+						<Image width={100} src={vehicle.vehicleOfImage[0]?.link} />
+						<div>
+							<div>Nhà xe: {vehicle.passengerCar?.name}</div>
+							<div>Số tầng: {vehicle.numberFloors}</div>
+							<div>Số ghế: {vehicle.seatVehicle?.length}</div>
+							<Space>
+								<Button
+									type="primary"
+									size="small"
+									onClick={() => {
+										dispatch({
+											type: SET_MODAL,
+											title: "Cập Nhật Ghế Xe",
+											content: <DetailSeatVehicle id={vehicle.id} />,
+											width: 1000,
+										});
+									}}
+								>
+									Quản lý ghế
+								</Button>
+								<Button
+									type="default"
+									size="small"
+									icon={<EyeOutlined />}
+									onClick={() => {
+										dispatch({
+											type: SET_MODAL,
+											title: "Cập Nhật Ảnh Xe",
+											content: <ImageVehicle id={vehicle.id} />,
+											width: 1000,
+										});
+									}}
+								>
+									Quản lý ảnh
+								</Button>
+							</Space>
+						</div>
+					</Space>
 				);
 			},
-		},
-		{
-			title: "Số Tầng",
-			dataIndex: "numberFloors",
-			sorter: (a, b) => a.name.numberFloors - b.name.numberFloors,
-			sortDirections: ["descend"],
-		},
-		{
-			title: "Số Ghế",
-			render: (text, vehicle) => {
-				return (
-					<div className="text-xl font-bold">
-						{vehicle.seatVehicle?.length}
-						<Button
-							type="primary"
-							onClick={() => {
-								dispatch({
-									type: SET_MODAL,
-									title: "Cập Nhật Ghế Xe",
-									content: <DetailSeatVehicle id={vehicle.id} />,
-									width: 1000,
-								});
-							}}
-						>
-							Xem Chi Tiết
-						</Button>
-					</div>
-				);
-			},
-			sorter: (a, b) => a.seatVehicle?.length - b.seatVehicle?.length,
-			sortDirections: ["descend"],
-		},
-		{
-			title: "Nhà Xe",
-			render: (text, vehicle) => {
-				return (
-					<div style={{cursor: "not-allowed"}}>
-						<DirectionsBusIcon />
-						{vehicle.passengerCar?.name}
-					</div>
-				);
-			},
-			filters: arrFilterPassenger,
-			onFilter: (value, record) => record.passengerCarId === value,
-			filterSearch: true,
 		},
 		{
 			title: "Action",
@@ -148,7 +112,7 @@ export default function AdminVehicle() {
 							</button>
 							<Popconfirm
 								placement="topLeft"
-								title={"Bạn có muốn xóa  xe này"}
+								title={"Bạn có muốn xóa xe này"}
 								onConfirm={() => {
 									dispatch(DeleteVehicleAction(item.id));
 								}}
@@ -165,6 +129,211 @@ export default function AdminVehicle() {
 			},
 		},
 	];
+
+	// const columns = [
+	// 	{
+	// 		title: "Tên xe",
+	// 		dataIndex: "name",
+	// 		sorter: (a, b) => a.name?.length - b.name?.length,
+	// 		sortDirections: ["descend"],
+	// 		filters: arrFilterName,
+	// 		onFilter: (value, record) => record.name.startsWith(value),
+	// 		filterSearch: true,
+	// 	},
+	// 	{
+	// 		title: "Loại Xe",
+	// 		render: (text, vehicle) => {
+	// 			return <Tag color={vehicle.type === "limouse" ? "gold" : "blue"}>{vehicle.type === "limouse" ? "Xe Limouse Vip" : "Xe Thường"}</Tag>;
+	// 		},
+	// 	},
+	// 	{
+	// 		title: "Hình Ảnh & Thông tin",
+	// 		render: (text, vehicle) => {
+	// 			return (
+	// 				<Space>
+	// 					<Image width={100} src={vehicle.vehicleOfImage[0]?.link} />
+	// 					<div>
+	// 						<div>Số ghế: {vehicle.seatVehicle?.length}</div>
+	// 						<div>Số tầng: {vehicle.numberFloors}</div>
+	// 						<div>{vehicle.passengerCar?.name}</div>
+	// 					</div>
+	// 				</Space>
+	// 			);
+	// 		},
+	// 	},
+	// 	{
+	// 		title: "Action",
+	// 		render: (text, item) => {
+	// 			return (
+	// 				<Fragment>
+	// 					<div>
+	// 						<button
+	// 							className="mr-3"
+	// 							onClick={() => {
+	// 								dispatch({
+	// 									type: OPEN_DRAWER,
+	// 									title: "Cập nhật Xe",
+	// 									content: <EditVehicle id={item.id} />,
+	// 								});
+	// 							}}
+	// 						>
+	// 							<EditOutlined />
+	// 						</button>
+	// 						<Popconfirm
+	// 							placement="topLeft"
+	// 							title={"Bạn có muốn xóa  xe này"}
+	// 							onConfirm={() => {
+	// 								dispatch(DeleteVehicleAction(item.id));
+	// 							}}
+	// 							okText="Yes"
+	// 							cancelText="No"
+	// 						>
+	// 							<button className="text-red-700">
+	// 								<DeleteOutlined />
+	// 							</button>
+	// 						</Popconfirm>
+	// 					</div>
+	// 				</Fragment>
+	// 			);
+	// 		},
+	// 	},
+	// ];
+
+	// const columns = [
+	// 	{
+	// 		title: "Tên xe",
+	// 		dataIndex: "name",
+	// 		sorter: (a, b) => a.name?.length - b.name?.length,
+	// 		sortDirections: ["descend"],
+	// 		filters: arrFilterName,
+	// 		onFilter: (value, record) => record.name.startsWith(value),
+	// 		filterSearch: true,
+	// 	},
+	// 	{
+	// 		title: "Mô Tả",
+	// 		dataIndex: "description",
+	// 		onFilter: (value, record) => record.description.indexOf(value) === 0,
+	// 		sorter: (a, b) => a.description?.length - b.description?.length,
+	// 		sortDirections: ["descend"],
+	// 	},
+
+	// 	{
+	// 		title: "Loại Xe",
+	// 		render: (text, vehicle) => {
+	// 			return <div>{vehicle.type == "limouse" ? "Xe Limouse Vip" : "Xe Thường"}</div>;
+	// 		},
+	// 		filters: arrFilterType,
+	// 		onFilter: (value, record) => record.type.startsWith(value),
+	// 		filterSearch: true,
+	// 	},
+	// 	{
+	// 		title: "Hình Ảnh",
+	// 		render: (text, vehicle) => {
+	// 			return (
+	// 				<div style={{display: "flex", alignItems: "center"}}>
+	// 					{" "}
+	// 					{/* Thêm style này */}
+	// 					{vehicle.vehicleOfImage.map((item, index) => {
+	// 						return <Image preview={{visible: vehicle.visible}} width={75} height={60} style={{borderRadius: "50%"}} src={item.link} key={index} />;
+	// 					})}
+	// 					<Button
+	// 						type="link"
+	// 						icon={<EyeOutlined />}
+	// 						onClick={() => {
+	// 							dispatch({
+	// 								type: SET_MODAL,
+	// 								title: "Cập Nhật Ảnh Xe",
+	// 								content: <ImageVehicle id={vehicle.id} />,
+	// 								width: 1000,
+	// 							});
+	// 						}}
+	// 					/>
+	// 				</div>
+	// 			);
+	// 		},
+	// 	},
+	// 	{
+	// 		title: "Số Tầng",
+	// 		dataIndex: "numberFloors",
+	// 		sorter: (a, b) => a.name.numberFloors - b.name.numberFloors,
+	// 		sortDirections: ["descend"],
+	// 	},
+	// 	{
+	// 		title: "Số Ghế",
+	// 		render: (text, vehicle) => {
+	// 			return (
+	// 				<div className="text-xl font-bold">
+	// 					{vehicle.seatVehicle?.length}
+	// 					<Button
+	// 						type="primary"
+	// 						onClick={() => {
+	// 							dispatch({
+	// 								type: SET_MODAL,
+	// 								title: "Cập Nhật Ghế Xe",
+	// 								content: <DetailSeatVehicle id={vehicle.id} />,
+	// 								width: 1000,
+	// 							});
+	// 						}}
+	// 					>
+	// 						Xem Chi Tiết
+	// 					</Button>
+	// 				</div>
+	// 			);
+	// 		},
+	// 		sorter: (a, b) => a.seatVehicle?.length - b.seatVehicle?.length,
+	// 		sortDirections: ["descend"],
+	// 	},
+	// 	{
+	// 		title: "Nhà Xe",
+	// 		render: (text, vehicle) => {
+	// 			return (
+	// 				<div style={{cursor: "not-allowed"}}>
+	// 					<DirectionsBusIcon />
+	// 					{vehicle.passengerCar?.name}
+	// 				</div>
+	// 			);
+	// 		},
+	// 		filters: arrFilterPassenger,
+	// 		onFilter: (value, record) => record.passengerCarId === value,
+	// 		filterSearch: true,
+	// 	},
+	// 	{
+	// 		title: "Action",
+	// 		render: (text, item) => {
+	// 			return (
+	// 				<Fragment>
+	// 					<div>
+	// 						<button
+	// 							className="mr-3"
+	// 							onClick={() => {
+	// 								dispatch({
+	// 									type: OPEN_DRAWER,
+	// 									title: "Cập nhật Xe",
+	// 									content: <EditVehicle id={item.id} />,
+	// 								});
+	// 							}}
+	// 						>
+	// 							<EditOutlined />
+	// 						</button>
+	// 						<Popconfirm
+	// 							placement="topLeft"
+	// 							title={"Bạn có muốn xóa  xe này"}
+	// 							onConfirm={() => {
+	// 								dispatch(DeleteVehicleAction(item.id));
+	// 							}}
+	// 							okText="Yes"
+	// 							cancelText="No"
+	// 						>
+	// 							<button className="text-red-700">
+	// 								<DeleteOutlined />
+	// 							</button>
+	// 						</Popconfirm>
+	// 					</div>
+	// 				</Fragment>
+	// 			);
+	// 		},
+	// 	},
+	// ];
 	const [searchText, setSearchText] = useState("");
 	const handleSearch = (e) => {
 		setSearchText(e.target.value);
@@ -196,7 +365,16 @@ export default function AdminVehicle() {
 						Thêm Xe
 					</Button>
 				</div>
-				<Table columns={columns} dataSource={filteredVehicles} />
+				<Table
+					columns={columns}
+					dataSource={filteredVehicles}
+					pagination={{
+						pageSize: 5,
+						total: filteredVehicles.length,
+						showTotal: (total) => `Tổng ${total} xe`,
+						showSizeChanger: false,
+					}}
+				/>
 			</div>
 		</Content>
 	);

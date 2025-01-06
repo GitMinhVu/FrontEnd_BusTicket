@@ -170,15 +170,21 @@ export default function AdminTripPassenger(props) {
 		},
 		{
 			title: t("tripManagement.trippassenger.price"),
-			// specify the condition of filtering result
-			// here is that finding the name started with `value`
 			render: (text, trip) => {
-				return <div> {trip.passenger.price} VNĐ</div>;
+				return (
+					<div
+						style={{
+							fontWeight: "500",
+							color: "#1890ff",
+						}}
+					>
+						{trip.passenger.price.toLocaleString("vi-VN")} VNĐ
+					</div>
+				);
 			},
 			defaultSortOrder: "descend",
 			sorter: (a, b) => a.passenger.price - b.passenger.price,
 		},
-
 		{
 			title: t("tripManagement.trippassenger.status"),
 			render: (text, trip) => {
@@ -214,7 +220,7 @@ export default function AdminTripPassenger(props) {
 			filterSearch: true,
 		},
 		{
-			title: t("tripManagement.trippassenger.startTime"),
+			title: t("tripManagement.trippassenger.bookedTickets"),
 
 			render: (text, item) => {
 				return (

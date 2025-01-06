@@ -16,8 +16,6 @@ const {Header, Content, Footer, Sider} = Layout;
 export default function AdminStation() {
 	const dispatch = useDispatch();
 	const {listStation} = useSelector((state) => state.StationReducer);
-	console.log("file: AdminStation.js ~ line 10 ~ AdminStation ~ listStation", listStation);
-
 	const [searchName, setSearchName] = useState("");
 	const [searchProvince, setSearchProvince] = useState("");
 
@@ -34,14 +32,17 @@ export default function AdminStation() {
 		const provinceMatch = station.province.toLowerCase().includes(searchProvince.toLowerCase());
 		return nameMatch && provinceMatch;
 	});
+
 	useEffect(() => {
 		const token = localStorage.getItem(ADMIN_LOGIN);
 		console.log("Admin token:", token);
 		dispatch(getListStationAction());
 	}, []);
+
 	useEffect(() => {
 		dispatch(getListStationAction());
 	}, []);
+
 	const columns = [
 		{
 			title: "Tên",
@@ -68,7 +69,7 @@ export default function AdminStation() {
 			title: "Các điểm đón / trả",
 			render: (text, station) => {
 				return (
-					<div className="flex items-center">
+					<div style={{padding: "8px 0"}}>
 						<Button
 							type="primary"
 							onClick={() => {
@@ -79,10 +80,27 @@ export default function AdminStation() {
 									width: 900,
 								});
 							}}
-							style={{display: "flex", alignItems: "center", gap: "8px"}}
+							style={{
+								display: "flex",
+								alignItems: "center",
+								gap: "6px",
+								borderRadius: "8px",
+								padding: "8px 16px",
+								background: "linear-gradient(90deg, #1890ff 0%, #096dd9 100%)",
+								boxShadow: "0 2px 4px rgba(24,144,255,0.2)",
+								transition: "all 0.3s ease",
+							}}
+							className="hover:opacity-90"
 						>
-							<DirectionsRailwayFilledIcon />
-							<span>Điểm Đón / Dừng</span>
+							<DirectionsRailwayFilledIcon style={{fontSize: "18px"}} />
+							<span
+								style={{
+									fontWeight: "500",
+									letterSpacing: "0.3px",
+								}}
+							>
+								Xem điểm
+							</span>
 						</Button>
 					</div>
 				);
@@ -160,7 +178,16 @@ export default function AdminStation() {
 						Thêm Bến Xe
 					</Button>
 				</div>
-				<Table columns={columns} dataSource={filteredStations} />
+				<Table
+					columns={columns}
+					dataSource={filteredStations}
+					pagination={{
+						pageSize: 6,
+						total: filteredStations.length,
+						showTotal: (total) => `Tổng ${total} bến xe`,
+						showSizeChanger: false,
+					}}
+				/>
 			</div>
 		</Content>
 	);

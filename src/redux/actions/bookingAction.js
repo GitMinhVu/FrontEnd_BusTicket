@@ -109,10 +109,9 @@ export const bookingTicketAction = (ticket, passenger) => {
 	return async (dispatch) => {
 		try {
 			const result = await bookingService.booking(ticket);
-			console.log(result);
 			if (result.status == 200) {
 				message.success("Đặt vé thành công");
-				if (ticket.paymentMethod === "cash") {
+				if (ticket.payment_method === "Tiền mặt") {
 					setTimeout(() => {
 						window.location.href = "/";
 					}, 1000);
@@ -120,10 +119,10 @@ export const bookingTicketAction = (ticket, passenger) => {
 					dispatch(PayAction(ticket, passenger));
 				}
 			} else {
-				message.error("đặt vé không thành công vì bạn đã đặt vé cho chuyến này rồi");
+				message.error("Đặt vé không thành công vì bạn đã đặt vé cho chuyến này rồi");
 			}
 		} catch (error) {
-			message.error("đặt vé không thành công vì bạn đã đặt vé cho chuyến này rồi");
+			message.error("Đặt vé không thành công vì bạn đã đặt vé cho chuyến này rồi");
 			console.log(error);
 		}
 	};

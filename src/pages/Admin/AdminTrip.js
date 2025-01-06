@@ -81,13 +81,25 @@ export default function AdminTrip() {
 						<div className="flex items-center justify-center gap-3">
 							<Button
 								type="primary"
-								style={{cursor: "pointer"}}
 								onClick={() => {
 									history.push(`/admin/trip/tripPassenger/${item.id}`);
 								}}
+								style={{
+									display: "flex",
+									alignItems: "center",
+									justifyContent: "center",
+									borderRadius: "8px",
+									padding: "8px 12px",
+									background: "linear-gradient(90deg, #1890ff 0%, #096dd9 100%)",
+									boxShadow: "0 2px 4px rgba(24,144,255,0.2)",
+									transition: "all 0.3s ease",
+									border: "none",
+								}}
+								className="hover:opacity-90"
 							>
-								<DirectionsRailwayFilledIcon />
+								<DirectionsRailwayFilledIcon style={{fontSize: "18px"}} />
 							</Button>
+
 							<Popconfirm
 								placement="topLeft"
 								title={t("tripManagement.mess.deleteTrip")}
@@ -151,7 +163,16 @@ export default function AdminTrip() {
 						{t("tripManagement.addTrip")}
 					</Button>
 				</div>
-				<Table columns={columns} dataSource={filteredTrips} />
+				<Table
+					columns={columns}
+					dataSource={filteredTrips}
+					pagination={{
+						pageSize: 5,
+						total: filteredTrips.length,
+						showTotal: (total) => `Tổng ${total} chuyến đi`,
+						showSizeChanger: false,
+					}}
+				/>
 			</div>
 		</Content>
 	);

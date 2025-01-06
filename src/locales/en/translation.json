@@ -39,7 +39,8 @@
 			"numberOfSeats": "Number of seats",
 			"pickUpPoint": "Pick up point",
 			"dropoff": "Drop off",
-			"floor": "Floor"
+			"floor": "Floor",
+			"bookedTickets": "Booked tickets"
 		},
 		"mess": {
 			"updateTrip": "Update trip",

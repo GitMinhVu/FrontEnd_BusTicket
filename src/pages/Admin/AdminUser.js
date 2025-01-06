@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {Layout, Menu, Breadcrumb, Table, Input, Space, Popconfirm, Button} from "antd";
+import {Layout, Menu, Tag, Breadcrumb, Table, Input, Space, Popconfirm, Button} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteUserAction, getUserAction} from "../../redux/actions/UserAction";
 import {AudioOutlined, EditOutlined, SearchOutlined, DeleteOutlined, CalendarOutlined, UserAddOutlined} from "@ant-design/icons";
@@ -82,7 +82,7 @@ export default function AdminUser() {
 			],
 			onFilter: (value, record) => record.type.startsWith(value),
 			filterSearch: true,
-			render: (text) => (text === "ADMIN" ? "Quản lý" : "Người dùng"),
+			render: (text) => <Tag color={text === "ADMIN" ? "gold" : "blue"}>{text === "ADMIN" ? "Quản lý" : "Người dùng"}</Tag>,
 		},
 		{
 			title: t("lable.action"),

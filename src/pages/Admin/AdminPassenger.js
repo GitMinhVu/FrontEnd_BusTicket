@@ -36,26 +36,11 @@ export default function AdminPassenger() {
 			filterSearch: true,
 		},
 		{
-			title: "Mô tả",
-			dataIndex: "description",
-			onFilter: (value, record) => record.description.indexOf(value) === 0,
-			sorter: (a, b) => a.description.length - b.description.length,
-			sortDirections: ["descend"],
-		},
-
-		{
-			title: "Loại Xác nhận",
-			dataIndex: "confirmType",
-			filters: arrFilterType,
-			onFilter: (value, record) => record.confirmType.startsWith(value),
-			filterSearch: true,
-		},
-		{
 			title: "Hình Ảnh",
 			render: (text, passenger) => {
 				return (
 					<div>
-						<Image width={180} src={passenger.imageIntro} style={{borderRadius: "20%"}} />
+						<Image width={120} src={passenger.imageIntro} style={{borderRadius: "20%"}} />
 					</div>
 				);
 			},
@@ -64,10 +49,43 @@ export default function AdminPassenger() {
 			title: "Số Xe Sở Hữu",
 			render: (text, passenger) => {
 				return (
-					<div>
-						<Statistic title="Số Xe" value={passenger.passengerCar.length} />
+					<div
+						style={{
+							display: "flex",
+							alignItems: "center",
+							justifyContent: "space-between",
+							padding: "8px 0",
+						}}
+					>
+						<div
+							style={{
+								background: "#f6f6f6",
+								padding: "8px 15px",
+								borderRadius: "6px",
+								marginRight: "12px",
+							}}
+						>
+							<span style={{fontSize: "12px", color: "#8c8c8c"}}>Số xe</span>
+							<div
+								style={{
+									fontSize: "20px",
+									fontWeight: "bold",
+									color: "#1890ff",
+								}}
+							>
+								{passenger.passengerCar.length}
+							</div>
+						</div>
 						<Button
 							type="primary"
+							size="middle"
+							icon={<FolderViewOutlined />}
+							style={{
+								borderRadius: "6px",
+								display: "flex",
+								alignItems: "center",
+								gap: "4px",
+							}}
 							onClick={() => {
 								dispatch({
 									type: SET_MODAL,
@@ -77,25 +95,19 @@ export default function AdminPassenger() {
 								});
 							}}
 						>
-							Xem Chi Tiết
+							Chi tiết
 						</Button>
 					</div>
 				);
 			},
-			onFilter: (value, record) => record.passengerCar?.length.indexOf(value) === 0,
 			sorter: (a, b) => a.passengerCar?.length - b.passengerCar?.length,
 			sortDirections: ["descend"],
 		},
+
 		{
 			title: "Đánh Giá",
 			render: (text, passenger) => {
-				let rate;
-				if (passenger.passengerRate.length === 0) {
-					rate = 0;
-				} else {
-					rate = _.meanBy(passenger.passengerRate, (rate) => rate.numberRate);
-				}
-
+				let rate = passenger.passengerRate.length === 0 ? 0 : _.meanBy(passenger.passengerRate, (rate) => rate.numberRate);
 				return <div>{<Rate disabled defaultValue={rate} style={{fontSize: 10}} />}</div>;
 			},
 		},
@@ -136,6 +148,118 @@ export default function AdminPassenger() {
 			},
 		},
 	];
+
+	// const columns = [
+	// 	{
+	// 		title: "Tên nhà xe",
+	// 		dataIndex: "name",
+	// 		sorter: (a, b) => a.name.length - b.name.length,
+	// 		sortDirections: ["descend"],
+	// 		filters: arrFilterName,
+	// 		onFilter: (value, record) => record.name.startsWith(value),
+	// 		filterSearch: true,
+	// 	},
+	// 	{
+	// 		title: "Mô tả",
+	// 		dataIndex: "description",
+	// 		onFilter: (value, record) => record.description.indexOf(value) === 0,
+	// 		sorter: (a, b) => a.description.length - b.description.length,
+	// 		sortDirections: ["descend"],
+	// 	},
+
+	// 	{
+	// 		title: "Loại Xác nhận",
+	// 		dataIndex: "confirmType",
+	// 		filters: arrFilterType,
+	// 		onFilter: (value, record) => record.confirmType.startsWith(value),
+	// 		filterSearch: true,
+	// 	},
+	// 	{
+	// 		title: "Hình Ảnh",
+	// 		render: (text, passenger) => {
+	// 			return (
+	// 				<div>
+	// 					<Image width={180} src={passenger.imageIntro} style={{borderRadius: "20%"}} />
+	// 				</div>
+	// 			);
+	// 		},
+	// 	},
+	// 	{
+	// 		title: "Số Xe Sở Hữu",
+	// 		render: (text, passenger) => {
+	// 			return (
+	// 				<div>
+	// 					<Statistic title="Số Xe" value={passenger.passengerCar.length} />
+	// 					<Button
+	// 						type="primary"
+	// 						onClick={() => {
+	// 							dispatch({
+	// 								type: SET_MODAL,
+	// 								title: `Danh sách xe của nhà xe ${passenger.name}`,
+	// 								content: <DetailsVehicleOfPassengerCar id={passenger.id} />,
+	// 								width: 800,
+	// 							});
+	// 						}}
+	// 					>
+	// 						Xem Chi Tiết
+	// 					</Button>
+	// 				</div>
+	// 			);
+	// 		},
+	// 		onFilter: (value, record) => record.passengerCar?.length.indexOf(value) === 0,
+	// 		sorter: (a, b) => a.passengerCar?.length - b.passengerCar?.length,
+	// 		sortDirections: ["descend"],
+	// 	},
+	// 	{
+	// 		title: "Đánh Giá",
+	// 		render: (text, passenger) => {
+	// 			let rate;
+	// 			if (passenger.passengerRate.length === 0) {
+	// 				rate = 0;
+	// 			} else {
+	// 				rate = _.meanBy(passenger.passengerRate, (rate) => rate.numberRate);
+	// 			}
+
+	// 			return <div>{<Rate disabled defaultValue={rate} style={{fontSize: 10}} />}</div>;
+	// 		},
+	// 	},
+	// 	{
+	// 		title: "Action",
+	// 		render: (text, item) => {
+	// 			return (
+	// 				<Fragment>
+	// 					<div>
+	// 						<button
+	// 							className="mr-3"
+	// 							onClick={() => {
+	// 								dispatch({
+	// 									type: OPEN_DRAWER,
+	// 									title: "Cập nhật nhà xe",
+	// 									content: <EditPassenger id={item.id} />,
+	// 								});
+	// 							}}
+	// 						>
+	// 							<EditOutlined />
+	// 						</button>
+	// 						<Popconfirm
+	// 							placement="topLeft"
+	// 							title={"Bạn có muốn xóa nhà xe này"}
+	// 							onConfirm={() => {
+	// 								dispatch(deletePassenger(item.id));
+	// 							}}
+	// 							okText="Yes"
+	// 							cancelText="No"
+	// 						>
+	// 							<button className="text-red-700">
+	// 								<DeleteOutlined />
+	// 							</button>
+	// 						</Popconfirm>
+	// 					</div>
+	// 				</Fragment>
+	// 			);
+	// 		},
+	// 	},
+	// ];
 	const [searchText, setSearchText] = useState("");
 
 	const handleSearch = (e) => {
@@ -176,7 +300,16 @@ export default function AdminPassenger() {
 						Thêm Nhà Xe
 					</Button>
 				</div>
-				<Table columns={columns} dataSource={filteredPassengers} />
+				<Table
+					columns={columns}
+					dataSource={filteredPassengers}
+					pagination={{
+						pageSize: 5,
+						total: filteredPassengers.length,
+						showTotal: (total) => `Tổng ${total} nhà xe`,
+						showSizeChanger: false,
+					}}
+				/>
 			</div>
 		</Content>
 	);
