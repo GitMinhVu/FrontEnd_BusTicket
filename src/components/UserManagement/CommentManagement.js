@@ -4,13 +4,13 @@ import {Breadcrumb, Dropdown, Menu, Card, Tabs, Rate, Avatar, Form, Modal, Popco
 import {useDispatch, useSelector} from "react-redux";
 import {SET_MODAL} from "../../redux/types/ModalTypes";
 import DetailsTicket from "./DetailsTicket";
-//
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import {HomeOutlined, UserOutlined, MoreOutlined, EditOutlined, EllipsisOutlined, SettingOutlined, DeleteFilled, DeleteOutlined} from "@ant-design/icons";
 import moment from "moment";
 import {cancelTicketUser, getTicketUser} from "../../redux/actions/ticketAction";
 import {TOKEN, USER_LOGIN} from "../../util/settings/config";
 import {history} from "../../App";
+import {createRatingAction} from "../../redux/actions/rateAction";
 import {getAllPassenger} from "../../redux/actions/passengerAction";
 import {createCommentUserAction, updateCommentAction, getCommentUserAction, deleteCommentAction} from "../../redux/actions/commentAction";
 const {TextArea} = Input;
@@ -41,6 +41,7 @@ export default function CommentManagement(props) {
 			return;
 		}
 
+		// Create comment
 		let usercomment = {
 			userId: userLogin.id,
 			content: values.content.trim(),
@@ -48,7 +49,16 @@ export default function CommentManagement(props) {
 			rate: values.rate,
 		};
 		dispatch(createCommentUserAction(usercomment));
+
+		// Create rating
+		let rateData = {
+			userId: userLogin.id,
+			passengerId: id,
+			numberRate: values.rate,
+		};
+		dispatch(createRatingAction(rateData));
 	};
+
 	const renderCommentPassenger = () => {
 		return listPassenger.map((item, index) => {
 			return (
@@ -113,7 +123,7 @@ export default function CommentManagement(props) {
 										avatar={"https://cdn-icons-png.flaticon.com/512/9187/9187604.png"}
 										content={
 											<div>
-												<Rate disabled defaultValue={item.rate} />
+												<Rate disabled defaultValue={item.userComment?.userRate?.[item.userComment.userRate.length - 1]?.numberRate || 0} />
 												<p>{item.content}</p>
 											</div>
 										}
@@ -129,7 +139,7 @@ export default function CommentManagement(props) {
 								onfinish(values, item.id);
 							}}
 						>
-							<Form.Item name="rate" label="Đánh giá">
+							<Form.Item name="rate" label="Đánh giá" rules={[{required: true, message: "Vui lòng đánh giá số sao"}]}>
 								<Rate allowHalf defaultValue={0} />
 							</Form.Item>
 							<Form.Item name="content">

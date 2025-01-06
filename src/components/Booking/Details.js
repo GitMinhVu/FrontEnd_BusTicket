@@ -1,16 +1,15 @@
-import React, {createElement, useEffect, useState} from "react";
-import {Tabs, List, Rate, Comment, Tooltip, Avatar, Table} from "antd";
+import React, {useState} from "react";
+import {Tabs, List, Rate, Comment, Tooltip, Avatar, Table, Pagination} from "antd";
 import moment from "moment";
-import {DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled} from "@ant-design/icons";
 import _ from "lodash";
 import Slider from "react-slick";
 import "../../Sass/css/Details.css";
-import {getImgVehicleAction} from "../../redux/actions/bookingAction";
 import {getCommentPassengerAction} from "../../redux/actions/commentAction";
 import {useDispatch, useSelector} from "react-redux";
 import LoadingSpin from "../Loading/LoadingSpin";
 import {getTimePointTripAction} from "../../redux/actions/timePointAction";
 const {TabPane} = Tabs;
+
 function SampleNextArrow(props) {
 	const {className, style, onClick} = props;
 	return <div className={className} style={{...style, display: "block", background: "red"}} onClick={onClick} />;
@@ -23,11 +22,13 @@ function SamplePrevArrow(props) {
 export default function Details(props) {
 	const {listImageVehicle} = useSelector((state) => state.vehicleReducer);
 	const {listCommentPassenger} = useSelector((state) => state.CommentReducer);
-	console.log("file: Details.js ~ line 26 ~ Details ~ listCommentPassenger", listCommentPassenger);
 	const {timePointTrip} = useSelector((state) => state.timePointReducer);
 	const {isLoadingSpin} = useSelector((state) => state.LoadingReducer);
-	console.log("timePointTrip", timePointTrip);
-	console.log(props.tripPassenger);
+	//filler
+	const [selectedFilter, setSelectedFilter] = useState("all");
+	//page
+	const [currentPage, setCurrentPage] = useState(1);
+	const commentsPerPage = 5;
 	const dispatch = useDispatch();
 	const renderImg = () => {
 		return listImageVehicle?.map((item, index) => {
@@ -38,32 +39,61 @@ export default function Details(props) {
 			);
 		});
 	};
-
+	const getFilteredComments = () => {
+		switch (selectedFilter) {
+			case "all":
+				return listCommentPassenger;
+			case "withComment":
+				return listCommentPassenger?.filter((item) => item.content?.trim());
+			case "5":
+			case "4":
+			case "3":
+			case "2":
+			case "1":
+				return listCommentPassenger?.filter((item) => {
+					const matchingRate = item.userComment.userRate.find((rate) => rate.numberRate !== null && rate.passengerId === item.passengerId && new Date(rate.createdAt).getTime() === new Date(item.createdAt).getTime());
+					return matchingRate?.numberRate === Number(selectedFilter);
+				});
+			default:
+				return listCommentPassenger;
+		}
+	};
 	const renderComment = () => {
-		return listCommentPassenger?.map((item, index) => {
-			let arrAllRate = item.userComment.userRate.filter((rate) => rate.passengerId == item.passengerId);
-			let rate = 0;
-			if (arrAllRate.length > 0) {
-				rate = _.meanBy(arrAllRate, (rate) => rate.numberRate);
-			}
-			return (
-				<Comment
-					author={
-						<a>
-							{item.userComment.name}
-							<div>{rate === 0 ? <p>Không có đánh giá</p> : <Rate disabled defaultValue={rate} style={{fontSize: 10}} />}</div>
-						</a>
-					}
-					avatar={<Avatar src={item.userComment.avatar} alt={item.userComment.name} />}
-					content={<p>{item.content}</p>}
-					datetime={
-						<Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
-							<span>{moment().fromNow()}</span>
-						</Tooltip>
-					}
-				/>
-			);
-		});
+		const filteredComments = getFilteredComments();
+		// Tính toán index bắt đầu và kết thúc cho trang hiện tại
+		const startIndex = (currentPage - 1) * commentsPerPage;
+		const endIndex = startIndex + commentsPerPage;
+		// Lấy comments cho trang hiện tại
+		const currentComments = filteredComments?.slice(startIndex, endIndex);
+
+		return (
+			<div>
+				{currentComments?.map((item, index) => {
+					let matchingRate = item.userComment.userRate.find((rate) => rate.numberRate !== null && rate.passengerId === item.passengerId && new Date(rate.createdAt).getTime() === new Date(item.createdAt).getTime());
+					let rate = matchingRate ? matchingRate.numberRate : 0;
+
+					return (
+						<Comment
+							key={index}
+							author={
+								<a>
+									{item.userComment.name}
+									<div>{rate === 0 ? <p>Không có đánh giá</p> : <Rate disabled defaultValue={rate} style={{fontSize: 10}} />}</div>
+								</a>
+							}
+							avatar={<Avatar src={item.userComment.avatar} alt={item.userComment.name} />}
+							content={<p>{item.content}</p>}
+							datetime={
+								<span>
+									{moment(item.createdAt).format("DD/MM/YYYY HH:mm:ss")} ({moment(item.createdAt).fromNow()})
+								</span>
+							}
+						/>
+					);
+				})}
+				<Pagination current={currentPage} total={filteredComments?.length} pageSize={commentsPerPage} onChange={(page) => setCurrentPage(page)} style={{marginTop: "20px", textAlign: "center"}} />
+			</div>
+		);
 	};
 
 	const renderPoint = (type) => {
@@ -298,65 +328,37 @@ export default function Details(props) {
 											<path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z" />
 										</svg>
 									</i>
-									{/* <span>{props.avgRate}</span> */}
 								</div>
 								<Rate allowClear={false} defaultValue={props.avgRate} disabled />
 								<span className="ant-rate-text">{props.passenger?.passengerRate.length} đánh giá</span>
 							</div>
 							<div className="ant-row filter-rate">
-								<button type="button" className="ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter active" ant-click-animating-without-extra-node="false">
-									<span>Tất cả ({listCommentPassenger?.length === 0 ? 0 : listCommentPassenger?.length})</span>
+								<button type="button" className={`ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter ${selectedFilter === "all" ? "active" : ""}`} onClick={() => setSelectedFilter("all")}>
+									<span>Tất cả ({listCommentPassenger?.length || 0})</span>
 								</button>
-								<button type="button" className="ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter " ant-click-animating-without-extra-node="false">
-									<span>Có nhận xét ({listCommentPassenger?.length === 0 ? 0 : listCommentPassenger?.length})</span>
+								<button type="button" className={`ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter ${selectedFilter === "withComment" ? "active" : ""}`} onClick={() => setSelectedFilter("withComment")}>
+									<span>Có nhận xét ({listCommentPassenger?.filter((item) => item.content?.trim()).length || 0})</span>
 								</button>
-								<button type="button" className="ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter " ant-click-animating-without-extra-node="false">
-									<span>5</span>
-									<i aria-label="icon: star" className="anticon anticon-star">
-										<svg viewBox="64 64 896 896" className data-icon="star" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false">
-											<path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z" />
-										</svg>
-									</i>
-									<span className="review-count"></span>
-								</button>
-								<button type="button" className="ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter ">
-									<span>4</span>
-									<i aria-label="icon: star" className="anticon anticon-star">
-										<svg viewBox="64 64 896 896" className data-icon="star" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false">
-											<path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z" />
-										</svg>
-									</i>
-									<span className="review-count"></span>
-								</button>
-								<button type="button" className="ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter ">
-									<span>3</span>
-									<i aria-label="icon: star" className="anticon anticon-star">
-										<svg viewBox="64 64 896 896" className data-icon="star" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false">
-											<path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z" />
-										</svg>
-									</i>
-									<span className="review-count"></span>
-								</button>
-								<button type="button" className="ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter ">
-									<span>2</span>
-									<i aria-label="icon: star" className="anticon anticon-star">
-										<svg viewBox="64 64 896 896" className data-icon="star" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false">
-											<path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z" />
-										</svg>
-									</i>
-									<span className="review-count"></span>
-								</button>
-								<button type="button" className="ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter ">
-									<span>1</span>
-									<i aria-label="icon: star" className="anticon anticon-star">
-										<svg viewBox="64 64 896 896" className data-icon="star" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false">
-											<path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z" />
-										</svg>
-									</i>
-									<span className="review-count"></span>
-								</button>
+								{[5, 4, 3, 2, 1].map((stars) => (
+									<button key={stars} type="button" className={`ant-btn Reviews__ButtonFilter-sc-1uhksgp-1 lmFGPV button-filter ${selectedFilter === stars.toString() ? "active" : ""}`} onClick={() => setSelectedFilter(stars.toString())}>
+										<span>{stars}</span>
+										<i aria-label="icon: star" className="anticon anticon-star">
+											<svg viewBox="64 64 896 896" className="star-icon" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false">
+												<path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 0 0 .6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0 0 46.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z" />
+											</svg>
+										</i>
+										<span className="review-count">
+											(
+											{listCommentPassenger?.filter((item) => {
+												const matchingRate = item.userComment.userRate.find((rate) => rate.numberRate === stars && rate.passengerId === item.passengerId && new Date(rate.createdAt).getTime() === new Date(item.createdAt).getTime());
+												return matchingRate !== undefined;
+											}).length || 0}
+											)
+										</span>
+									</button>
+								))}
 							</div>
-							<div>{renderComment()}</div>
+							<div>{renderComment(getFilteredComments())}</div>
 						</>
 					)}
 				</TabPane>

@@ -103,12 +103,19 @@ export default function AdminPassenger() {
 			sorter: (a, b) => a.passengerCar?.length - b.passengerCar?.length,
 			sortDirections: ["descend"],
 		},
-
 		{
 			title: "Đánh Giá",
 			render: (text, passenger) => {
-				let rate = passenger.passengerRate.length === 0 ? 0 : _.meanBy(passenger.passengerRate, (rate) => rate.numberRate);
-				return <div>{<Rate disabled defaultValue={rate} style={{fontSize: 10}} />}</div>;
+				const validRates = passenger.passengerRate.filter((rate) => rate.numberRate !== null);
+				let rate = validRates.length === 0 ? 0 : _.meanBy(validRates, "numberRate");
+				rate = Math.round(rate * 10) / 10;
+
+				return (
+					<div>
+						<Rate disabled defaultValue={rate} style={{fontSize: 10}} />
+						<span>({validRates.length} đánh giá)</span>
+					</div>
+				);
 			},
 		},
 		{

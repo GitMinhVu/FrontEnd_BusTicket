@@ -1,11 +1,10 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {Layout, Menu, Breadcrumb, Image, Space, Tag, Table, Statistic, Button, Rate, Popconfirm, Input} from "antd";
+import {Layout, Menu, Breadcrumb, Image, Space, Tag, Table, Button, Rate, Popconfirm, Input} from "antd";
 import {useDispatch, useSelector} from "react-redux";
-import _, {templateSettings} from "lodash";
-import {AudioOutlined, EditOutlined, SearchOutlined, DeleteOutlined, CalendarOutlined, FolderViewOutlined, CarOutlined, EyeOutlined} from "@ant-design/icons";
+import _ from "lodash";
+import {EditOutlined, SearchOutlined, DeleteOutlined, EyeOutlined} from "@ant-design/icons";
 import LocalCarWashIcon from "@mui/icons-material/LocalCarWash";
 import {SET_MODAL} from "../../redux/types/ModalTypes";
-import DetailsVehicleOfPassengerCar from "../../components/Vehicle/DetailsVehicleOfPassengerCar";
 import {OPEN_DRAWER} from "../../redux/types/DrawerTypes";
 import {DeleteVehicleAction, getAllVehicleAction} from "../../redux/actions/vehicleAction";
 import EditVehicle from "../../components/Edit/EditVehicle";
@@ -13,11 +12,10 @@ import ImageVehicle from "../../components/Vehicle/ImageVehicle";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import DetailSeatVehicle from "../../components/Vehicle/DetailSeatVehicle";
 import AddVehicle from "../../components/Add/AddVehicle";
-const {Header, Content, Footer, Sider} = Layout;
+const {Content} = Layout;
 export default function AdminVehicle() {
 	const dispatch = useDispatch();
 	const {listVehicle} = useSelector((state) => state.vehicleReducer);
-	console.log("file: AdminVehicle.js ~ line 19 ~ AdminVehicle ~ listVehicle", listVehicle);
 	useEffect(() => {
 		dispatch(getAllVehicleAction());
 	}, []);
