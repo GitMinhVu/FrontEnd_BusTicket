@@ -13,9 +13,8 @@ import {updateUserAvatarAction} from "../../redux/actions/UserAction";
 import {Modal} from "antd";
 import {userService} from "../../redux/services/UserService";
 import moment from "moment";
-
-const {TabPane} = Tabs;
-const {Meta} = Card;
+import {Select} from "antd";
+const {Option} = Select;
 
 export default function InfoManagement(props) {
 	const dispatch = useDispatch();
@@ -191,7 +190,7 @@ export default function InfoManagement(props) {
 									</Form.Item>
 
 									<Form.Item label="Giới tính">
-										<Input readOnly value={formik.values.gender} />
+										<Input readOnly value={formik.values.gender === "male" ? "Nam" : "Nữ"} />
 									</Form.Item>
 
 									<Form.Item label="Ngày sinh">
@@ -229,24 +228,44 @@ export default function InfoManagement(props) {
 									onCancel={() => setIsEditModalVisible(false)}
 								>
 									<Form layout="vertical">
-										<Form.Item label="Họ tên">
-											<Input value={formik.values.name} onChange={(e) => formik.setFieldValue("name", e.target.value)} />
-										</Form.Item>
-										<Form.Item label="Giới tính">
-											<Input value={formik.values.gender} onChange={(e) => formik.setFieldValue("gender", e.target.value)} />
-										</Form.Item>
-										<Form.Item label="Ngày sinh">
-											<Input value={formik.values.dateOfBirth} onChange={(e) => formik.setFieldValue("dateOfBirth", e.target.value)} />
-										</Form.Item>
-										<Form.Item label="Địa chỉ">
-											<Input value={formik.values.address} onChange={(e) => formik.setFieldValue("address", e.target.value)} />
-										</Form.Item>
-										<Form.Item label="Email">
-											<Input value={formik.values.email} onChange={(e) => formik.setFieldValue("email", e.target.value)} />
-										</Form.Item>
-										<Form.Item label="Số điện thoại">
-											<Input value={formik.values.phone} onChange={(e) => formik.setFieldValue("phone", e.target.value)} />
-										</Form.Item>
+										<div className="grid grid-cols-2 gap-4">
+											<div>
+												<Form.Item label="Họ tên">
+													<Input onChange={(e) => formik.setFieldValue("name", e.target.value)} value={formik.values.name} />
+													<p className="text-red-500 text-xs italic">{formik.errors.name}</p>
+												</Form.Item>
+
+												<Form.Item label="Giới tính">
+													<Select onChange={(value) => formik.setFieldValue("gender", value)} value={formik.values.gender}>
+														<Option value="male">Nam</Option>
+														<Option value="female">Nữ</Option>
+													</Select>
+													<p className="text-red-500 text-xs italic">{formik.errors.gender}</p>
+												</Form.Item>
+
+												<Form.Item label="Ngày sinh">
+													<DatePicker onChange={(date) => formik.setFieldValue("dateOfBirth", date)} value={moment(formik.values.dateOfBirth)} format="DD-MM-YYYY" />
+													<p className="text-red-500 text-xs italic">{formik.errors.dateOfBirth}</p>
+												</Form.Item>
+											</div>
+
+											<div>
+												<Form.Item label="Email">
+													<Input onChange={(e) => formik.setFieldValue("email", e.target.value)} value={formik.values.email} />
+													<p className="text-red-500 text-xs italic">{formik.errors.email}</p>
+												</Form.Item>
+
+												<Form.Item label="Số điện thoại">
+													<Input onChange={(e) => formik.setFieldValue("phone", e.target.value)} value={formik.values.phone} />
+													<p className="text-red-500 text-xs italic">{formik.errors.phone}</p>
+												</Form.Item>
+
+												<Form.Item label="Địa chỉ">
+													<Input.TextArea onChange={(e) => formik.setFieldValue("address", e.target.value)} value={formik.values.address} rows={4} />
+													<p className="text-red-500 text-xs italic">{formik.errors.address}</p>
+												</Form.Item>
+											</div>
+										</div>
 									</Form>
 								</Modal>
 

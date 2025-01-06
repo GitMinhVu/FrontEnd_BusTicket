@@ -49,7 +49,7 @@ export const registerAction = (user) => {
 			dispatch({
 				type: NOFICATION,
 				title: "error",
-				text: "Lỗi Đăng ký, Vui lòng thử lại!",
+				text: "Email đã tồn tại!, vui lòng sử dụng email khác!",
 			});
 		}
 	};
@@ -137,17 +137,18 @@ export const UpdatelBookingUserAction = (userUpdate, id) => {
 		}
 	};
 };
-export const deleteUserAction = (id) => {
+
+export const deleteUserAction = (id, name) => {
 	return async (dispatch) => {
 		try {
 			const result = await userService.deleteUser(id);
 			console.log(result);
 			if (result.status == 200) {
-				message.success("xóa user thành công");
+				message.success(`Xóa tài khoản ${name} thành công`);
 				dispatch(getUserAction());
 			}
 		} catch (error) {
-			message.error("Xóa user thất bại");
+			message.error(`Xóa tài khoản ${name} thất bại`);
 			console.log(error);
 		}
 	};

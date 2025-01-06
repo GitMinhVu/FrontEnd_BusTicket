@@ -6,7 +6,7 @@ import "../Sass/css/Home.css";
 export default function Home() {
 	useEffect(() => {
 		Modal.success({
-			title: "🎊 Chúc Mừng Năm Mới Giáp Thìn 2024 🎊",
+			title: "🎊 Chúc Mừng Năm Mới Ất Tỵ 2025 🎊",
 			content: (
 				<div style={{fontSize: "16px", lineHeight: "1.6"}}>
 					🌟 Kính chúc quý khách một năm mới an khang, thịnh vượng, sức khỏe dồi dào, và vạn sự như ý!

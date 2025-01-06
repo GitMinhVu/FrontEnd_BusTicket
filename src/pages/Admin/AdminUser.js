@@ -46,6 +46,7 @@ export default function AdminUser() {
 			dataIndex: "gender",
 			sorter: (a, b) => a.gender.length - b.gender.length,
 			sortDirections: ["descend"],
+			render: (text) => (text === "male" ? "Nam" : "Nữ"),
 		},
 		{
 			title: t("lable.email"),
@@ -71,16 +72,17 @@ export default function AdminUser() {
 			dataIndex: "type",
 			filters: [
 				{
-					text: "Admin",
+					text: "Quản lý",
 					value: "ADMIN",
 				},
 				{
-					text: "Client",
+					text: "Người dùng",
 					value: "CLIENT",
 				},
 			],
 			onFilter: (value, record) => record.type.startsWith(value),
 			filterSearch: true,
+			render: (text) => (text === "ADMIN" ? "Quản lý" : "Người dùng"),
 		},
 		{
 			title: t("lable.action"),
@@ -93,7 +95,6 @@ export default function AdminUser() {
 								className="mr-3"
 								onClick={() => {
 									console.log("Edit clicked for id:", item.id);
-
 									dispatch({
 										type: SET_MODAL,
 										title: t("button.editUser"),
@@ -108,7 +109,7 @@ export default function AdminUser() {
 								placement="topLeft"
 								title={t("messages.deleteAccount")}
 								onConfirm={() => {
-									dispatch(deleteUserAction(item.id));
+									dispatch(deleteUserAction(item.id, item.name));
 								}}
 								okText="Yes"
 								cancelText="No"

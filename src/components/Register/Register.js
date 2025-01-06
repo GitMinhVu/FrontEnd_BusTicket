@@ -72,7 +72,7 @@ export default function Register(props) {
 								dispatch({
 									type: NOFICATION,
 									title: "error",
-									text: "Lỗi Đăng ký, Vui lòng thử lại!",
+									text: "Email đã tồn tại",
 								});
 							} else {
 								props.setToggle(!props.toggle);

@@ -1,12 +1,10 @@
 import React, {useEffect} from "react";
-import {Form, Input, Button, Checkbox, Popconfirm, Select, DatePicker} from "antd";
+import {Form, Input, Button, Popconfirm, Select, DatePicker} from "antd";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
-import {getDetailUserAction, registerAction, UpdatelUserAction} from "../../redux/actions/UserAction";
-import {CLOSE_NOFICATION, NOFICATION} from "../../redux/types/userTypes";
-import {add} from "lodash";
+import {getDetailUserAction, UpdatelUserAction} from "../../redux/actions/UserAction";
 import moment from "moment";
 const {Option, OptGroup} = Select;
 
@@ -19,13 +17,12 @@ export default function EditUser(props) {
 		dispatch(getDetailUserAction(props.id));
 	}, [props.id]);
 
-	// Second useEffect to handle form initialization when detailUser is loaded
 	useEffect(() => {
 		if (detailUser) {
-			console.log("Detail User received:", detailUser); // Để debug
+			console.log("Detail User received:", detailUser);
 			formik.setValues({
 				name: detailUser.name,
-				dateOfBirth: moment(detailUser.dateOfBirth), // Sử dụng moment để parse date
+				dateOfBirth: moment(detailUser.dateOfBirth),
 				gender: detailUser.gender,
 				phone: detailUser.numberPhone,
 				email: detailUser.email,
@@ -45,9 +42,10 @@ export default function EditUser(props) {
 			.matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/, t("validationRules.phone_invalid")),
 		address: Yup.string().min(2, t("validationRules.address_min")).max(50, t("validationRules.address_max")).required(t("validationRules.address_required")),
 		gender: Yup.string().required(t("validationRules.gender_required")),
-		dateOfBirth: Yup.string().required(t("validationRules.dateOfBirth_required")),
+		dateOfBirth: Yup.date().required(t("validationRules.dateOfBirth_required")).max(moment().subtract(18, "years"), "Must be at least 18 years old").typeError("Invalid date"),
 	});
 
+	//debug
 	useEffect(() => {
 		console.log("Edit User Data:", formik.values);
 	}, []);
