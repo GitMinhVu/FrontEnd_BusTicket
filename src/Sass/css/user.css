@@ -18,5 +18,10 @@
 	color: inherit;
 	cursor: pointer;
 	text-decoration: underline;
+	text-decoration: none;
+	cursor: pointer;
+	padding-top: 20px;
+	margin-top: 10px;
 }
+
 /*# sourceMappingURL=user.css.map */

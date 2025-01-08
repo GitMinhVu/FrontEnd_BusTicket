@@ -106,7 +106,21 @@ export default function ListTrips(props) {
 											<div className="hour">{item.startTime}</div>
 											<div className="place">• {item.trip.from.name}</div>
 										</div>
-										<div className="duration">5h30m</div>
+										<div className="duration">
+											{(() => {
+												const start = new Date(`2000/01/01 ${item.startTime}`);
+												let end = new Date(`2000/01/01 ${item.endTime}`);
+												// If end time is smaller than start time, add one day to end time
+												if (end < start) {
+													end = new Date(`2000/01/02 ${item.endTime}`);
+												}
+												const diff = end - start;
+												const hours = Math.floor(diff / (1000 * 60 * 60));
+												const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+												return `${hours}h${minutes}m`;
+											})()}
+										</div>
+
 										<div className="content to">
 											<div className="hour">{item.endTime}</div>
 											<div className="place">• {item.trip.to.name}</div>
