@@ -1,6 +1,6 @@
-import React, {Fragment, useState} from "react";
-import {Layout, Menu, Breadcrumb, Avatar, Dropdown} from "antd";
-import {IdcardOutlined, PieChartOutlined, FileOutlined, TeamOutlined, UserOutlined, DownOutlined, CarOutlined, MoneyCollectOutlined} from "@ant-design/icons";
+import React, {Fragment, useState, useEffect} from "react";
+import {Layout, Menu, Breadcrumb, Avatar, Dropdown, Badge} from "antd";
+import {IdcardOutlined, PieChartOutlined, FileOutlined, TeamOutlined, UserOutlined, DownOutlined, CarOutlined, MoneyCollectOutlined, BellOutlined} from "@ant-design/icons";
 import CarRentalIcon from "@mui/icons-material/CarRental";
 import DepartureBoardIcon from "@mui/icons-material/DepartureBoard";
 import DirectionsTransitIcon from "@mui/icons-material/DirectionsTransit";
@@ -11,6 +11,9 @@ import {CHANGE_KEY} from "../../redux/types/AdminTypes";
 import {TOKEN, USER_LOGIN, ADMIN_LOGIN, ADMIN_TOKEN} from "../../util/settings/config";
 import {useTranslation} from "react-i18next";
 import LanguageSwitcher from "../../components/LanguageSwitch/LanguageSwitch";
+
+import io from "socket.io-client";
+import {notification} from "antd";
 const {Header, Content, Footer, Sider} = Layout;
 const {SubMenu} = Menu;
 
@@ -22,6 +25,8 @@ export default function AdminTemplate(props) {
 	const [collapsed, setCollapsed] = useState(false);
 	const {t, i18n} = useTranslation();
 	const adminData = JSON.parse(localStorage.getItem(ADMIN_LOGIN));
+	const [notifications, setNotifications] = useState([]);
+
 	const changeCollapsed = () => {
 		setCollapsed(!collapsed);
 	};
@@ -44,6 +49,54 @@ export default function AdminTemplate(props) {
 	// 	alert("Bạn không có quyền truy cập vào trang này!");
 	// 	return <Redirect to="/" />;
 	// }
+
+	// Trong component
+	// useEffect(() => {
+	// 	const socket = io("http://localhost:7000");
+	// 	socket.on("newTicketBooked", (data) => {
+	// 		setNotifications((prev) => [...prev, data]);
+	// 		notification.info({
+	// 			message: "Đặt vé mới",
+	// 			description: `Có đơn đặt vé mới #${data.ticketId}`,
+	// 			placement: "topRight",
+	// 		});
+	// 	});
+	// 	return () => socket.disconnect();
+	// }, []);
+	useEffect(() => {
+		const socket = io("http://localhost:7000");
+
+		socket.on("newTicketBooked", (data) => {
+			setNotifications((prev) => [...prev, data]);
+			notification.info({
+				message: "Đặt vé mới",
+				description: `Vừa có khách hàng đặt vé số #${data.ticketId}.`,
+				placement: "topRight",
+			});
+		});
+
+		return () => socket.disconnect();
+	}, []);
+
+	const notificationMenu = (
+		<Menu>
+			{notifications.map((notif, index) => (
+				<Menu.Item
+					key={index}
+					onClick={() => {
+						history.push("/admin/ticket");
+						dispatch({
+							type: CHANGE_KEY,
+							key: "7",
+						});
+					}}
+				>
+					<Menu.Item key={index}>Đơn đặt vé số #{notif.ticketId}</Menu.Item>{" "}
+				</Menu.Item>
+			))}
+			{notifications.length === 0 && <Menu.Item>Không có thông báo mới</Menu.Item>}
+		</Menu>
+	);
 
 	// Cập nhật menu logout
 	const menu = (
@@ -197,6 +250,11 @@ export default function AdminTemplate(props) {
 										<span className="font-bold text-xl">{t("admin.systemTitle")}</span>
 										<div className="flex items-center gap-4">
 											<LanguageSwitcher />
+											<Dropdown overlay={notificationMenu} trigger={["click"]}>
+												<Badge count={notifications.length} className="cursor-pointer">
+													<BellOutlined style={{fontSize: "20px"}} />
+												</Badge>
+											</Dropdown>
 											<Dropdown overlay={menu} trigger={["click"]} className="cursor-pointer">
 												<div className="flex items-center">
 													<Avatar style={{verticalAlign: "middle", background: "#7265e6", marginRight: 10}} size="large">
