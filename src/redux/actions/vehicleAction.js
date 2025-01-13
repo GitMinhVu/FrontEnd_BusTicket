@@ -109,11 +109,11 @@ export const UpdateVehicleAction = (id, vehicle) => {
 		try {
 			const result = await vehicleService.UpdateVehicle(id, vehicle);
 			if (result.status == 200) {
-				message.success("update xe thành công");
+				message.success(`Cập nhật thông tin xe ${vehicle.name} thành công`);
 				dispatch(getAllVehicleAction());
 			}
 		} catch (error) {
-			message.error("update xe thất bại");
+			message.error(`Cập nhật xe ${vehicle.name} thất bại`);
 			console.log(error);
 		}
 	};
@@ -125,11 +125,11 @@ export const createVehicleAction = (vehicle) => {
 			const result = await vehicleService.CreateVehicle(vehicle);
 			console.log(result);
 			if (result.status == 201) {
-				message.success("Tạo Xe  thành công");
+				message.success(`Tạo xe ${vehicle.name} thành công`);
 				dispatch(getAllVehicleAction());
 			}
 		} catch (error) {
-			message.error("Tạo  xe thất bại");
+			message.error(`Tạo xe ${vehicle.name} thất bại`);
 			console.log(error);
 		}
 	};
@@ -137,14 +137,18 @@ export const createVehicleAction = (vehicle) => {
 
 export const DeleteVehicleAction = (id) => {
 	return async (dispatch) => {
+		let vehicleName = "";
 		try {
+			const detailResult = await vehicleService.getDetailVehicle(id);
+			vehicleName = detailResult.data.name;
+
 			const result = await vehicleService.DeleteVehicle(id);
 			if (result.status == 200) {
-				message.success("Xóa xe thành công");
+				message.success(`Xóa xe ${vehicleName} thành công`);
 				dispatch(getAllVehicleAction());
 			}
 		} catch (error) {
-			message.error("Xóa xe thất bại");
+			message.error(`Xóa xe ${vehicleName} thất bại`);
 			console.log(error);
 		}
 	};
@@ -152,15 +156,19 @@ export const DeleteVehicleAction = (id) => {
 
 export const CreateImgVehicleAction = (id, file) => {
 	return async (dispatch) => {
+		let vehicleName = "";
 		try {
+			const detailResult = await vehicleService.getDetailVehicle(id);
+			vehicleName = detailResult.data.name;
+
 			const result = await vehicleService.createImgVehicle(id, file);
 			console.log(result);
 			if (result.status == 200) {
-				message.success("thêm ảnh xe thành công");
+				message.success(`Thêm ảnh xe ${vehicleName} thành công`);
 				dispatch(getAllVehicleAction());
 			}
 		} catch (error) {
-			message.error("thêm ảnh xe thất bại");
+			message.error(`Thêm ảnh xe ${vehicleName} thất bại`);
 			console.log(error);
 		}
 	};
@@ -168,15 +176,19 @@ export const CreateImgVehicleAction = (id, file) => {
 
 export const deleteImgVehicleAction = (id) => {
 	return async (dispatch) => {
+		let vehicleName = "";
 		try {
+			const detailResult = await vehicleService.getDetailVehicle(id);
+			vehicleName = detailResult.data.name;
+
 			const result = await vehicleService.deleteImgVehicle(id);
 			console.log(result);
 			if (result.status == 200) {
 				dispatch(getAllVehicleAction());
-				message.success("Xóa ảnh xe thành công");
+				message.success(`Xóa ảnh xe ${vehicleName} thành công`);
 			}
 		} catch (error) {
-			message.error("Xóa ảnh xe thất bại");
+			message.error(`Xóa ảnh xe ${vehicleName} thất bại`);
 			console.log(error);
 		}
 	};

@@ -80,8 +80,9 @@ export default function Register(props) {
 						}}
 						okText="Yes"
 						cancelText="No"
+						disabled={!formik.isValid || !formik.dirty}
 					>
-						<Button type="primary" htmlType="submit">
+						<Button type="primary" htmlType="submit" disabled={!formik.isValid || !formik.dirty}>
 							Đăng ký
 						</Button>
 					</Popconfirm>

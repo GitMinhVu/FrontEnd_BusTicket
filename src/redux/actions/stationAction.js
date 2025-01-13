@@ -39,11 +39,11 @@ export const updateStationAction = (id, station) => {
 		try {
 			const result = await stationService.updateStation(id, station);
 			if (result.status == 200) {
-				message.success("update station thành công");
+				message.success("Cập nhật bến xe thành công");
 				dispatch(getListStationAction());
 			}
 		} catch (error) {
-			message.error("update station thất bại");
+			message.error("Cập nhật bến xe thất bại");
 			console.log(error);
 		}
 	};
@@ -54,11 +54,11 @@ export const createStationAction = (station) => {
 		try {
 			const result = await stationService.createStation(station);
 			if (result.status == 200) {
-				message.success("Thêm station thành công");
+				message.success("Thêm bến xe thành công");
 				dispatch(getListStationAction());
 			}
 		} catch (error) {
-			message.error("Thêm station thất bại");
+			message.error("Thêm bến xe thất bại");
 			console.log(error);
 		}
 	};
@@ -69,11 +69,11 @@ export const deleteStationAction = (id) => {
 		try {
 			const result = await stationService.deleteStation(id);
 			if (result.status == 200) {
-				message.success("delete station thành công");
+				message.success("Xóa bến xe thành công");
 				dispatch(getListStationAction());
 			}
 		} catch (error) {
-			message.error("delete station thất bại");
+			message.error("Xóa bến xe thất bại");
 			console.log(error);
 		}
 	};

@@ -1,19 +1,16 @@
 import React, {useEffect, useState} from "react";
 import "../Sass/css/Payment.css";
-import {Row, Col, message} from "antd";
-import {List, Avatar, Card, Radio, Input, Space, Collapse, Button} from "antd";
+import {Card, Radio, Space, Collapse, Button, message} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {USER_LOGIN} from "../util/settings/config";
-import {getDetailPassenger} from "../redux/actions/passengerAction";
 import moment from "moment";
 import {Redirect} from "react-router-dom";
 import {getDetailTripPassengerAction} from "../redux/actions/tripAction";
-import {getDetailPointDropAction, getDetailPointPickDropAction} from "../redux/actions/pointAction";
 import {getDetailTimePointDropTripAction, getDetailTimePointPickTripAction} from "../redux/actions/timePointAction";
 import {SET_MODAL} from "../redux/types/ModalTypes";
 import EditUserBooking from "../components/Edit/EditUserBooking";
 import EditTimePoint from "../components/Edit/EditTimePoint";
-import {PayAction} from "../redux/actions/payAction";
+// import {PayAction} from "../redux/actions/payAction";
 import {bookingTicketAction} from "../redux/actions/bookingAction";
 
 export default function Payment(props) {

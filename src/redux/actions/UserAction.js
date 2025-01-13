@@ -49,7 +49,7 @@ export const registerAction = (user) => {
 			dispatch({
 				type: NOFICATION,
 				title: "error",
-				text: "Email đã tồn tại!, vui lòng sử dụng email khác!",
+				text: "Email hoặc số điện thoại đã đăng ký trước đó!, vui lòng sử dụng email, số điện thoại khác để tiến hành đăng ký!",
 			});
 		}
 	};

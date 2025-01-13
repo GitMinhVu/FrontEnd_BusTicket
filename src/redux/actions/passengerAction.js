@@ -48,11 +48,11 @@ export const updatePassengerAction = (passenger, id, file) => {
 			const result = await passengerService.updatePassenger(passenger, id);
 			console.log("update passenger", result);
 			if (result.status == 200) {
-				message.success("update  xe thành công");
+				message.success(`Cập nhật nhà xe ${passenger.name} thành công`);
 				dispatch(getAllPassenger());
 			}
 		} catch (error) {
-			message.error("update  xe thất bại");
+			message.error(`Cập nhật nhà xe ${passenger.name} thất bại`);
 			console.log(error);
 		}
 	};
@@ -60,15 +60,18 @@ export const updatePassengerAction = (passenger, id, file) => {
 
 export const updateImagePassengerAction = (id, file) => {
 	return async (dispatch) => {
+		let passengerName = "";
 		try {
+			const detailResult = await passengerService.getDetailPassenger(id);
+			passengerName = detailResult.data.name;
+
 			const result = await passengerService.updateImagePassenger(id, file);
-			console.log("update images passenger", result);
 			if (result.status == 200) {
-				message.success("update images xe thành công");
+				message.success(`Cập nhật ảnh nhà xe ${passengerName} thành công`);
 				dispatch(getAllPassenger());
 			}
 		} catch (error) {
-			message.error("update images xe thất bại");
+			message.error(`Cập nhật ảnh nhà xe ${passengerName} thất bại`);
 			console.log(error);
 		}
 	};
@@ -76,15 +79,18 @@ export const updateImagePassengerAction = (id, file) => {
 
 export const deletePassenger = (id) => {
 	return async (dispatch) => {
+		let passengerName = "";
 		try {
+			const detailResult = await passengerService.getDetailPassenger(id);
+			passengerName = detailResult.data.name;
+
 			const result = await passengerService.deletePassenger(id);
-			console.log("delete passenger", result);
 			if (result.status == 200) {
-				message.success("delete  passenger xe thành công");
+				message.success(`Xóa nhà xe ${passengerName} thành công`);
 				dispatch(getAllPassenger());
 			}
 		} catch (error) {
-			message.error("elete  passenger xe  thất bại");
+			message.error(`Xóa nhà xe ${passengerName} thất bại`);
 			console.log(error);
 		}
 	};
@@ -97,11 +103,11 @@ export const createPassenger = (passenger, file) => {
 			console.log("thêm passenger", result);
 			if (result.status == 200) {
 				dispatch(updateImagePassengerAction(result.data.id, file));
-				message.success("thêm  passenger xe thành công");
+				message.success(`Thêm nhà xe ${passenger.name} thành công`);
 				dispatch(getAllPassenger());
 			}
 		} catch (error) {
-			message.error("thêm  passenger xe  thất bại");
+			message.error(`Thêm nhà xe ${passenger.name} thất bại`);
 			console.log(error);
 		}
 	};

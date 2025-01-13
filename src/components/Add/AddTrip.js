@@ -238,7 +238,7 @@ function AddPoint(props) {
 	const {listPointPickup, listPointDropoff} = useSelector((state) => state.PointReducer);
 	const {tripCreated, tripPassengerCreated} = useSelector((state) => state.TripReducer);
 	const {isSuccess} = useSelector((state) => state.LoadingReducer);
-	console.log("file: AddTrip.js ~ line 234 ~ AddPoint ~ tripPassengerCreated", tripPassengerCreated);
+	// console.log("file: AddTrip.js ~ line 234 ~ AddPoint ~ tripPassengerCreated", tripPassengerCreated);
 	useEffect(() => {
 		dispatch(getPointPickUpAction(tripCreated.fromStation));
 		dispatch(getPointDropoffAction(tripCreated.toStation));
@@ -401,6 +401,7 @@ function AddPoint(props) {
 							{t("common.back")}
 						</Button>
 						<Button
+							style={{marginLeft: "10px"}}
 							type="primary"
 							htmlType="submit"
 							onClick={() => {
