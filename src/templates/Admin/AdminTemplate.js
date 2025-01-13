@@ -11,6 +11,7 @@ import {CHANGE_KEY} from "../../redux/types/AdminTypes";
 import {TOKEN, USER_LOGIN, ADMIN_LOGIN, ADMIN_TOKEN} from "../../util/settings/config";
 import {useTranslation} from "react-i18next";
 import LanguageSwitcher from "../../components/LanguageSwitch/LanguageSwitch";
+import ChatBox from "../../components/Chat/ChatBox";
 
 import io from "socket.io-client";
 import {notification} from "antd";
@@ -26,6 +27,40 @@ export default function AdminTemplate(props) {
 	const {t, i18n} = useTranslation();
 	const adminData = JSON.parse(localStorage.getItem(ADMIN_LOGIN));
 	const [notifications, setNotifications] = useState([]);
+
+	const [chatMessages, setChatMessages] = useState({});
+	const [activeChat, setActiveChat] = useState(null);
+	const [socket, setSocket] = useState(null);
+
+	useEffect(() => {
+		const socket = io("http://localhost:7000");
+		setSocket(socket);
+		// Listen for both customer and admin messages
+		socket.on("messageToAdmin", (data) => {
+			setChatMessages((prev) => ({
+				...prev,
+				[data.userId]: [...(prev[data.userId] || []), data],
+			}));
+		});
+
+		return () => socket.disconnect();
+	}, []);
+
+	const sendAdminMessage = (userId, message) => {
+		const messageData = {
+			userId,
+			message,
+			fromAdmin: true,
+			timestamp: new Date(),
+		};
+		// Add to local state first
+		setChatMessages((prev) => ({
+			...prev,
+			[userId]: [...(prev[userId] || []), messageData],
+		}));
+		// Then emit to socket
+		socket.emit("adminMessage", messageData);
+	};
 
 	const changeCollapsed = () => {
 		setCollapsed(!collapsed);
@@ -269,9 +304,25 @@ export default function AdminTemplate(props) {
 									</div>
 								</Header>
 								<Component {...propsRoute} />
-
 								<Footer style={{textAlign: "center"}}>Created 2024 To Minh Vu</Footer>
+								<ChatBox isAdmin={true} />
+
+								<div className="admin-chat">
+									<div className="chat-users">
+										{Object.keys(chatMessages).map((userId) => (
+											<div onClick={() => setActiveChat(userId)}>User {userId}</div>
+										))}
+									</div>
+									{activeChat && (
+										<div className="chat-messages">
+											{chatMessages[activeChat].map((msg, index) => (
+												<div key={index}>{msg.message}</div>
+											))}
+										</div>
+									)}
+								</div>
 							</Layout>
+							<ChatBox isAdmin={true} />
 						</Layout>
 					</Fragment>
 				);

@@ -1,9 +1,45 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import InputSearchTrip from "../components/Input/InputSearchTrip";
 import Slider from "react-slick";
 import {List, Card, Modal} from "antd";
 import "../Sass/css/Home.css";
+import io from "socket.io-client";
+import ChatBox from "../components/Chat/ChatBox";
+import "../components/Chat/ChatBox.css";
+
 export default function Home() {
+	const [socket, setSocket] = useState(null);
+	const [messages, setMessages] = useState([]);
+	const [newMessage, setNewMessage] = useState("");
+	useEffect(() => {
+		const newSocket = io("http://localhost:7000");
+		setSocket(newSocket);
+		// Listen for both customer and admin messages
+		newSocket.on("messageToCustomer", (data) => {
+			setMessages((prev) => [...prev, data]);
+		});
+
+		return () => newSocket.disconnect();
+	}, []);
+
+	const sendMessage = () => {
+		if (newMessage.trim()) {
+			const messageData = {
+				userId: "customer-id",
+				message: newMessage,
+				fromCustomer: true,
+				timestamp: new Date(),
+			};
+
+			// Add message to local state first
+			setMessages((prev) => [...prev, messageData]);
+
+			// Then emit to socket
+			socket.emit("customerMessage", messageData);
+			setNewMessage("");
+		}
+	};
+
 	useEffect(() => {
 		Modal.success({
 			title: "🎊 Chúc Mừng Năm Mới Ất Tỵ 2025 🎊",
@@ -231,6 +267,17 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
+			<div className="chat-box">
+				<div className="messages">
+					{messages.map((msg, index) => (
+						<div className={`message ${msg.fromCustomer ? "sent" : "received"}`}>{msg.message}</div>
+					))}
+				</div>
+				<input value={newMessage} onChange={(e) => setNewMessage(e.target.value)} />
+				<button onClick={sendMessage}>Gửi</button>
+			</div>
+
+			<ChatBox isAdmin={false} />
 		</>
 	);
 }
