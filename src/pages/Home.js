@@ -33,8 +33,7 @@ export default function Home() {
 
 			// Add message to local state first
 			setMessages((prev) => [...prev, messageData]);
-
-			// Then emit to socket
+			// sau do emit to socket
 			socket.emit("customerMessage", messageData);
 			setNewMessage("");
 		}

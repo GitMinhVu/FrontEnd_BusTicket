@@ -45,7 +45,7 @@ export default function TicketManagement() {
 									});
 								}}
 							/>,
-							item.status == "cancel" ? (
+							item.status === "cancel" ? (
 								""
 							) : (
 								<Popconfirm
