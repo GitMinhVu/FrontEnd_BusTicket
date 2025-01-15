@@ -1,13 +1,16 @@
 import React, {useState, useEffect} from "react";
-import {Button, Input, Card, Badge} from "antd";
+import {Button, Input, Card, Badge, Avatar} from "antd";
 import io from "socket.io-client";
-import {MessageOutlined} from "@ant-design/icons";
+import {MessageOutlined, UserOutlined, SendOutlined} from "@ant-design/icons";
 
 import "./ChatBox.css";
 
 const ChatBox = ({isAdmin = false}) => {
 	const [socket, setSocket] = useState(null);
-	const [messages, setMessages] = useState([]);
+	const [messages, setMessages] = useState(() => {
+		const savedMessages = localStorage.getItem("chatMessages");
+		return savedMessages ? JSON.parse(savedMessages) : [];
+	});
 	const [inputMessage, setInputMessage] = useState("");
 	const [isVisible, setIsVisible] = useState(false);
 	const [unreadCount, setUnreadCount] = useState(0);
@@ -40,6 +43,10 @@ const ChatBox = ({isAdmin = false}) => {
 		setIsVisible(!isVisible);
 	};
 
+	useEffect(() => {
+		localStorage.setItem("chatMessages", JSON.stringify(messages));
+	}, [messages]);
+
 	const sendMessage = () => {
 		if (inputMessage.trim()) {
 			const messageData = {
@@ -51,6 +58,11 @@ const ChatBox = ({isAdmin = false}) => {
 			socket.emit(isAdmin ? "adminMessage" : "customerMessage", messageData);
 			setInputMessage("");
 		}
+	};
+	const deleteMessage = (index) => {
+		const newMessages = messages.filter((_, i) => i !== index);
+		setMessages(newMessages);
+		localStorage.setItem("chatMessages", JSON.stringify(newMessages));
 	};
 	useEffect(() => {
 		if (isVisible) {
@@ -65,17 +77,21 @@ const ChatBox = ({isAdmin = false}) => {
 				</div>
 			</Badge>
 
-			<Card className={`chat-box ${isVisible ? "visible" : ""}`}>
-				<div className="messages">
+			<Card className={`chat-box ${isVisible ? "visible" : ""}`} title="Chat Support">
+				<div className="messages-container">
 					{messages.map((msg, i) => (
-						<div key={i} className={`message ${(msg.isAdmin && isAdmin) || (!msg.isAdmin && !isAdmin) ? "sent" : "received"}`}>
-							{msg.message}
+						<div key={i} className={`message-wrapper ${(msg.isAdmin && isAdmin) || (!msg.isAdmin && !isAdmin) ? "sent" : "received"}`}>
+							<div className="message-bubble">
+								{msg.message}{" "}
+								<span className="delete-btn" onClick={() => deleteMessage(i)}>
+									×
+								</span>
+							</div>
 						</div>
 					))}
 				</div>
 				<div className="input-area">
-					<Input value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} onPressEnter={sendMessage} />
-					<Button onClick={sendMessage}>Gửi</Button>
+					<Input value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} onPressEnter={sendMessage} placeholder="Type a message..." suffix={<SendOutlined onClick={sendMessage} style={{cursor: "pointer", color: "#1890ff"}} />} />
 				</div>
 			</Card>
 		</div>
