@@ -1,6 +1,6 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import "../../Sass/css/ticket.css";
-import {Breadcrumb, Card, Tabs, Avatar, Popconfirm, message, Button} from "antd";
+import {Breadcrumb, Card, Tabs, Avatar, Popconfirm, message, Button, Modal} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {SET_MODAL} from "../../redux/types/ModalTypes";
 import DetailsTicket from "./DetailsTicket";
@@ -16,6 +16,7 @@ const {Meta} = Card;
 export default function TicketManagement() {
 	const {ticketUser} = useSelector((state) => state.TicketReducer);
 	console.log("file: TicketManagement.js ~ line 18 ~ TicketManagement ~ ticketUser", ticketUser);
+	const [isModalVisible, setIsModalVisible] = useState(true);
 
 	const {userLogin} = useSelector((state) => state.userReducer);
 
@@ -26,6 +27,94 @@ export default function TicketManagement() {
 	function confirm(id) {
 		dispatch(cancelTicketUser(id));
 	}
+	useEffect(() => {
+		Modal.info({
+			title: (
+				<div
+					style={{
+						textAlign: "center",
+						fontSize: "24px",
+						color: "#1890ff",
+						borderBottom: "2px solid #1890ff",
+						paddingBottom: "10px",
+						marginBottom: "20px",
+					}}
+				>
+					Chính Sách Hủy Vé
+				</div>
+			),
+			content: (
+				<div
+					style={{
+						padding: "20px",
+						backgroundColor: "#f8f9fa",
+						borderRadius: "8px",
+						boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+					}}
+				>
+					<div
+						style={{
+							marginBottom: "15px",
+							padding: "10px",
+							borderLeft: "4px solid #52c41a",
+							backgroundColor: "#fff",
+						}}
+					>
+						<p style={{fontSize: "16px", color: "#52c41a"}}>✓ Hủy trước 24 giờ:</p>
+						<p style={{marginLeft: "20px", color: "#666"}}>Miễn phí hoàn tiền 100%</p>
+					</div>
+
+					<div
+						style={{
+							marginBottom: "15px",
+							padding: "10px",
+							borderLeft: "4px solid #faad14",
+							backgroundColor: "#fff",
+						}}
+					>
+						<p style={{fontSize: "16px", color: "#faad14"}}>⚠ Hủy trong vòng 12-24 giờ:</p>
+						<p style={{marginLeft: "20px", color: "#666"}}>Phí 10% giá vé</p>
+					</div>
+
+					<div
+						style={{
+							marginBottom: "15px",
+							padding: "10px",
+							borderLeft: "4px solid #ff4d4f",
+							backgroundColor: "#fff",
+						}}
+					>
+						<p style={{fontSize: "16px", color: "#ff4d4f"}}>⚠ Hủy trong vòng 6-12 giờ:</p>
+						<p style={{marginLeft: "20px", color: "#666"}}>Phí 20% giá vé</p>
+					</div>
+
+					<div
+						style={{
+							padding: "10px",
+							borderLeft: "4px solid #ff1f1f",
+							backgroundColor: "#fff",
+						}}
+					>
+						<p style={{fontSize: "16px", color: "#ff1f1f"}}>✕ Hủy trong vòng 6 giờ:</p>
+						<p style={{marginLeft: "20px", color: "#666"}}>Không hoàn tiền</p>
+					</div>
+				</div>
+			),
+			okText: "Đã hiểu",
+			centered: true,
+			width: 500,
+			okButtonProps: {
+				style: {
+					width: "120px",
+					height: "40px",
+					fontSize: "16px",
+					borderRadius: "20px",
+				},
+			},
+			className: "cancel-policy-modal",
+			maskClosable: true,
+		});
+	}, []);
 
 	const renderTicketDepart = (status) => {
 		return ticketUser.map((item, index) => {
@@ -52,10 +141,22 @@ export default function TicketManagement() {
 									placement="topRight"
 									title={"Bạn có muốn hủy vé xe này không?"}
 									onConfirm={() => {
-										if (item.tripPassengerTicket.status == "depart") {
+										const startTime = moment(item.tripPassengerTicket.trip.startTime);
+										const now = moment();
+										const diffHours = startTime.diff(now, "hours");
+										const ticketPrice = item.totalAmount;
+
+										if (diffHours >= 24) {
+											message.success("Hủy vé thành công - Hoàn tiền 100%");
 											confirm(item.id);
-										} else {
-											message.error("Không thể hủy vé");
+										} else if (diffHours >= 12 && diffHours < 24) {
+											message.warning(`Phí hủy vé 10%: ${(ticketPrice * 0.1).toLocaleString()} VND`);
+											confirm(item.id);
+										} else if (diffHours >= 6 && diffHours < 12) {
+											message.warning(`Phí hủy vé 20%: ${(ticketPrice * 0.2).toLocaleString()} VND`);
+											confirm(item.id);
+										} else if (diffHours < 6) {
+											message.error("Không thể hủy vé trong vòng 6 giờ trước khi khởi hành");
 										}
 									}}
 									okText="Yes"
